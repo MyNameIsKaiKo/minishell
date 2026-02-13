@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:18:50 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/13 15:34:24 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/02/13 15:39:02 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(void)
 		tmp = readline(str);
 		add_history(tmp);
 		printf("Commande: %s\n", tmp);
-		if (!strcmp("exit", tmp))
+		if (tmp == NULL || !ft_strncmp("exit", tmp, 5))
 		{
 			free(tmp);
 			break ;
