@@ -26,7 +26,10 @@ typedef struct s_node
 
 // -- node Function --
 t_node				*nodenew(char *data, char *type, t_node *head);
-void				node_add(t_node *node, t_node *new_node, char *side);
+void				node_add(t_node **node, t_node *new_node, char *side);
 void				node_free(t_node *node);
 
+// -- parser_utils Function --
+char				*ft_strrnstr(const char *big, const char *little,
+						size_t loc);
 #endif

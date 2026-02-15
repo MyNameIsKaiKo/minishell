@@ -12,13 +12,13 @@
 
 #include "../parser.h"
 
-void	node_add(t_node *node, t_node *new_node, char *side)
+void	node_add(t_node **node, t_node *new_node, char *side)
 {
 	if (!node || !new_node)
 		return ;
 	if (ft_strncmp(side, "left", 4) == 0)
-		node->left = new_node;
+		(*node)->left = new_node;
 	if (ft_strncmp(side, "right", 5) == 0)
-		node->right = new_node;
+		(*node)->right = new_node;
 	return ;
 }
