@@ -18,15 +18,9 @@ static char	*check_operator(char *str)
 	const char	*s_or = ft_strrnstr(str, "||", 2);
 
 	if (ft_strlen(s_and) > ft_strlen(s_or))
-		return ("&&");
+		return ((char *)s_and);
 	else
-		return ("||");
-}
-
-static t_node	*make_branch(t_node **node)
-{
-	(void)node;
-	return (NULL);
+		return ((char *)s_or);
 }
 
 static void	make_three(char *operator, char *str, t_node **node)
@@ -47,7 +41,6 @@ static void	make_three(char *operator, char *str, t_node **node)
 				- ft_strlen(op_pos + 2));
 		node_add(node, nodenew(l_part, NULL, *node), "left");
 		node_add(node, nodenew(r_part, NULL, *node), "right");
-		make_branch(node);
 	}
 }
 
