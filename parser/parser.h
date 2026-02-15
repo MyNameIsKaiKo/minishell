@@ -24,4 +24,9 @@ typedef struct s_node
 	struct s_node	*head;
 }					t_node;
 
+// -- node Function --
+t_node				*nodenew(char *data, char *type, t_node *head);
+void				node_add(t_node *node, t_node *new_node, char *side);
+void				node_free(t_node *node);
+
 #endif

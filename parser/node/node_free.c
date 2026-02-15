@@ -14,26 +14,11 @@
 
 void	node_free(t_node *node)
 {
-	t_node	*tmp;
-	t_node	*left;
-	t_node	*right;
-
-	left = node->left;
-	right = node->right;
-	while (left->left)
-	{
-		tmp = left;
-		free(tmp->data);
-		left = left->left;
-		free(tmp);
-	}
-	while (right->right)
-	{
-		tmp = right;
-		free(tmp->data);
-		right = right->left;
-		free(tmp);
-	}
-	free(node->data);
+	if (!node)
+		return ;
+	node_free(node->left);
+	node_free(node->right);
+	if (node->data)
+		free(node->data);
 	free(node);
 }

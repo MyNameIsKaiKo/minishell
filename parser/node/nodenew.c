@@ -13,15 +13,17 @@
 #include "../parser.h"
 
 // data will always be a malloc so in node free, need to free data !
-t_node	*nodenew(char *data, char *type)
+t_node	*nodenew(char *data, char *type, t_node *head)
 {
 	t_node	*node;
 
 	node = malloc(sizeof(t_node));
+	if (!head)
+		head = node;
 	node->data = data;
 	node->right = NULL;
 	node->left = NULL;
-	node->head = node;
+	node->head = head;
 	node->type = type;
 	return (node);
 }

@@ -11,3 +11,24 @@
 /* ************************************************************************** */
 
 #include "parser.h"
+
+t_node	*define_type(char *str)
+{
+	int	i;
+	int	done;
+
+	done = 0;
+	while (done == 0)
+	{
+		i = 0;
+		while (str[i])
+		{
+		}
+	}
+	return (NULL);
+}
+
+void	parser(char *str)
+{
+	(void)str;
+}
