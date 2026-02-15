@@ -17,7 +17,7 @@ static char	*check_operator(char *str)
 	const char	*s_and = ft_strrnstr(str, "&&", 2);
 	const char	*s_or = ft_strrnstr(str, "||", 2);
 
-	if (ft_strlen(s_and) > ft_strlen(s_or))
+	if (ft_strlen(s_and) < ft_strlen(s_or))
 		return ((char *)s_and);
 	else
 		return ((char *)s_or);
@@ -37,5 +37,7 @@ char	*get_last_op(char *str, char *type)
 		op = ft_strrchr(str, '|');
 		return (op);
 	}
-	return (str);
+	return (NULL);
 }
+
+
