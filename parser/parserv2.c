@@ -12,32 +12,27 @@
 
 #include "parser.h"
 
-static char	*check_operator(char *str)
+t_node	*make_tree(char *str)
 {
-	const char	*s_and = ft_strrnstr(str, "&&", 2);
-	const char	*s_or = ft_strrnstr(str, "||", 2);
+	char	*is_op;
+	t_node	*node;
 
-	if (ft_strlen(s_and) < ft_strlen(s_or))
-		return ((char *)s_and);
+	is_op = get_last_op(str, "LOGIC");
+	if (!is_op)
+		is_op = get_last_op(str, "PIPE");
+	if (ft_strncmp(is_op, "&&", 2) || ft_strncmp(is_op, "||", 2))
+	{
+		node = nodenew(ft_strdup(is_op), is_op, NULL);
+		node_add(&node, make_tree(ft_getleft(str, is_op)), "LEFT");
+		node_add(&node, make_tree(ft_getright(str, is_op)), "RIGHT");
+	}
+	else if (ft_strncmp(is_op, "|", 1))
+	{
+		node = nodenew(ft_strdup(is_op), is_op, NULL);
+		node_add(&node, make_tree(ft_getleft(str, is_op)), "LEFT");
+		node_add(&node, make_tree(ft_getright(str, is_op)), "RIGHT");
+	}
 	else
-		return ((char *)s_or);
+		node = nodenew(ft_strdup(str), "CMD", NULL);
+	return (node);
 }
-
-char	*get_last_op(char *str, char *type)
-{
-	char	*op;
-
-	if (ft_strncmp(type, "LOGIC", 5) == 0)
-	{
-		op = check_operator(str);
-		return (op);
-	}
-	else if (ft_strncmp(type, "PIPE", 4) == 0)
-	{
-		op = ft_strrchr(str, '|');
-		return (op);
-	}
-	return (NULL);
-}
-
-

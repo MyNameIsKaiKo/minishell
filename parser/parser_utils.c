@@ -12,24 +12,70 @@
 
 #include "parser.h"
 
-char	*ft_strrnstr(const char *big, const char *little, size_t loc)
-{
-	size_t	l_len;
-	size_t	b_len;
 
-	l_len = ft_strlen(little);
-	b_len = ft_strlen(big);
-	if (little[0] == '\0')
-		return ((char *)big);
-	if (l_len > loc)
-		return (NULL);
-	if (b_len > loc)
-		b_len = loc;
-	while (b_len >= l_len)
+static char	*check_operator(char *str)
+{
+	const char	*s_and = ft_strrnstr(str, "&&", 2);
+	const char	*s_or = ft_strrnstr(str, "||", 2);
+
+	if (ft_strlen(s_and) < ft_strlen(s_or))
+		return ((char *)s_and);
+	else
+		return ((char *)s_or);
+}
+
+char	*get_last_op(char *str, char *type)
+{
+	char	*op;
+
+	if (ft_strncmp(type, "LOGIC", 5) == 0)
 	{
-		if (!(ft_strncmp(big + b_len * l_len, little, l_len)))
-			return ((char *)big + b_len - l_len);
-		b_len--;
+		op = check_operator(str);
+		op = or_and(op);
+		return (op);
+	}
+	else if (ft_strncmp(type, "PIPE", 4) == 0)
+	{
+		op = ft_strrchr(str, '|');
+		if (op)
+		{
+			free(op);
+			op = "|";
+		}
+		return (op);
 	}
 	return (NULL);
 }
+
+char	*or_and(char *op)
+{
+	if (op && ft_strncmp(op, "&&", 2) == 0)
+	{
+		free(op);
+		op = "&&";
+	}
+	else if (op)
+	{
+		free(op);
+		op = "||";
+	}
+	return (op);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

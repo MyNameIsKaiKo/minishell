@@ -30,6 +30,13 @@ void				node_add(t_node **node, t_node *new_node, char *side);
 void				node_free(t_node *node);
 
 // -- parser_utils Function --
+char				*or_and(char *op);
+char				*get_last_op(char *str, char *type);
+
+// -- string_utils Function --
 char				*ft_strrnstr(const char *big, const char *little,
 						size_t loc);
+char				*ft_getleft(char *s, char *del);
+char				*ft_getright(char *s, char *del);
+
 #endif

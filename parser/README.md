@@ -37,3 +37,4 @@ Create three :
         5 -> create node if exist
         6 -> create left and right using recursive.
     7 -> if nothing found it is a function
+
