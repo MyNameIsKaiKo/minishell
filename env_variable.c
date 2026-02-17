@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   env_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 15:18:50 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/17 12:50:37 by nredouan         ###   ########.fr       */
+/*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
+/*   Updated: 2026/02/17 12:50:22 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-char	*build_prompt(t_env *env_var)
-{
-	char	*prompt;
-	char	*tmp;
-
-	prompt = ft_strjoin("\033[35m<T&J minishell>", env_var->pwd);
-	tmp = prompt;
-	prompt = ft_strjoin(prompt, "$ \033[0m");
-	free(tmp);
-	return (prompt);
-}
-
-void	change_prompt(t_env *env_var)
+void	init_env(t_env *env_var)
 {
 	char	cwd[256];
 
 	getcwd(cwd, sizeof(cwd));
-	free(env_var->old_pwd);
-	env_var->old_pwd = env_var->pwd;
 	env_var->pwd = ft_strdup(cwd);
+	env_var->old_pwd = ft_strdup(cwd);
+}
+
+void	free_env(t_env *env_var)
+{
+	free(env_var->pwd);
+	free(env_var->old_pwd);
 }

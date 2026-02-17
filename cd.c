@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 15:18:50 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/17 12:50:37 by nredouan         ###   ########.fr       */
+/*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
+/*   Updated: 2026/02/17 12:48:31 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-char	*build_prompt(t_env *env_var)
+char	*cd(const char *path, t_env *env_var)
 {
-	char	*prompt;
-	char	*tmp;
+	char	*str;
 
-	prompt = ft_strjoin("\033[35m<T&J minishell>", env_var->pwd);
-	tmp = prompt;
-	prompt = ft_strjoin(prompt, "$ \033[0m");
-	free(tmp);
-	return (prompt);
-}
-
-void	change_prompt(t_env *env_var)
-{
-	char	cwd[256];
-
-	getcwd(cwd, sizeof(cwd));
-	free(env_var->old_pwd);
-	env_var->old_pwd = env_var->pwd;
-	env_var->pwd = ft_strdup(cwd);
+	if (!path)
+	{
+		str = getenv("HOME");
+		if (!str)
+			ft_putendl_fd("Error: HOME not set", 2);
+		else
+			chdir(str);
+	}
+	else
+	{
+		path += 3;//a retirer pour parsing complet
+		if (chdir(path) < 0)
+			perror("Error");
+	}
+	change_prompt(env_var);
+	str = build_prompt(env_var);
+	return (str);
 }

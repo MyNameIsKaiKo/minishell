@@ -7,7 +7,10 @@ OBJ_DIR			= obj
 
 # VPATH			= 
 
-SRCS 			=	prompt.c
+SRCS 			=	main.c \
+					prompt.c \
+					cd.c \
+					env_variable.c
 
 OBJS			= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
