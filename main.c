@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/17 12:49:06 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/02/17 15:00:04 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(void)
 			if (ft_strlen(tmp) == 2)
 				prompt = cd(NULL, &env_var);
 			else
-				prompt = cd(tmp, &env_var);
+				prompt = cd(tmp + 2, &env_var);
 		}
 		free(tmp);
 	}
