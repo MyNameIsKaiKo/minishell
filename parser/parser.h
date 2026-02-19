@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:54:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/19 14:02:27 by jleray           ###   ########.fr       */
+/*   Updated: 2026/02/19 20:05:53 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,20 @@ typedef struct s_node
 
 // -- parser Function --
 t_node				*make_tree(char *str, t_node **head);
+int					exec_tree(t_node *tree);
 
 // -- node Function --
 t_node				*nodenew(char *data, char *type, t_node *head);
 void				node_add(t_node **node, t_node *new_node, char *side);
 void				node_free(t_node *node);
 
-// -- parser_utils Function --
+// -- operator_utils Function --
 char				*or_and(char *op);
 char				*get_last_op(char *str, char *type);
+
+// -- parser_utils Function --
 t_node				*create_treenodes(char *str, char *is_op, t_node **head);
+int					pipe_exec(t_node *tree);
 
 // -- string_utils Function --
 char				*ft_strrnstr(const char *big, const char *little,

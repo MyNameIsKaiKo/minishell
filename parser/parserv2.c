@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 07:59:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/19 15:01:30 by jleray           ###   ########.fr       */
+/*   Updated: 2026/02/19 17:12:42 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,38 @@ t_node	*make_tree(char *str, t_node **head)
 	return (node);
 }
 
-void	exec_tree(t_node *tree)
+int	cmd_exec(void)
 {
+	return (0);
+}
+
+int	exec_tree(t_node *tree)
+{
+	int	success;
+
+	if (!tree)
+		return (0);
 	if (!ft_strncmp(tree->type, "&&", 2))
 	{
-		// exec_tree with left and if left return 0 exec right
+		if (exec_tree(tree->left))
+			return (0);
+		else
+			success = exec_tree(tree->right);
 	}
 	else if (!ft_strncmp(tree->type, "||", 2))
 	{
-		// exec_tree with left and if left return 0 stop else exec right
+		if (exec_tree(tree->left))
+			success = exec_tree(tree->right);
+		else
+			return (0);
 	}
 	else if (!ft_strncmp(tree->type, "|", 1))
-	{
-		// exec_pipe
-		// exec pipe need to call exec_three
-	}
+		success = pipe_exec(tree);
 	else
-	{
-		// exec cmd
-	}
-	return ;
+		success = cmd_exec();
+	if (!success)
+		return (success);
+	return (1);
 }
 
 void	handle_tree(char *str)
