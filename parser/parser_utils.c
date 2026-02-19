@@ -6,12 +6,11 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 06:38:16 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/15 06:38:16 by jleray           ###   ########.fr       */
+/*   Updated: 2026/02/19 13:07:48 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
 
 static char	*check_operator(char *str)
 {
@@ -62,20 +61,25 @@ char	*or_and(char *op)
 	return (op);
 }
 
+t_node	*create_threenodes(char *str, char *is_op, t_node *head)
+{
+	t_node	*node;
+	char	*op;
+	char	*left;
+	char	*right;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	op = ft_strdup(is_op);
+	left = ft_getleft(str, is_op);
+	right = ft_getright(str, is_op);
+	if (!op || !left | !right)
+		return (NULL);
+	node = nodenew(op, is_op, head);
+	if (!node)
+	{
+		node_free(head);
+		return (NULL);
+	}
+	node_add(&node, make_tree(ft_getleft(str, is_op), head), "LEFT");
+	node_add(&node, make_tree(ft_getright(str, is_op), head), "RIGHT");
+	return (node);
+}
