@@ -28,7 +28,7 @@ Create three :
 
   ----------------------------------------------------------
 
-  The make_three function need to be recursiv in order to create everything without any node lost.
+The make_three function need to be recursiv in order to create everything without any node lost.
 
     1 -> find operator logic
         2 -> create node if exist
@@ -38,3 +38,6 @@ Create three :
         6 -> create left and right using recursive.
     7 -> if nothing found it is a function
 
+The exec_three function
+
+    
