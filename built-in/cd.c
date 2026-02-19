@@ -6,12 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/17 15:31:46 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/02/19 13:36:18 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header.h"
-#include <stdio.h>
 
 static int	count_words(char const *s)
 {
@@ -62,31 +61,60 @@ static char	*cd_parser(const char *arg)
 	return (path);
 }
 
-char	*cd(const char *arg, t_env *env_var)
+static void	cd_home(t_env *env_var)
 {
 	char	*str;
+	
+	str = getenv("HOME");
+	if (!str)
+	{
+		ft_putendl_fd("cd: HOME not set", 2);
+		return ;
+	}
+	else
+		chdir(str);
+	change_prompt(env_var);
+}
+
+static void	cd_dash(t_env *env_var)
+{
+	char *str;
+	
+	if (!env_var->old_pwd)
+	{
+		ft_putendl_fd("cd: OLDPWD not set", 2);
+		return ;
+	}
+	str = env_var->pwd;
+	env_var->pwd = env_var->old_pwd;
+	env_var->old_pwd = str;
+	chdir(env_var->pwd);
+}
+
+char	*cd(const char *arg, t_env *env_var)
+{
 	char	*path;
 
 	path = cd_parser(arg);
 	if (count_words(path) <= 1)
 	{
 		if (!path)
-		{
-			str = getenv("HOME");
-			if (!str)
-				ft_putendl_fd("Error: HOME not set", 2);
-			else
-				chdir(str);
-		}
+			cd_home(env_var);
 		else
 		{
-			if (chdir(path) < 0)
-				perror("Error");
+			if (!ft_strncmp(path, "-", 2))
+				cd_dash(env_var);
+			else if (chdir(path) < 0)
+			{
+				ft_putstr_fd("cd: ", 2);
+				perror(path);
+			}
+			else
+				change_prompt(env_var);
 		}
 	}
 	else
-		ft_putendl_fd("Error: too many arguments", 2);
-	change_prompt(env_var);
-	str = build_prompt(env_var);
-	return (str);
+		ft_putendl_fd("cd: too many arguments", 2);
+	free(path);
+	return (build_prompt(env_var));
 }
