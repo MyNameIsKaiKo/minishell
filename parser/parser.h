@@ -47,4 +47,7 @@ char				*ft_strrnstr(const char *big, const char *little,
 char				*ft_getleft(char *s, char *del);
 char				*ft_getright(char *s, char *del);
 
+// minish_pipex Function --
+int					pipe_exec(t_node *tree);
+
 #endif

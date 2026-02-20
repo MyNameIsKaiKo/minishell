@@ -48,18 +48,4 @@ t_node	*create_treenodes(char *str, char *is_op, t_node **head)
 	return (node);
 }
 
-int	pipe_exec(t_node *tree)
-{
-	pid_t	fst_cmd;
-	pid_t	scd_cmd;
-	int		pipefd[2];
 
-	pipe(pipefd);
-	fst_cmd = fork();
-	exec_tree(tree->left);
-	scd_cmd = fork();
-	exec_tree(tree->right);
-	close(pipefd[0]);
-	close(pipefd[1]);
-	return (0);
-}
