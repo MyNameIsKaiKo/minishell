@@ -15,25 +15,6 @@
 
 # include "../include/libft/libft.h"
 
-typedef enum e_token_type
-{
-	WORD,		 // cat, file.txt etc..
-	PIPE,		 // |
-	REDIR_IN,	 // <
-	REDIR_OUT,	 // >
-	APPEND,		 // >>
-	HEREDOC, 	// <<
-	PONCT, 		// (), '' or ""
-	OPERATOR 	// && or ||
-}						t_token_type;
-
-typedef struct s_lexer
-{
-	char				*data;
-	enum e_token_type	*type;
-	struct s_lexer		*next;
-}						t_lexer;
-
 typedef struct s_node
 {
 	char				*type;
