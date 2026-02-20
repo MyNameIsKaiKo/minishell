@@ -15,6 +15,13 @@
 
 # include "../include/libft/libft.h"
 
+typedef struct s_lexer
+{
+	char			*data;
+	char			*type;
+	struct s_lexer	*next;
+}					t_lexer;
+
 typedef struct s_node
 {
 	char			*type;
