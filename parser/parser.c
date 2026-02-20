@@ -12,6 +12,8 @@
 
 #include "parser.h"
 
+// TODO ADD A WAY TO HANDLE HERE DOC AND TEST MULTI PIPE WITHIN A CMD
+
 t_node	*make_tree(char *str, t_node **head)
 {
 	t_node	*node;
@@ -62,7 +64,7 @@ int	exec_tree(t_node *tree)
 		success = cmd_exec(tree);
 	if (!success)
 		return (success);
-	return (1);
+	return (success);
 }
 
 void	handle_tree(char *str)
