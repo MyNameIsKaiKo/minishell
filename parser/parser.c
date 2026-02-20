@@ -36,11 +36,6 @@ t_node	*make_tree(char *str, t_node **head)
 	return (node);
 }
 
-int	cmd_exec(void)
-{
-	return (0);
-}
-
 int	exec_tree(t_node *tree)
 {
 	int	success;
@@ -64,7 +59,7 @@ int	exec_tree(t_node *tree)
 	else if (!ft_strncmp(tree->type, "|", 1))
 		success = pipe_exec(tree);
 	else
-		success = cmd_exec();
+		success = cmd_exec(tree);
 	if (!success)
 		return (success);
 	return (1);

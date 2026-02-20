@@ -50,4 +50,7 @@ char				*ft_getright(char *s, char *del);
 // minish_pipex Function --
 int					pipe_exec(t_node *tree);
 
+// minish_cmd Function --
+int					cmd_exec(t_node *tree);
+
 #endif
