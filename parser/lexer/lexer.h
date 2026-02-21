@@ -21,9 +21,9 @@ typedef enum e_token_type
 	PIPE,
 	REDIR_IN,
 	REDIR_OUT,
-	APPEND,
-	HEREDOC,
 	PONCT,
+	HEREDOC,
+	APPEND,
 	OPERATOR
 }						t_token_type;
 
@@ -34,8 +34,16 @@ typedef struct s_lexer
 	struct s_lexer		*next;
 }						t_lexer;
 
+// -- struct Function --
 t_lexer					*lexer_last(t_lexer *lex);
 t_lexer					*lexernew(char *data, int type);
 void					lexer_add(t_lexer *head, t_lexer *to_add);
 void					lexer_free(t_lexer *lex);
+
+// -- lexer --
+t_lexer					*lexing(char *str);
+
+// -- lexer_utils Function --
+char					*strcjoin(char *s, char c);
+
 #endif
