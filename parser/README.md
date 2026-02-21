@@ -9,7 +9,7 @@ Create three :
  - If no operator -> it's a command
 
  ```
- commande : Makefile cat | ls -l && echo success
+ commande : < Makefile cat | ls -l > out && echo success
                     
                     [&&]
                    /    \
@@ -37,6 +37,9 @@ The make_three function need to be recursiv in order to create everything withou
         5 -> create node if exist
         6 -> create left and right using recursive.
     7 -> if nothing found it is a function
+
+Need to reed the str backward for LOGICAL operator
+And in the right way for PIPE order
 
 The exec_three function
 
