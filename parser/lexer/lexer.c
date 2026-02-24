@@ -52,12 +52,12 @@ static int	is_type(char *s)
 	if (size == 1)
 	{
 		status = handle_singletype(s);
-		exit(status);
+		return (status);
 	}
 	else if (size == 2)
 	{
 		status = handle_dualtype(s);
-		exit(status);
+		return (status);
 	}
 	else
 		return (1);
