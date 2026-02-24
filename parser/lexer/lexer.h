@@ -24,7 +24,8 @@ typedef enum e_token_type
 	PONCT,
 	HEREDOC,
 	APPEND,
-	OPERATOR
+	OPERATOR,
+	SUBPROCESS
 }						t_token_type;
 
 typedef struct s_lexer

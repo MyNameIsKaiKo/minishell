@@ -17,6 +17,8 @@ void	lexer_free(t_lexer *lex)
 	while (lex)
 	{
 		lex = lexer_last(lex);
+		if (lex->data)
+			free(lex->data);
 		free(lex);
 	}
 	return ;

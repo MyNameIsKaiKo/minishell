@@ -8,7 +8,7 @@ First do Lexer :
  - Read char by char and create chained list of token
  - Check for quotes "" and '' -> if inside quote, everything is a WORD (even | or &&)
  - Check for redirection -> if < is followed by < it make << (HEREDOC)
- - Check for parentheses -> add OPEN_PAREN and CLOSE_PAREN token
+ - Check for parentheses -> add PONCT token
 
 Create tree :
  - Check for operator in the token list -> if exist LOGIC else PIPE
