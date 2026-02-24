@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/19 13:46:36 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/02/19 13:58:07 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,10 +163,10 @@ int	main(int argc, char **argv, char **envp)
 				clear(envp);
 			waitpid(child, NULL, 0);//TODO protect
 		}
+		else if (!ft_strncmp("echo -n", tmp, 7))
+			ft_putstr_fd(tmp + 4, 1);
 		else if (!ft_strncmp("echo", tmp, 4))
-		{
-			echo(tmp);
-		}
+			ft_putendl_fd(tmp + 4, 1);
 		free(tmp);
 	}
 	rl_clear_history();
