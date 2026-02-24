@@ -44,7 +44,7 @@ static int	handle_dualtype(char *s)
 	return (0);
 }
 
-static int	is_type(char *s)
+static int	is_type(char *s, char *og)
 {
 	const size_t	size = ft_strlen(s);
 	int				status;
@@ -59,12 +59,12 @@ static int	is_type(char *s)
 		status = handle_dualtype(s);
 		return (status);
 	}
-	else
+	else if (is_complete_w(og))
 		return (1);
 	return (0);
 }
 
-// need to protect str ? or is it done before
+// Maybe need to do a scd lexing part where we assamble thing from lexing
 t_lexer	*lexing(char *str)
 {
 	t_lexer	*lex;
@@ -72,13 +72,13 @@ t_lexer	*lexing(char *str)
 	int		type;
 
 	lex = NULL;
-	tmp = ft_strdup(str);
+	tmp = ft_strdup("");
 	if (!tmp)
 		return (NULL);
 	while (*str)
 	{
 		tmp = strcjoin(tmp, *str);
-		type = is_type(tmp);
+		type = is_type(tmp, str);
 		if (type)
 		{
 			if (!lex)

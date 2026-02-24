@@ -1,46 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   lexer_index.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/21 01:25:09 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/21 01:25:09 by jleray           ###   ########.fr       */
+/*   Created: 2026/02/24 19:46:48 by jleray            #+#    #+#             */
+/*   Updated: 2026/02/24 19:46:48 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-char	*strcjoin(char *s, char c)
+void	indexing_lex(t_lexer **lex)
 {
 	int		i;
-	char	*output;
+	t_lexer	*tmp;
 
-	output = malloc(sizeof(char *) * (ft_strlen(s) + 2));
-	if (!output)
-		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		output[i] = s[i];
-		i++;
-	}
-	output[i] = c;
-	output[i + 1] = '\0';
-	free(s);
-	return (output);
-}
-
-int	is_complete_w(char *str)
-{
-	int	i;
-
+	tmp = *lex;
 	i = 1;
-	if (!str)
-		return (1);
-	if (str[i - 1] && (!str[i] || ((str[i] == ' ') || (str[i] > 11
-					&& str[i] < 13))))
-		return (1);
-	return (0);
+	while (tmp->next)
+	{
+		tmp->index = i;
+		i++;
+		tmp = tmp->next;
+	}
 }
