@@ -64,6 +64,7 @@ static int	is_type(char *s)
 	return (0);
 }
 
+// need to protect str ? or is it done before
 t_lexer	*lexing(char *str)
 {
 	t_lexer	*lex;
