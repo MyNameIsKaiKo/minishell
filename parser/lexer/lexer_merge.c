@@ -6,20 +6,11 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 19:56:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/24 19:56:30 by jleray           ###   ########.fr       */
+/*   Updated: 2026/02/26 20:34:18 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-t_lexer	*find_by_index(t_lexer *lex, int index)
-{
-	while (lex->next && lex->index != index)
-		lex = lex->next;
-	if (lex)
-		return (lex);
-	return (NULL);
-}
 
 char	*merge_data(t_lexer *start_lex, int diff)
 {

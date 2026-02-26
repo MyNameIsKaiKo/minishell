@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/20 23:49:11 by jleray           ###   ########.fr       */
+/*   Updated: 2026/02/26 20:41:53 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,10 @@ t_lexer					*lexing(char *str);
 // -- lexer_utils Function --
 char					*strcjoin(char *s, char c);
 int						is_complete_w(char *str);
+t_lexer					*find_by_index(t_lexer *lex, int index);
+
+// -- lexer_merge function --
+t_lexer					*lexer_merge(t_lexer *lex, int start, int stop,
+							int type);
 
 #endif
