@@ -28,6 +28,18 @@ typedef enum e_token_type
 	SUBPROCESS
 }						t_token_type;
 
+typedef enum e_quote_states
+{
+	SQUOTE,
+	DQUOTE
+}						t_quote_stats;
+
+typedef struct s_quotedata
+{
+	enum e_quote_states	state;
+	int					lex_index;
+}						t_quotedata;
+
 typedef struct s_lexer
 {
 	char				*data;
