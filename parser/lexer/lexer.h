@@ -52,7 +52,7 @@ int						is_complete_w(char *str);
 t_lexer					*find_by_index(t_lexer *lex, int index);
 
 // -- lexer_merge function --
-t_lexer					*lexer_merge(t_lexer *lex, int start, int stop,
+void					lexer_merge(t_lexer **lex, int start, int stop,
 							int type);
 
 #endif

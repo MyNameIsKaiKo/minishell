@@ -21,26 +21,26 @@
 static int	handle_singletype(char *s)
 {
 	if (ft_strncmp(s, "|", 1) == 0)
-		return (2);
+		return (PIPE);
 	if (ft_strncmp(s, "<", 1) == 0)
-		return (3);
+		return (REDIR_OUT);
 	if (ft_strncmp(s, ">", 1) == 0)
-		return (4);
+		return (REDIR_IN);
 	if (!ft_strncmp(s, "\'", 1) || !ft_strncmp(s, "\"", 1))
-		return (5);
+		return (PONCT);
 	if (!ft_strncmp(s, "(", 1) || !ft_strncmp(s, ")", 1))
-		return (5);
+		return (PONCT);
 	return (0);
 }
 
 static int	handle_dualtype(char *s)
 {
 	if (!ft_strncmp(s, "<<", 2))
-		return (6);
+		return (HEREDOC);
 	if (!ft_strncmp(s, ">>", 2))
-		return (7);
+		return (APPEND);
 	if (!ft_strncmp(s, "&&", 2) || !ft_strncmp(s, "||", 2))
-		return (8);
+		return (OPERATOR);
 	return (0);
 }
 

@@ -48,17 +48,25 @@ int	find_parrc(t_lexer **lex, int parro)
 	return (0);
 }
 
-t_lexer	*combined_parr(t_lexer *lex)
+void	combined_parr(t_lexer **lex)
 {
 	int	is_open;
 	int	is_close;
 
-	indexing_lex(&lex);
-	is_open = find_parro(&lex);
+	indexing_lex(lex);
+	is_open = find_parro(lex);
 	is_close = 0;
 	if (is_open)
-		is_close = find_parrc(&lex, is_open);
+		is_close = find_parrc(lex, is_open);
 	if (is_close != 0 && is_open != 0)
 		lexer_merge(lex, is_open, is_close, SUBPROCESS);
-	return (lex);
+	return ;
+}
+
+void	handle_ponct(t_lexer **lex)
+{
+	t_lexer	*tmp;
+
+	tmp = *lex;
+	return ;
 }

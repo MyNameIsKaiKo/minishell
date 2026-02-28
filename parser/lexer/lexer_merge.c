@@ -32,20 +32,19 @@ char	*merge_data(t_lexer *start_lex, int diff)
 	return (merged);
 }
 
-t_lexer	*lexer_merge(t_lexer *lex, int start, int stop, int type)
+void	lexer_merge(t_lexer **lex, int start, int stop, int type)
 {
 	t_lexer	*start_lex;
 	t_lexer	*new_lex;
 	t_lexer	*tmp;
 	char	*data;
 
-	start_lex = find_by_index(lex, start);
+	start_lex = find_by_index(*lex, start);
 	data = merge_data(start_lex, stop - start);
 	new_lex = lexernew(data, type);
-	tmp = find_by_index(lex, start - 1);
+	tmp = find_by_index(*lex, start - 1);
 	tmp->next = new_lex;
-	tmp = find_by_index(lex, stop + 1);
+	tmp = find_by_index(*lex, stop + 1);
 	new_lex->next = tmp;
 	lexer_free(start_lex);
-	return (lex);
 }
