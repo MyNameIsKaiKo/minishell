@@ -62,11 +62,3 @@ void	combined_parr(t_lexer **lex)
 		lexer_merge(lex, is_open, is_close, SUBPROCESS);
 	return ;
 }
-
-void	handle_ponct(t_lexer **lex)
-{
-	t_lexer	*tmp;
-
-	tmp = *lex;
-	return ;
-}
