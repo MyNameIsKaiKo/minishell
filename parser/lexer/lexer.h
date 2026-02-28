@@ -50,6 +50,8 @@ t_lexer					*lexing(char *str);
 char					*strcjoin(char *s, char c);
 int						is_complete_w(char *str);
 t_lexer					*find_by_index(t_lexer *lex, int index);
+void					combined_parr(t_lexer **lex);
+void					combined_quotes(t_lexer **lex);
 
 // -- lexer_merge function --
 void					lexer_merge(t_lexer **lex, int start, int stop,

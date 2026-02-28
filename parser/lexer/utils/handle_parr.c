@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "../lexer.h"
 
 int	find_parro(t_lexer **lex)
 {
@@ -53,7 +53,6 @@ void	combined_parr(t_lexer **lex)
 	int	is_open;
 	int	is_close;
 
-	indexing_lex(lex);
 	is_open = find_parro(lex);
 	is_close = 0;
 	if (is_open)
