@@ -6,26 +6,76 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/19 13:45:56 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:33:48 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	init_env(t_env *env_var)
+t_env	*env_last(t_env *lst)
 {
-	char	cwd[256];
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
 
-	getcwd(cwd, sizeof(cwd));
-	env_var->pwd = ft_strdup(cwd);
-	if (!getenv("OLDPWD"))
-		env_var->old_pwd = NULL;
-	else
-		env_var->old_pwd = ft_strdup(cwd);
+void	add_env(t_env *env_var, char *name, char *value)
+{
+	t_env	*last;
+
+	last = env_last(env_var);
+	last->next = ft_calloc(1, sizeof(t_env));
+	last->next->name = name;
+	last->next->value = value;
+	last->next->next = NULL;
+}
+
+t_env	*first_env(char *name, char *value)
+{
+	t_env	*env_var;
+
+	env_var = ft_calloc(1, sizeof(t_env));
+	env_var->name = name;
+	env_var->value = value;
+	env_var->next = NULL;
+	return (env_var);
+}
+
+t_env	*init_env(char **envp)
+{
+	t_env	*env_var;
+	int		i;
+	int		j;
+	
+	i = 0;
+	j = 0;
+	env_var = NULL;
+	while (envp[i])
+	{
+		while (envp[i][j] && envp[i][j] != '=')
+			j++;
+		if (!env_var)
+			env_var = first_env(ft_substr(envp[i], 0, j), ft_substr(envp[i], j + 1, ft_strlen(envp[i])));
+		else
+			add_env(env_var, ft_substr(envp[i], 0, j), ft_substr(envp[i], j + 1, ft_strlen(envp[i])));
+		j = 0;
+		i++;
+	}
+	return (env_var);
 }
 
 void	free_env(t_env *env_var)
 {
-	free(env_var->pwd);
-	free(env_var->old_pwd);
+	t_env	*tmp;
+
+	while (env_var)
+	{
+		free(env_var->name);
+		free(env_var->value);
+		tmp = env_var;
+		env_var = env_var->next;
+		free(tmp);
+	}
 }

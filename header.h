@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:55 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/18 13:45:19 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:27:13 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,22 @@
 # include <readline/history.h>
 # include "include/libft/libft.h"
 
-//TODO affiner la env_var
 typedef struct s_env
 {
-	char	*pwd;
-	char	*old_pwd;
-}			t_env;
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
 
-char		*build_prompt(t_env *env_var);
-void		change_prompt(t_env *env_var);
-void		init_env(t_env *env_var);
-void		free_env(t_env *env_var);
-char		*cd(const char *path, t_env *env_var);
+char				*build_prompt(void);
+void				add_env(t_env *env_var, char *name, char *value);
+t_env				*init_env(char **envp);
+void				free_env(t_env *env_var);
+
+char				*cd(const char *path, t_env *env_var);
+char				*path_error(char *path, char *oldpath);
+void				set_pwd(t_env *pwd, t_env *old_pwd);
+void				set_oldpwd(t_env *old_pwd);
+void				change_pwd(t_env *old_pwd, char *newpwd, char *oldpwd);
 
 #endif

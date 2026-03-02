@@ -10,6 +10,7 @@ VPATH		= built-in
 SRCS 		=	main.c \
 				prompt.c \
 				cd.c \
+				cd_utils.c \
 				env_variable.c
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)

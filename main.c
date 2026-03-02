@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/19 13:58:07 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/02/27 19:09:00 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,17 +127,19 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*prompt;
 	char	*tmp;
-	t_env	env_var;
+	t_env	*env_var;
+	t_env	*finder;
 	pid_t	child;
 
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
-	init_env(&env_var);
-	prompt = build_prompt(&env_var);
+	env_var = init_env(envp);
+	prompt = build_prompt();
 	while (1)
 	{
+		finder = env_var;
 		tmp = readline(prompt);
 		add_history(tmp);
 		//fais des trucs
@@ -150,12 +152,16 @@ int	main(int argc, char **argv, char **envp)
 		{
 			free(prompt);
 			if (ft_strlen(tmp) == 2)
-				prompt = cd(NULL, &env_var);
+				prompt = cd(NULL, env_var);
 			else
-				prompt = cd(tmp + 2, &env_var);
+				prompt = cd(tmp + 2, env_var);
 		}
 		else if (!ft_strncmp("pwd", tmp, 3))
-			printf("%s\n", env_var.pwd);
+		{
+			while (ft_strncmp("PWD", finder->name, 3))
+				finder = finder->next;
+			printf("%s\n", finder->value);
+		}
 		else if (!ft_strncmp("clear", tmp, 5))
 		{
 			child = fork();//TODO protect
@@ -164,12 +170,12 @@ int	main(int argc, char **argv, char **envp)
 			waitpid(child, NULL, 0);//TODO protect
 		}
 		else if (!ft_strncmp("echo -n", tmp, 7))
-			ft_putstr_fd(tmp + 4, 1);
+			ft_putstr_fd(tmp + 7, 1);
 		else if (!ft_strncmp("echo", tmp, 4))
 			ft_putendl_fd(tmp + 4, 1);
 		free(tmp);
 	}
 	rl_clear_history();
-	free_env(&env_var);
+	free_env(env_var);
 	free(prompt);
 }

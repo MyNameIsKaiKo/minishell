@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/19 13:36:18 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:32:09 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,37 +63,51 @@ static char	*cd_parser(const char *arg)
 
 static void	cd_home(t_env *env_var)
 {
-	char	*str;
+	t_env	*home;
 	
-	str = getenv("HOME");
-	if (!str)
+	home = env_var;
+	while (home && ft_strncmp("HOME", home->name, 4))
+		home = home->next;
+	if (!home || !home->value)
 	{
 		ft_putendl_fd("cd: HOME not set", 2);
 		return ;
 	}
 	else
-		chdir(str);
-	change_prompt(env_var);
+	{
+		change_pwd(env_var, ft_strdup(home->value), getcwd(NULL, 256));
+		chdir(home->value);
+	}
 }
 
-static void	cd_dash(t_env *env_var)
+static void	cd_dash(t_env *old_pwd, char *oldpath)
 {
-	char *str;
+	t_env	*pwd;
 	
-	if (!env_var->old_pwd)
+	pwd = old_pwd;
+	free(oldpath);
+	while (pwd && ft_strncmp("PWD", pwd->name, 3))
+		pwd = pwd->next;
+	while (old_pwd && ft_strncmp("OLDPWD", old_pwd->name, 6))
+		old_pwd = old_pwd->next;
+	if (!old_pwd || !old_pwd->value)
 	{
 		ft_putendl_fd("cd: OLDPWD not set", 2);
 		return ;
 	}
-	str = env_var->pwd;
-	env_var->pwd = env_var->old_pwd;
-	env_var->old_pwd = str;
-	chdir(env_var->pwd);
+	else
+	{
+		if (pwd)
+			set_pwd(pwd, old_pwd);
+		else
+			set_oldpwd(old_pwd);
+	}
 }
 
 char	*cd(const char *arg, t_env *env_var)
 {
 	char	*path;
+	char	*oldpath;
 
 	path = cd_parser(arg);
 	if (count_words(path) <= 1)
@@ -102,19 +116,17 @@ char	*cd(const char *arg, t_env *env_var)
 			cd_home(env_var);
 		else
 		{
+			oldpath = getcwd(NULL, 256);
 			if (!ft_strncmp(path, "-", 2))
-				cd_dash(env_var);
+				cd_dash(env_var, oldpath);
 			else if (chdir(path) < 0)
-			{
-				ft_putstr_fd("cd: ", 2);
-				perror(path);
-			}
+				return (path_error(path, oldpath));
 			else
-				change_prompt(env_var);
+				change_pwd(env_var, getcwd(NULL, 256), oldpath);
 		}
 	}
 	else
 		ft_putendl_fd("cd: too many arguments", 2);
 	free(path);
-	return (build_prompt(env_var));
+	return (build_prompt());
 }
