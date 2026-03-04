@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/27 19:09:00 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/04 18:23:39 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,7 @@ int	main(int argc, char **argv, char **envp)
 				prompt = cd(tmp + 2, env_var);
 		}
 		else if (!ft_strncmp("pwd", tmp, 3))
-		{
-			while (ft_strncmp("PWD", finder->name, 3))
-				finder = finder->next;
-			printf("%s\n", finder->value);
-		}
+			pwd();
 		else if (!ft_strncmp("clear", tmp, 5))
 		{
 			child = fork();//TODO protect
@@ -173,6 +169,8 @@ int	main(int argc, char **argv, char **envp)
 			ft_putstr_fd(tmp + 7, 1);
 		else if (!ft_strncmp("echo", tmp, 4))
 			ft_putendl_fd(tmp + 4, 1);
+		else if (!ft_strncmp("unset", tmp, 5))
+			env_var = unset(tmp + 6, env_var);
 		free(tmp);
 	}
 	rl_clear_history();

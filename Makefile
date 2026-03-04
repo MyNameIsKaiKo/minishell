@@ -11,6 +11,8 @@ SRCS 		=	main.c \
 				prompt.c \
 				cd.c \
 				cd_utils.c \
+				pwd.c \
+				unset.c \
 				env_variable.c
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)

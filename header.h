@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:55 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/02 17:27:13 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/04 17:24:46 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_env
 	char			*name;
 	char			*value;
 	struct s_env	*next;
+	struct s_env	*prev;
 }					t_env;
 
 char				*build_prompt(void);
@@ -39,5 +40,9 @@ char				*path_error(char *path, char *oldpath);
 void				set_pwd(t_env *pwd, t_env *old_pwd);
 void				set_oldpwd(t_env *old_pwd);
 void				change_pwd(t_env *old_pwd, char *newpwd, char *oldpwd);
+
+void				pwd(void);
+
+t_env				*unset(const char *arg, t_env *env_var);
 
 #endif

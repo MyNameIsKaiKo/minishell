@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/02 17:33:48 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/04 15:45:32 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	add_env(t_env *env_var, char *name, char *value)
 	last->next = ft_calloc(1, sizeof(t_env));
 	last->next->name = name;
 	last->next->value = value;
+	last->next->prev = last;
 	last->next->next = NULL;
 }
 
@@ -39,6 +40,7 @@ t_env	*first_env(char *name, char *value)
 	env_var = ft_calloc(1, sizeof(t_env));
 	env_var->name = name;
 	env_var->value = value;
+	env_var->prev = NULL;
 	env_var->next = NULL;
 	return (env_var);
 }
@@ -57,9 +59,11 @@ t_env	*init_env(char **envp)
 		while (envp[i][j] && envp[i][j] != '=')
 			j++;
 		if (!env_var)
-			env_var = first_env(ft_substr(envp[i], 0, j), ft_substr(envp[i], j + 1, ft_strlen(envp[i])));
+			env_var = first_env(ft_substr(envp[i], 0, j),
+				ft_substr(envp[i], j + 1, ft_strlen(envp[i])));
 		else
-			add_env(env_var, ft_substr(envp[i], 0, j), ft_substr(envp[i], j + 1, ft_strlen(envp[i])));
+			add_env(env_var, ft_substr(envp[i], 0, j),
+				ft_substr(envp[i], j + 1, ft_strlen(envp[i])));
 		j = 0;
 		i++;
 	}
