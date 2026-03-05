@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lexer.h"
-
+#include <stdio.h>
 // Aim -> create t_lexer with everything with a token
 // token list :
 // - word -> file and cmd ?
@@ -59,7 +59,7 @@ static int	is_type(char *s, char *og)
 		status = handle_dualtype(s);
 		return (status);
 	}
-	else if (is_complete_w(og))
+	else if (is_complete_w(s, og))
 		return (1);
 	return (0);
 }
@@ -76,17 +76,17 @@ void	lexing(t_lexer **lex, char *str)
 	while (*str)
 	{
 		tmp = strcjoin(tmp, *str);
+		str++;
 		type = is_type(tmp, str);
 		if (type)
 		{
 			if (!(*lex))
-				(*lex) = lexernew(tmp, type);
+				(*lex) = lexernew(ft_strdup(tmp), type);
 			else
-				lexer_add(lex, lexernew(tmp, type));
+				lexer_add(lex, lexernew(ft_strdup(tmp), type));
 			free(tmp);
 			tmp = ft_strdup("");
 		}
-		str++;
 	}
 	return ;
 }
@@ -97,9 +97,16 @@ t_lexer	*lexer(char	*str)
 
 	lex = NULL;
 	lexing(&lex, str);
-	if (lex)
-		handle_ponct(&lex);
-	else
-		return (NULL);
+	t_lexer *tmpl = lex;
+	while ((tmpl))
+	{
+		printf("%s\n", tmpl->data);
+		tmpl = tmpl->next;
+	}
+	indexing_lex(&lex);
+	// if (lex)
+		// handle_ponct(&lex);
+	// else
+		// return (NULL);
 	return (lex);
 }

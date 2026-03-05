@@ -17,7 +17,7 @@ char	*strcjoin(char *s, char c)
 	int		i;
 	char	*output;
 
-	output = malloc(sizeof(char *) * (ft_strlen(s) + 2));
+	output = malloc(sizeof(char) * (ft_strlen(s) + 2));
 	if (!output)
 		return (NULL);
 	i = 0;
@@ -32,15 +32,12 @@ char	*strcjoin(char *s, char c)
 	return (output);
 }
 
-int	is_complete_w(char *str)
+int	is_complete_w(char *str, char *og)
 {
 	int	i;
 
-	i = 1;
-	if (!str)
-		return (1);
-	if (str[i - 1] && (!str[i] || ((str[i] == ' ') || (str[i] > 11
-					&& str[i] < 13))))
+	i = ft_strlen(str) - 1;
+	if (str[i] == ' ' || *og == '(' || *og == ')')
 		return (1);
 	return (0);
 }

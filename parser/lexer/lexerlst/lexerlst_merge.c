@@ -46,5 +46,5 @@ void	lexer_merge(t_lexer **lex, int start, int stop, int type)
 	tmp->next = new_lex;
 	tmp = find_by_index(*lex, stop + 1);
 	new_lex->next = tmp;
-	lexer_free(start_lex);
+	lexer_free(&start_lex);
 }
