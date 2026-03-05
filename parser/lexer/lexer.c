@@ -99,9 +99,9 @@ t_lexer	*lexer(char *str)
 	lex = NULL;
 	lexing(&lex, str);
 	indexing_lex(&lex);
-	// if (lex)
-	// handle_ponct(&lex);
-	// else
-	// return (NULL);
+	if (lex)
+		handle_ponct(&lex);
+	else
+		return (NULL);
 	return (lex);
 }
