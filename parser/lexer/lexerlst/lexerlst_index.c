@@ -19,7 +19,7 @@ void	indexing_lex(t_lexer **lex)
 
 	tmp = *lex;
 	i = 1;
-	while (tmp->next)
+	while (tmp)
 	{
 		tmp->index = i;
 		i++;

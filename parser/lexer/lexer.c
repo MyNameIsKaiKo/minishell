@@ -12,6 +12,7 @@
 
 #include "lexer.h"
 #include <stdio.h>
+
 // Aim -> create t_lexer with everything with a token
 // token list :
 // - word -> file and cmd ?
@@ -20,11 +21,11 @@
 
 static int	handle_singletype(char *s)
 {
-	if (ft_strncmp(s, "|", 1) == 0)
+	if (ft_strncmp(s, "|", 1) == 0 && ft_strncmp(s, "||", 2))
 		return (PIPE);
-	if (ft_strncmp(s, "<", 1) == 0)
+	if (ft_strncmp(s, "<", 1) == 0 && ft_strncmp(s, "<<", 2))
 		return (REDIR_OUT);
-	if (ft_strncmp(s, ">", 1) == 0)
+	if (ft_strncmp(s, ">", 1) == 0 && ft_strncmp(s, ">>", 2))
 		return (REDIR_IN);
 	if (!ft_strncmp(s, "\'", 1) || !ft_strncmp(s, "\"", 1))
 		return (PONCT);
@@ -91,22 +92,16 @@ void	lexing(t_lexer **lex, char *str)
 	return ;
 }
 
-t_lexer	*lexer(char	*str)
+t_lexer	*lexer(char *str)
 {
 	t_lexer	*lex;
 
 	lex = NULL;
 	lexing(&lex, str);
-	t_lexer *tmpl = lex;
-	while ((tmpl))
-	{
-		printf("%s\n", tmpl->data);
-		tmpl = tmpl->next;
-	}
 	indexing_lex(&lex);
 	// if (lex)
-		// handle_ponct(&lex);
+	// handle_ponct(&lex);
 	// else
-		// return (NULL);
+	// return (NULL);
 	return (lex);
 }

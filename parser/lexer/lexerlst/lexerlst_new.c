@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../lexer.h"
+#include <stdio.h>
 
 t_lexer	*lexernew(char *data, int type)
 {
@@ -22,5 +23,6 @@ t_lexer	*lexernew(char *data, int type)
 	lexernew->data = data;
 	lexernew->type = type;
 	lexernew->next = NULL;
+	printf("\n New node with : \n - data : %s \n - type : %d", lexernew->data, lexernew->type);
 	return (lexernew);
 }

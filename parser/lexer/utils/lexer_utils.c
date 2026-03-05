@@ -37,7 +37,7 @@ int	is_complete_w(char *str, char *og)
 	int	i;
 
 	i = ft_strlen(str) - 1;
-	if (str[i] == ' ' || *og == '(' || *og == ')')
+	if (str[i] == ' ' || *og == '(' || *og == ')' || *og == '\'' || *og == '\"')
 		return (1);
 	return (0);
 }

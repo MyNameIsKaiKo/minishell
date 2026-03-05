@@ -21,10 +21,13 @@ int	main(void)
 	t_lexer	*lex;
 	char	*str;
 
-		str = "Je suis une phrase (simple) \"et j'aime bien la simplicite\"";
+	str = "Je suis une phrase (simple) \"et j'aime bien la simplicite\"";
 	lex = lexer(str);
 	if (!lex)
 		return (0);
+	printf("\n");
+	printf("--------------------");
+	printf("\n");
 	while (lex)
 	{
 		printf("Node : %d\n", lex->index);

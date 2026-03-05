@@ -14,19 +14,14 @@
 
 void	lexer_add(t_lexer **head, t_lexer *to_add)
 {
-	if (!head)
+	t_lexer	*tmp;
+
+	if (!head || !to_add)
 		return ;
-	if (!(*head))
-	{
+	tmp = lexer_last(*head);
+	if (!tmp)
 		(*head) = to_add;
-		return ;
-	}
-	if (!(*head)->next)
-	{
-		(*head)->next = to_add;
-		return ;
-	}
-	(*head) = lexer_last(*head);
-	(*head)->next = to_add;
+	else
+		tmp->next = to_add;
 	return ;
 }
