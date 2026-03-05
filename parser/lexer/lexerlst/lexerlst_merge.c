@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "../lexer.h"
 
 char	*merge_data(t_lexer *start_lex, int diff)
 {

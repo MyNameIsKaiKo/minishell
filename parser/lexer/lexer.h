@@ -51,12 +51,15 @@ typedef struct s_lexer
 // -- struct Function --
 t_lexer					*lexer_last(t_lexer *lex);
 t_lexer					*lexernew(char *data, int type);
-void					lexer_add(t_lexer *head, t_lexer *to_add);
-void					lexer_free(t_lexer *lex);
+void					lexer_add(t_lexer **head, t_lexer *to_add);
+void					lexer_free(t_lexer **lex);
 void					indexing_lex(t_lexer **lex);
 
 // -- lexer --
-t_lexer					*lexing(char *str);
+t_lexer					*lexer(char *str);
+
+// -- handle_ponct Function --
+void					handle_ponct(t_lexer **lex);
 
 // -- lexer_utils Function --
 char					*strcjoin(char *s, char c);

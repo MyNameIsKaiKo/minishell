@@ -65,24 +65,22 @@ static int	is_type(char *s, char *og)
 }
 
 // Maybe need to do a scd lexing part where we assamble thing from lexing
-t_lexer	*lexing(char *str)
+void	lexing(t_lexer **lex, char *str)
 {
-	t_lexer	*lex;
 	char	*tmp;
 	int		type;
 
-	lex = NULL;
 	tmp = ft_strdup("");
 	if (!tmp)
-		return (NULL);
+		return ;
 	while (*str)
 	{
 		tmp = strcjoin(tmp, *str);
 		type = is_type(tmp, str);
 		if (type)
 		{
-			if (!lex)
-				lex = lexernew(tmp, type);
+			if (!(*lex))
+				(*lex) = lexernew(tmp, type);
 			else
 				lexer_add(lex, lexernew(tmp, type));
 			free(tmp);
@@ -90,5 +88,18 @@ t_lexer	*lexing(char *str)
 		}
 		str++;
 	}
+	return ;
+}
+
+t_lexer	*lexer(char	*str)
+{
+	t_lexer	*lex;
+
+	lex = NULL;
+	lexing(&lex, str);
+	if (lex)
+		handle_ponct(&lex);
+	else
+		return (NULL);
 	return (lex);
 }

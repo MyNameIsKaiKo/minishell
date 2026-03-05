@@ -10,13 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "../lexer.h"
 
 t_lexer	*lexernew(char *data, int type)
 {
 	t_lexer	*lexernew;
 
 	lexernew = malloc(sizeof(t_lexer));
+	if (!lexernew)
+		return (NULL);
 	lexernew->data = data;
 	lexernew->type = type;
 	lexernew->next = NULL;

@@ -48,10 +48,13 @@ int	find_parrc(t_lexer **lex, int parro)
 	return (0);
 }
 
+// don't know what to set or the single ( need to test with the real shell;
+
 void	combined_parr(t_lexer **lex)
 {
-	int	is_open;
-	int	is_close;
+	t_lexer	*tmp;
+	int		is_open;
+	int		is_close;
 
 	is_open = find_parro(lex);
 	is_close = 0;
@@ -59,5 +62,10 @@ void	combined_parr(t_lexer **lex)
 		is_close = find_parrc(lex, is_open);
 	if (is_close != 0 && is_open != 0)
 		lexer_merge(lex, is_open, is_close, SUBPROCESS);
+	if (is_close == 0 && is_open == 1)
+	{
+		tmp = find_by_index((*lex), is_open);
+		tmp->type = WORD;
+	}
 	return ;
 }

@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "../lexer.h"
 
-void	lexer_free(t_lexer *lex)
+void	lexer_free(t_lexer **lex)
 {
 	t_lexer	*tmp;
 
-	while (lex)
+	while (*lex)
 	{
-		tmp = lexer_last(lex);
+		tmp = *lex;
 		if (tmp->data)
 			free(tmp->data);
 		free(tmp);

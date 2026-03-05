@@ -10,21 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "../lexer.h"
 
-void	lexer_add(t_lexer *head, t_lexer *to_add)
+void	lexer_add(t_lexer **head, t_lexer *to_add)
 {
 	if (!head)
+		return ;
+	if (!(*head))
 	{
-		head = to_add;
+		(*head) = to_add;
 		return ;
 	}
-	if (!head->next)
+	if (!(*head)->next)
 	{
-		head->next = to_add;
+		(*head)->next = to_add;
 		return ;
 	}
-	head = lexer_last(head);
-	head->next = to_add;
+	(*head) = lexer_last(*head);
+	(*head)->next = to_add;
 	return ;
 }
