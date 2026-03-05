@@ -12,7 +12,7 @@
 
 #include "../lexer.h"
 
-void	find_firstq(t_lexer **lex, t_quotedata **data)
+static void	find_firstq(t_lexer **lex, t_quotedata **data)
 {
 	t_lexer	*tmp;
 
@@ -32,14 +32,39 @@ void	find_firstq(t_lexer **lex, t_quotedata **data)
 	}
 }
 
+static void	get_scdq(t_lexer *lex, t_quotedata **cdata, char *s)
+{
+	while (lex->next)
+	{
+		if (lex->type == PONCT && !ft_strncmp(lex->data, s, 1))
+		{
+			(*cdata)->lex_index = lex->index;
+			return ;
+		}
+	}
+	(*cdata)->lex_index = 0;
+}
+
+static void	find_scdq(t_lexer **lex, t_quotedata **data)
+{
+	t_lexer		*tmp;
+	t_quotedata	*cdata;
+
+	tmp = find_by_index(*lex, (*data)->lex_index);
+	if ((*data)->state == SQUOTE)
+		get_scdq(tmp, &cdata, "\'");
+	else
+		get_scdq(tmp, &cdata, "\"");
+	if (cdata->lex_index != 0 && (*data)->lex_index != 0)
+		lexer_merge(lex, (*data)->lex_index, cdata->lex_index, WORD);
+}
+
 void	combined_quotes(t_lexer **lex)
 {
 	t_quotedata	*data;
 
 	find_firstq(lex, &data);
-	if (data->state == SQUOTE)
-		// TODO
-	else if (data->state == DQUOTE)
-		// TODO
+	if (data->state == SQUOTE || data->state == DQUOTE)
+		find_scdq(lex, &data);
 	return ;
 }

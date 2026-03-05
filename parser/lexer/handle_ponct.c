@@ -12,40 +12,49 @@
 
 #include "lexer.h"
 
-int	is_ponct(char *str)
+int	is_ponct(t_lexer *lex)
 {
-	if (!ft_strncmp(str, "\'", 1) || !ft_strncmp(str, "\"", 1))
+	char	*str;
+
+	str = lex->data;
+	if (lex->type == PONCT
+		&& (!ft_strncmp(str, "\'", 1) || !ft_strncmp(str, "\"", 1)))
 		return (1);
-	if (!ft_strncmp(str, "(", 1) || !ft_strncmp(str, ")", 1))
+	if (lex->type == PONCT
+		&& (!ft_strncmp(str, "(", 1) || !ft_strncmp(str, ")", 1)))
 		return (2);
 	return (0);
 }
 
 int	find_first_ponct(t_lexer *lex)
 {
-	int	status;
+	int		status;
+	t_lexer	*tmp;
 
 	status = 0;
-	while (lex->next)
+	tmp = lex;
+	while (tmp->next)
 	{
-		status = is_ponct(lex->data);
+		status = is_ponct(tmp);
 		if (status != 0)
 			return (status);
-		lex = lex->next;
+		tmp = tmp->next;
 	}
 	return (status);
 }
 
 void	handle_ponct(t_lexer **lex)
 {
-	int		ponct_id;
+	int	ponct_id;
 
 	indexing_lex(lex);
 	ponct_id = find_first_ponct(*lex);
-	if (ponct_id == 1)
-		combined_quotes(lex);
-	else if (ponct_id == 2)
-		combined_parr(lex);
-	else
-		return ;
+	while (ponct_id != 0)
+	{
+		if (ponct_id == 1)
+			combined_quotes(lex);
+		else if (ponct_id == 2)
+			combined_parr(lex);
+		ponct_id = find_first_ponct(*lex);
+	}
 }
