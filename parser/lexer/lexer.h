@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/26 20:41:53 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/06 15:41:19 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@
 
 typedef enum e_token_type
 {
-	WORD,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	PONCT,
-	HEREDOC,
-	APPEND,
-	OPERATOR,
-	SUBPROCESS
+	WORD = 1,
+	PIPE = 2,
+	REDIR_IN = 3,
+	REDIR_OUT = 4,
+	PONCT = 5,
+	HEREDOC = 6,
+	APPEND = 7,
+	OPERATOR = 8,
+	SUBPROCESS = 9
 }						t_token_type;
 
 typedef enum e_quote_states
 {
-	SQUOTE,
-	DQUOTE
+	SQUOTE = 1,
+	DQUOTE = 2
 }						t_quote_stats;
 
 typedef struct s_quotedata

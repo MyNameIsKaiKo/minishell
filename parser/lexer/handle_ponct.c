@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 09:14:54 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/28 11:17:13 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/06 19:34:51 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_ponct(t_lexer *lex)
 		&& (!ft_strncmp(str, "\'", 1) || !ft_strncmp(str, "\"", 1)))
 		return (1);
 	if (lex->type == PONCT
-		&& (!ft_strncmp(str, "(", 1) || !ft_strncmp(str, ")", 1)))
+		&& (!ft_strncmp(str, "(", 1)))
 		return (2);
 	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   combine_lexer.c                                    :+:      :+:    :+:   */
+/*   handle_parr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 19:45:23 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/26 20:44:24 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/06 19:34:08 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	find_parro(t_lexer **lex)
 	t_lexer	*tmp;
 
 	tmp = *lex;
-	while (tmp->next)
+	while (tmp)
 	{
 		if (tmp->type == PONCT && !ft_strncmp(tmp->data, "(", 1))
 			return (tmp->index);
@@ -33,17 +33,18 @@ int	find_parrc(t_lexer **lex, int parro)
 	int		is_another_open;
 
 	tmp = find_by_index(*lex, parro);
-	is_parro = tmp;
-	while (tmp->next)
+	is_parro = tmp->next;
+	while (tmp)
 	{
 		if (tmp->type == PONCT && !ft_strncmp(tmp->data, ")", 1))
 		{
 			is_another_open = find_parro(&is_parro);
-			if ((is_another_open != 0) && (tmp->index < is_another_open))
+			if ((is_another_open == 0) || (tmp->index < is_another_open))
 				return (tmp->index);
 			else
 				return (0);
 		}
+		tmp = tmp->next;
 	}
 	return (0);
 }
@@ -62,7 +63,7 @@ void	combined_parr(t_lexer **lex)
 		is_close = find_parrc(lex, is_open);
 	if (is_close != 0 && is_open != 0)
 		lexer_merge(lex, is_open, is_close, SUBPROCESS);
-	if (is_close == 0 && is_open == 1)
+	if (is_close == 0 && is_open)
 	{
 		tmp = find_by_index((*lex), is_open);
 		tmp->type = WORD;

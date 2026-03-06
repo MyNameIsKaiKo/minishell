@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 01:25:09 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/26 20:34:33 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/06 16:16:20 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,9 @@ char	*strcjoin(char *s, char c)
 
 int	is_complete_w(char *str, char *og)
 {
-	int	i;
-
-	i = ft_strlen(str) - 1;
-	if (str[i] == ' ' || *og == '(' || *og == ')' || *og == '\'' || *og == '\"')
+	if (*str && *og == ' ')
+		return (1);
+	if (*og == '(' || *og == ')' || *og == '\'' || *og == '\"' || *og == '\0')
 		return (1);
 	return (0);
 }

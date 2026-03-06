@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/20 20:16:19 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/06 18:52:35 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,19 @@
 // - operator -> logic or pipe
 // - direction
 
-static int	handle_singletype(char *s)
+static int	handle_singletype(char *s, char *og)
 {
-	if (ft_strncmp(s, "|", 1) == 0 && ft_strncmp(s, "||", 2))
+	if (ft_strncmp(s, "|", 1) == 0 && *og == ' ')
 		return (PIPE);
-	if (ft_strncmp(s, "<", 1) == 0 && ft_strncmp(s, "<<", 2))
+	if (ft_strncmp(s, "<", 1) == 0 && *og == ' ')
 		return (REDIR_OUT);
-	if (ft_strncmp(s, ">", 1) == 0 && ft_strncmp(s, ">>", 2))
+	if (ft_strncmp(s, ">", 1) == 0 && *og == ' ')
 		return (REDIR_IN);
 	if (!ft_strncmp(s, "\'", 1) || !ft_strncmp(s, "\"", 1))
 		return (PONCT);
 	if (!ft_strncmp(s, "(", 1) || !ft_strncmp(s, ")", 1))
+		return (PONCT);
+	if (!ft_strncmp(s, " ", 1))
 		return (PONCT);
 	return (0);
 }
@@ -52,16 +54,18 @@ static int	is_type(char *s, char *og)
 
 	if (size == 1)
 	{
-		status = handle_singletype(s);
-		return (status);
+		status = handle_singletype(s, og);
+		if (status)
+			return (status);
 	}
-	else if (size == 2)
+	if (size == 2)
 	{
 		status = handle_dualtype(s);
-		return (status);
+		if (status)
+			return (status);
 	}
-	else if (is_complete_w(s, og))
-		return (1);
+	if (is_complete_w(s, og))
+		return (WORD);
 	return (0);
 }
 
@@ -89,6 +93,7 @@ void	lexing(t_lexer **lex, char *str)
 			tmp = ft_strdup("");
 		}
 	}
+	free(tmp);
 	return ;
 }
 
@@ -98,7 +103,6 @@ t_lexer	*lexer(char *str)
 
 	lex = NULL;
 	lexing(&lex, str);
-	indexing_lex(&lex);
 	if (lex)
 		handle_ponct(&lex);
 	else
