@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/03 13:37:33 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/03 13:51:23 by nredouan         ###   ########.fr       */
+/*   Created: 2026/03/10 14:29:24 by nredouan          #+#    #+#             */
+/*   Updated: 2026/03/10 17:39:53 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
-
-void	pwd(void)
+int	ft_strcmp(char *s1, char *s2)
 {
-	char	pwd[256];
+	int	i;
 
-	getcwd(pwd, 256);
-	printf("%s\n", pwd);
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+	{
+		if (!s1[i] || !s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (s1[i] - s2[i]);
 }

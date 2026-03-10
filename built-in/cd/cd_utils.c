@@ -6,17 +6,16 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 17:16:31 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/02 17:27:05 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/10 17:43:33 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
 char	*path_error(char *path, char *oldpath)
 {
 	ft_putstr_fd("cd: ", 2);
 	perror(path);
-	free(path);
 	free(oldpath);
 	return (build_prompt());
 }
@@ -24,16 +23,17 @@ char	*path_error(char *path, char *oldpath)
 void	set_pwd(t_env *pwd, t_env *old_pwd)
 {
 	char	*tmp;
-	
+
 	tmp = pwd->value;
 	pwd->value = old_pwd->value;
 	old_pwd->value = tmp;
 	chdir(pwd->value);
 }
+
 void	set_oldpwd(t_env *old_pwd)
 {
 	char	*tmp;
-	
+
 	tmp = old_pwd->value;
 	old_pwd->value = getcwd(NULL, 256);
 	chdir(tmp);
@@ -43,7 +43,7 @@ void	set_oldpwd(t_env *old_pwd)
 void	change_pwd(t_env *old_pwd, char *newpwd, char *oldpwd)
 {
 	t_env	*pwd;
-	
+
 	pwd = old_pwd;
 	while (pwd && ft_strncmp("PWD", pwd->name, 3))
 		pwd = pwd->next;
@@ -57,6 +57,6 @@ void	change_pwd(t_env *old_pwd, char *newpwd, char *oldpwd)
 	if (old_pwd)
 	{
 		free(old_pwd->value);
-		old_pwd->value = oldpwd;			
-	}			
+		old_pwd->value = oldpwd;
+	}
 }

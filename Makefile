@@ -5,7 +5,7 @@ RM			= rm -f
 
 OBJ_DIR		= obj
 
-VPATH		= built-in
+VPATH		= built-in/cd:built-in/unset:built-in/pwd:built-in/export
 
 SRCS 		=	main.c \
 				prompt.c \
@@ -13,6 +13,10 @@ SRCS 		=	main.c \
 				cd_utils.c \
 				pwd.c \
 				unset.c \
+				export.c \
+				print_export.c \
+				export_utils.c \
+				quick_string_sort.c \
 				env_variable.c
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)

@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/04 18:23:39 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/06 18:04:34 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,24 @@ void	clear(char **envp)
 	//TODO contruire le path pour clear
 }
 
+void	free_str(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*prompt;
 	char	*tmp;
+	char	**tmp2;
 	t_env	*env_var;
 	t_env	*finder;
 	pid_t	child;
@@ -143,35 +157,32 @@ int	main(int argc, char **argv, char **envp)
 		tmp = readline(prompt);
 		add_history(tmp);
 		//fais des trucs
-		if (tmp == NULL || !ft_strncmp("exit", tmp, 4))
+		tmp2 = ft_split(tmp, ' ');
+		free(tmp);
+		if (tmp2 == NULL || !ft_strncmp("exit", tmp2[0], 4))
 		{
-			free(tmp);
+			free_str(tmp2);
 			break ;
 		}
-		if (!ft_strncmp("cd", tmp, 2))
+		if (!ft_strncmp("cd", tmp2[0], 2))
 		{
 			free(prompt);
-			if (ft_strlen(tmp) == 2)
-				prompt = cd(NULL, env_var);
-			else
-				prompt = cd(tmp + 2, env_var);
+			prompt = cd(&tmp2[1], env_var);
 		}
-		else if (!ft_strncmp("pwd", tmp, 3))
+		else if (!ft_strncmp("pwd", tmp2[0], 3))
 			pwd();
-		else if (!ft_strncmp("clear", tmp, 5))
+		else if (!ft_strncmp("clear", tmp2[0], 5))
 		{
 			child = fork();//TODO protect
 			if (child == 0)
 				clear(envp);
 			waitpid(child, NULL, 0);//TODO protect
 		}
-		else if (!ft_strncmp("echo -n", tmp, 7))
-			ft_putstr_fd(tmp + 7, 1);
-		else if (!ft_strncmp("echo", tmp, 4))
-			ft_putendl_fd(tmp + 4, 1);
-		else if (!ft_strncmp("unset", tmp, 5))
-			env_var = unset(tmp + 6, env_var);
-		free(tmp);
+		else if (!ft_strncmp("unset", tmp2[0], 5))
+			env_var = unset(&tmp2[1], env_var);
+		else if (!ft_strncmp("export", tmp2[0], 6))
+			export(&tmp2[1], env_var);
+		free_str(tmp2);
 	}
 	rl_clear_history();
 	free_env(env_var);
