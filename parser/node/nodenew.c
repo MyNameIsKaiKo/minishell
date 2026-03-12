@@ -6,24 +6,23 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 16:00:23 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/13 16:00:23 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/12 15:01:11 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser.h"
+#include "../ast.h"
 
-// data will always be a malloc so in node free, need to free data !
-t_node	*nodenew(char *data, char *type, t_node *head)
+t_ast	*nodenew(char *data, int type, t_ast **head)
 {
-	t_node	*node;
+	t_ast	*node;
 
-	node = malloc(sizeof(t_node));
+	node = malloc(sizeof(t_ast));
 	if (!head)
-		head = node;
+		*head = node;
 	node->data = data;
 	node->right = NULL;
 	node->left = NULL;
-	node->head = head;
+	node->head = (*head);
 	node->type = type;
 	return (node);
 }

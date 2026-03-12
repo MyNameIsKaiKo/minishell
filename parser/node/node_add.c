@@ -6,19 +6,19 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 16:05:32 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/13 16:08:45 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/12 14:48:03 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser.h"
+#include "../ast.h"
 
-void	node_add(t_node **node, t_node *new_node, char *side)
+void	node_add(t_ast **node, t_ast *new_node, t_side side)
 {
 	if (!node || !new_node)
 		return ;
-	if (ft_strncmp(side, "left", 4) == 0)
+	if (side == LEFT)
 		(*node)->left = new_node;
-	if (ft_strncmp(side, "right", 5) == 0)
+	if (side == RIGHT)
 		(*node)->right = new_node;
 	return ;
 }

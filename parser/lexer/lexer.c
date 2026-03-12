@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/06 18:52:35 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/12 17:36:32 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static int	is_type(char *s, char *og)
 	return (0);
 }
 
-// Maybe need to do a scd lexing part where we assamble thing from lexing
 void	lexing(t_lexer **lex, char *str)
 {
 	char	*tmp;

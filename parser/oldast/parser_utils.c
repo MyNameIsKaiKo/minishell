@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 06:38:16 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/19 20:09:57 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/12 17:09:10 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,3 @@ t_node	*create_treenodes(char *str, char *is_op, t_node **head)
 	node_add(&node, make_tree(right, head), "RIGHT");
 	return (node);
 }
-
-

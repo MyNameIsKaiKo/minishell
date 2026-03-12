@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node_free.c                                        :+:      :+:    :+:   */
+/*   ast_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 17:35:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/13 17:35:19 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/12 13:57:47 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parser.h"
+#include "../ast.h"
 
-void	node_free(t_node *node)
+void	ast_free(t_ast **ast)
 {
+	t_ast	*node;
+
+	if (!ast)
+		return ;
+	node = *ast;
 	if (!node)
 		return ;
-	node_free(node->left);
-	node_free(node->right);
+	ast_free(&node->left);
+	ast_free(&node->right);
 	if (node->data)
 		free(node->data);
 	free(node);
