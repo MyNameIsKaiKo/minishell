@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:55 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/10 17:38:20 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:45:48 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,9 @@ typedef struct s_env
 
 char				*build_prompt(void);
 
-/*Add a new node in the linked list env_var.
-WARNING : name and value must be allocated.*/
 void				add_env(t_env *env_var, char *name, char *value);
-
-//Initializing the entire linked list env_var.
 t_env				*init_env(char **envp);
-
-//Free the entire linked list env_var.
+t_env				*first_env(char *name, char *value);
 void				free_env(t_env *env_var);
 
 char				*cd(char **args, t_env *env_var);
@@ -53,13 +48,20 @@ void				pwd(void);
 
 t_env				*unset(char **args, t_env *env_var);
 
-void				export(char **args, t_env *env_var);
+void				env(char **arg, t_env *env_var);
+
+t_env				*export(char **args, t_env *env_var);
 void				print_export(t_env *env_var);
 void				print_export_error(char *arg);
 bool				check_export_args(char **args);
 bool				env_search(char *name, t_env *env_var);
 char				*set_name(char *arg, int i);
 char				*set_value(char *arg, int i);
+void				change_value(t_env *env_var, char *name, char *value);
+void				add_value(t_env *env_var, char *name, char *value);
+void				chose_value(t_env *env, char *name, char *value, char c);
 void				quick_sort(char **name_copy, int start, int end);
+
+void				echo(char **args, t_env *env_var);
 
 #endif

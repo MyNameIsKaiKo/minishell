@@ -6,13 +6,29 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/10 17:39:15 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:40:35 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-//Get the last node of the linked list env_var.
+/*Free every node of the the linked list.*/
+void	free_env(t_env *env_var)
+{
+	t_env	*tmp;
+
+	while (env_var)
+	{
+		free(env_var->name);
+		if (env_var->value)
+			free(env_var->value);
+		tmp = env_var;
+		env_var = env_var->next;
+		free(tmp);
+	}
+}
+
+/*Get the last node of the linked list env_var.*/
 static t_env	*env_last(t_env *lst)
 {
 	if (!lst)
@@ -22,8 +38,9 @@ static t_env	*env_last(t_env *lst)
 	return (lst);
 }
 
-//Create the first node of the linked list env_var.
-static t_env	*first_env(char *name, char *value)
+/*Create the first node of the linked list env_var.
+"name" and "value" need to be allocated.*/
+t_env	*first_env(char *name, char *value)
 {
 	t_env	*env_var;
 
@@ -35,6 +52,8 @@ static t_env	*first_env(char *name, char *value)
 	return (env_var);
 }
 
+/*Create and add a node in the linked list.
+"name" and "value" need to be allocated.*/
 void	add_env(t_env *env_var, char *name, char *value)
 {
 	t_env	*last;
@@ -47,6 +66,8 @@ void	add_env(t_env *env_var, char *name, char *value)
 	last->next->next = NULL;
 }
 
+/*Initialize the linked list env_var. We will use this list
+in every built-in of our Minishell program.*/
 t_env	*init_env(char **envp)
 {
 	t_env	*env_var;
@@ -70,19 +91,4 @@ t_env	*init_env(char **envp)
 		i++;
 	}
 	return (env_var);
-}
-
-void	free_env(t_env *env_var)
-{
-	t_env	*tmp;
-
-	while (env_var)
-	{
-		free(env_var->name);
-		if (env_var->value)
-			free(env_var->value);
-		tmp = env_var;
-		env_var = env_var->next;
-		free(tmp);
-	}
 }

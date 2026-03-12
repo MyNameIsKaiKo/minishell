@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/06 18:04:34 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/12 17:01:11 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ int	main(int argc, char **argv, char **envp)
 	char	*tmp;
 	char	**tmp2;
 	t_env	*env_var;
-	t_env	*finder;
 	pid_t	child;
 
 	(void)argc;
@@ -153,35 +152,38 @@ int	main(int argc, char **argv, char **envp)
 	prompt = build_prompt();
 	while (1)
 	{
-		finder = env_var;
 		tmp = readline(prompt);
 		add_history(tmp);
 		//fais des trucs
 		tmp2 = ft_split(tmp, ' ');
 		free(tmp);
-		if (tmp2 == NULL || !ft_strncmp("exit", tmp2[0], 4))
+		if (tmp2 == NULL || !ft_strcmp("exit", tmp2[0]))
 		{
 			free_str(tmp2);
 			break ;
 		}
-		if (!ft_strncmp("cd", tmp2[0], 2))
+		if (!ft_strcmp("cd", tmp2[0]))
 		{
 			free(prompt);
 			prompt = cd(&tmp2[1], env_var);
 		}
-		else if (!ft_strncmp("pwd", tmp2[0], 3))
+		else if (!ft_strcmp("pwd", tmp2[0]))
 			pwd();
-		else if (!ft_strncmp("clear", tmp2[0], 5))
+		else if (!ft_strcmp("clear", tmp2[0]))
 		{
 			child = fork();//TODO protect
 			if (child == 0)
 				clear(envp);
 			waitpid(child, NULL, 0);//TODO protect
 		}
-		else if (!ft_strncmp("unset", tmp2[0], 5))
+		else if (!ft_strcmp("unset", tmp2[0]))
 			env_var = unset(&tmp2[1], env_var);
-		else if (!ft_strncmp("export", tmp2[0], 6))
-			export(&tmp2[1], env_var);
+		else if (!ft_strcmp("export", tmp2[0]))
+			env_var = export(&tmp2[1], env_var);
+		else if (!ft_strcmp("env", tmp2[0]))
+			env(&tmp2[1], env_var);
+		else if (!ft_strcmp("echo", tmp2[0]))
+			echo(&tmp2[1], env_var);
 		free_str(tmp2);
 	}
 	rl_clear_history();

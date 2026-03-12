@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:39:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/10 17:48:35 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/12 13:39:04 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	identifier(char *arg)
 	return (true);
 }
 
-static void	change_value(t_env *env_var, char *name, char *value)
+void	change_value(t_env *env_var, char *name, char *value)
 {
 	size_t	size;
 
@@ -47,7 +47,7 @@ static void	change_value(t_env *env_var, char *name, char *value)
 	env_var->value = value;
 }
 
-static void	add_value(t_env *env_var, char *name, char *value)
+void	add_value(t_env *env_var, char *name, char *value)
 {
 	t_env	*env_head;
 	size_t	size;
@@ -75,7 +75,7 @@ static void	add_value(t_env *env_var, char *name, char *value)
 	free(tmp);
 }
 
-static void	exec_export(char *arg, t_env *env_var)
+static t_env	*exec_export(char *arg, t_env *env_var)
 {
 	char	*value;
 	char	*name;
@@ -85,24 +85,22 @@ static void	exec_export(char *arg, t_env *env_var)
 	if (!identifier(arg))
 	{
 		print_export_error(arg);
-		return ;
+		return (env_var);
 	}
 	while (arg[i] && arg[i] != '=')
 		i++;
 	name = set_name(arg, i);
 	value = set_value(arg, i);
-	if (!env_search(name, env_var))
+	if (!env_var)
+		env_var = first_env(name, value);
+	else if (!env_search(name, env_var))
 		add_env(env_var, name, value);
 	else
-	{
-		if (arg[i - 1] == '+')
-			add_value(env_var, name, value);
-		else
-			change_value(env_var, name, value);
-	}
+		chose_value(env_var, name, value, arg[i - 1]);
+	return (env_var);
 }
 
-void	export(char **args, t_env *env_var)
+t_env	*export(char **args, t_env *env_var)
 {
 	int		i;
 	int		j;
@@ -115,8 +113,9 @@ void	export(char **args, t_env *env_var)
 	{
 		while (args[i])
 		{
-			exec_export(args[i], env_var);
+			env_var = exec_export(args[i], env_var);
 			i++;
 		}
 	}
+	return (env_var);
 }

@@ -6,12 +6,13 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:21:09 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/10 17:48:44 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:41:11 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header.h"
 
+/*Copy the name of the variables for sorting them before the print.*/
 static void	name_dup(char **name_copy, t_env *env_var)
 {
 	int		i;
@@ -25,6 +26,16 @@ static void	name_dup(char **name_copy, t_env *env_var)
 	}
 }
 
+/*Print an error message in case of non-alphabetical
+characters in the name of the variable we want to add.*/
+void	print_export_error(char *arg)
+{
+	ft_putstr_fd("export: \'", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd("\': not a valid identifier\n", 2);
+}
+
+//Get the number of variables in env_var.
 int	ft_lst_env_size(t_env *lst)
 {
 	int	i;
@@ -40,6 +51,7 @@ int	ft_lst_env_size(t_env *lst)
 	return (i);
 }
 
+/*Print the list of all variables set in env_var in alphabetical order.*/
 void	print_export(t_env *env_var)
 {
 	char	**name_copy;

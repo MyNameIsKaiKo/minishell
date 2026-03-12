@@ -5,7 +5,7 @@ RM			= rm -f
 
 OBJ_DIR		= obj
 
-VPATH		= built-in/cd:built-in/unset:built-in/pwd:built-in/export
+VPATH		= built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env
 
 SRCS 		=	main.c \
 				prompt.c \
@@ -13,7 +13,9 @@ SRCS 		=	main.c \
 				cd_utils.c \
 				pwd.c \
 				unset.c \
+				env.c  \
 				export.c \
+				echo.c \
 				print_export.c \
 				export_utils.c \
 				quick_string_sort.c \

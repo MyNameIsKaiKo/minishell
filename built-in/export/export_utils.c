@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:18:29 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/10 17:43:45 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/12 13:41:58 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ char	*set_value(char *arg, int i)
 	return (ft_substr(arg, i + 1, ft_strlen(arg)));
 }
 
-void	print_export_error(char *arg)
+void	chose_value(t_env *env, char *name, char *value, char c)
 {
-	ft_putstr_fd("export: \'", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putstr_fd("\': not a valid identifier\n", 2);
+	if (c == '+')
+		add_value(env, name, value);
+	else
+		change_value(env, name, value);
 }

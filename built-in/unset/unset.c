@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:16:42 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/10 17:56:29 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:43:15 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static t_env	*supp_node(const char *name, t_env *env_var)
 	free(env_var->value);
 	if (!env_var->prev)
 	{
-		env_var->next->prev = NULL;
+		if (env_var->next)
+			env_var->next->prev = NULL;
 		head = env_var->next;
 	}
 	else
@@ -36,6 +37,7 @@ static t_env	*supp_node(const char *name, t_env *env_var)
 	return (head);
 }
 
+/*This function search a variable and free the node of this variable.*/
 t_env	*unset(char **args, t_env *env_var)
 {
 	t_env	*node;
@@ -44,6 +46,8 @@ t_env	*unset(char **args, t_env *env_var)
 	i = 0;
 	while (args[i])
 	{
+		if (!env_var)
+			return (NULL);
 		node = env_var;
 		while (node && ft_strcmp(args[i], node->name))
 			node = node->next;

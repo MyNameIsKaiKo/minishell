@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/10 17:43:41 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/12 16:44:04 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ static bool	check_cd_args(char **args)
 	return (true);
 }
 
+/*This function change the directory and the prompt.*/
 char	*cd(char **args, t_env *env_var)
 {
 	char	*oldpath;
