@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/06 15:41:19 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/12 18:33:41 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int						is_complete_w(char *str, char *og);
 t_lexer					*find_by_index(t_lexer *lex, int index);
 void					combined_parr(t_lexer **lex);
 void					combined_quotes(t_lexer **lex);
+void					merge_words(t_lexer **lex);
 
 // -- lexer_merge function --
 void					lexer_merge(t_lexer **lex, int start, int stop,
