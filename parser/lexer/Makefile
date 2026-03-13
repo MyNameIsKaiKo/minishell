@@ -13,7 +13,9 @@ SOURCE = 	main.c \
 			./lexerlst/lexerlst_merge.c \
 			./utils/handle_parr.c \
 			./utils/handle_quote.c \
-			./utils/lexer_utils.c
+			./utils/lexer_utils.c \
+			./utils/word_merger.c \
+			./utils/word_and_ponct_merger.c
 
 LIBFT_DIR = ../../include/libft
 LIBFT = $(LIBFT_DIR)/libft.a

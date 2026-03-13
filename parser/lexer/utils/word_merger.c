@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 17:36:34 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/12 18:09:31 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/13 14:23:30 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	merge_words(t_lexer **lex)
 	int		index;
 
 	index = 0;
+	indexing_lex(lex);
 	while (is_chained_words(*lex))
 	{
 		if (last_word)

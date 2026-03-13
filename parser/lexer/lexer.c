@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/12 18:34:14 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/13 14:22:44 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_lexer	*lexer(char *str)
 	{
 		handle_ponct(&lex);
 		merge_words(&lex);
+		merge_word_ponct(&lex);
 	}
 	else
 		return (NULL);
