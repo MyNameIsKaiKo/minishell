@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 01:25:09 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/06 16:16:20 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/14 14:46:46 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int	is_complete_w(char *str, char *og)
 
 t_lexer	*find_by_index(t_lexer *lex, int index)
 {
-	while (lex->next && lex->index != index)
+	if (index <= 0 || !lex)
+		return (NULL);
+	while (lex && lex->index != index)
 		lex = lex->next;
 	if (lex)
 		return (lex);

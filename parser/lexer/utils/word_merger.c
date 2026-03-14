@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 17:36:34 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/13 14:23:30 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/14 16:53:59 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	is_chained_words(t_lexer *lex)
 	int	chained;
 
 	chained = 0;
-	while (lex->next)
+	while (lex->next && lex->next->data[0] != '\0')
 	{
 		if (lex->type == lex->next->type)
 			chained = 1;
@@ -56,13 +56,15 @@ void	merge_words(t_lexer **lex)
 	t_lexer	*last_word;
 	int		index;
 
-	index = 0;
 	indexing_lex(lex);
+	last_word = NULL;
 	while (is_chained_words(*lex))
 	{
 		if (last_word)
 			index = last_word->index;
-		first_word = find_first_word(*lex, last_word->index);
+		else
+			index = 1;
+		first_word = find_first_word(*lex, index);
 		last_word = find_last_word(*lex, first_word->index);
 		lexer_merge(lex, first_word->index, last_word->index, WORD);
 	}

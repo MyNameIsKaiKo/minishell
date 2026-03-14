@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 13:28:13 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/13 14:23:14 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/14 13:50:57 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,6 @@ t_lexer	*find_start(t_lexer *lex)
 	return (NULL);
 }
 
-t_lexer	*find_stop(t_lexer *start, t_lexer *lex)
-{
-	while (lex->index == start->index)
-		lex = lex->next;
-	if (start->type == PONCT)
-	{
-		if (lex->next->type == WORD)
-			return (lex->next);
-	}
-	else if (start->type == WORD)
-	{
-		if (lex->next->type == PONCT)
-			return (lex->next);
-	}
-	return (NULL);
-}
-
 void	merge_word_ponct(t_lexer **lex)
 {
 	t_lexer	*start;
@@ -63,7 +46,7 @@ void	merge_word_ponct(t_lexer **lex)
 	while (is_chained_word_ponct(*lex))
 	{
 		start = find_start((*lex));
-		stop = find_stop(start, (*lex));
+		stop = find_by_index((*lex), start->index + 1);
 		lexer_merge(lex, start->index, stop->index, WORD);
 	}
 }

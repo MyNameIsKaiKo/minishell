@@ -11,11 +11,13 @@ SOURCE = 	main.c \
 			./lexerlst/lexerlst_last.c \
 			./lexerlst/lexerlst_index.c \
 			./lexerlst/lexerlst_merge.c \
+			./lexerlst/lexerlst_delone.c \
 			./utils/handle_parr.c \
 			./utils/handle_quote.c \
 			./utils/lexer_utils.c \
 			./utils/word_merger.c \
-			./utils/word_and_ponct_merger.c
+			./utils/word_and_ponct_merger.c \
+			./utils/remove_rponct.c
 
 LIBFT_DIR = ../../include/libft
 LIBFT = $(LIBFT_DIR)/libft.a
