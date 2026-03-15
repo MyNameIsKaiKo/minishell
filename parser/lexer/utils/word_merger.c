@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 17:36:34 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/14 16:53:59 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/15 12:58:32 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ void	merge_words(t_lexer **lex)
 
 	indexing_lex(lex);
 	last_word = NULL;
+	index = 1;
 	while (is_chained_words(*lex))
 	{
-		if (last_word)
-			index = last_word->index;
-		else
+		if (!index || index == 0)
 			index = 1;
 		first_word = find_first_word(*lex, index);
 		last_word = find_last_word(*lex, first_word->index);
+		index = last_word->index;
 		lexer_merge(lex, first_word->index, last_word->index, WORD);
 	}
 }
