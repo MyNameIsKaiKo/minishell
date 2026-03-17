@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_count.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/11 19:31:48 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/09 12:37:01 by nredouan         ###   ########.fr       */
+/*   Created: 2025/10/28 15:06:34 by nredouan          #+#    #+#             */
+/*   Updated: 2025/11/04 18:25:12 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_putnbr_count(int n)
 {
-	size_t	i;
+	int	size_nbr;
+	int	mod;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	size_nbr = 0;
+	if (n < 0)
+	{
+		mod = -(n % 10) + 48;
+		size_nbr += write(1, "-", 1);
+		if (n < -9)
+			size_nbr += ft_putnbr_count(-(n / 10));
+	}
+	if (n >= 10)
+	{
+		mod = (n % 10) + 48;
+		size_nbr += ft_putnbr_count(n / 10);
+	}
+	if (n < 10 && n >= 0)
+		mod = n + 48;
+	size_nbr += write(1, &mod, 1);
+	return (size_nbr);
 }

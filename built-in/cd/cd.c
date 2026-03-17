@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/12 16:44:04 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/13 15:49:37 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ static void	cd_home(t_env *env_var)
 	while (home && ft_strncmp("HOME", home->name, 4))
 		home = home->next;
 	if (!home || !home->value)
-	{
 		ft_putendl_fd("cd: HOME not set", 2);
-		return ;
-	}
 	else
 	{
 		change_pwd(env_var, ft_strdup(home->value), getcwd(NULL, 256));
@@ -98,9 +95,9 @@ static void	cd_dash(t_env *old_pwd, char *oldpath)
 	else
 	{
 		if (pwd)
-			set_pwd(pwd, old_pwd);
+			set_dash_pwd(pwd, old_pwd);
 		else
-			set_oldpwd(old_pwd);
+			set_dash_oldpwd(old_pwd);
 	}
 }
 

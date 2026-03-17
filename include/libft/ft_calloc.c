@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 14:54:42 by jleray            #+#    #+#             */
-/*   Updated: 2025/10/14 14:54:42 by jleray           ###   ########.fr       */
+/*   Created: 2025/10/18 18:13:26 by nredouan          #+#    #+#             */
+/*   Updated: 2026/02/11 14:37:00 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,21 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char	*alloc;
+	char	*array;
+	size_t	i;
+	size_t	total;
 
-	if (nmemb == 0 || size == 0)
+	i = 0;
+	total = nmemb * size;
+	if (size != 0 && nmemb != 0 && (nmemb * size) / size != nmemb)
+		return (NULL);
+	array = malloc((nmemb * size));
+	if (!array)
+		return (NULL);
+	while (i < total)
 	{
-		alloc = malloc(0);
-		if (!alloc)
-			return (0);
-		return (alloc);
+		array[i] = '\0';
+		i++;
 	}
-	if (nmemb > (size_t)-1 / size)
-		return (0);
-	alloc = malloc(nmemb * size);
-	if (!alloc)
-		return (0);
-	return (ft_memset(alloc, 0, (nmemb * size)));
+	return (array);
 }

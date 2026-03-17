@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   set_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/11 19:31:48 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/09 12:37:01 by nredouan         ###   ########.fr       */
+/*   Created: 2026/03/13 13:54:41 by nredouan          #+#    #+#             */
+/*   Updated: 2026/03/13 15:14:51 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../header.h"
 
-size_t	ft_strlen(const char *str)
+char	*set_name(char *arg, int i)
 {
-	size_t	i;
+	if (arg[i - 1] == '+')
+		return (ft_substr(arg, 0, i - 1));
+	return (ft_substr(arg, 0, i));
+}
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+char	*set_value(char *arg, int i)
+{
+	if (!arg[i])
+		return (NULL);
+	else if (arg[i] == '=')
+	{
+		if (!arg[i + 1])
+			return (ft_strdup(""));
+	}
+	return (ft_substr(arg, i + 1, ft_strlen(arg)));
 }

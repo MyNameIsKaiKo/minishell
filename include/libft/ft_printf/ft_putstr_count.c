@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_count.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 11:06:29 by jleray            #+#    #+#             */
-/*   Updated: 2025/10/14 11:06:29 by jleray           ###   ########.fr       */
+/*   Created: 2025/10/28 15:02:40 by nredouan          #+#    #+#             */
+/*   Updated: 2025/11/04 18:23:24 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-char	*ft_strchr(const char *s, int c)
+int	ft_putstr_count(char *s)
 {
 	int	i;
+	int	size_len;
 
 	i = 0;
-	while (s[i] != (char)c && s[i])
+	size_len = 0;
+	if (!s)
+	{
+		write (1, "(null)", 6);
+		return (6);
+	}
+	while (s && s[i])
+	{
+		size_len += write(1, &s[i], 1);
 		i++;
-	if (s[i] == (char)c)
-		return ((char *)s + i);
-	return (0);
+	}
+	return (size_len);
 }

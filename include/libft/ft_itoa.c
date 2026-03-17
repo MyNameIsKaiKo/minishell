@@ -3,69 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/15 19:12:30 by jleray            #+#    #+#             */
-/*   Updated: 2025/10/15 19:12:30 by jleray           ###   ########.fr       */
+/*   Created: 2025/10/21 17:39:24 by nredouan          #+#    #+#             */
+/*   Updated: 2026/02/07 16:04:47 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar(char c)
+static char	*write_str(int nb, int size, int n)
 {
-	write(1, &c, 1);
-}
+	char	*result;
+	int		i;
 
-int	find_size(int nb)
-{
-	int	size_l;
-
-	size_l = 0;
-	if (nb == 0)
-		size_l++;
-	if (nb < 0)
-		size_l++;
-	while (nb != 0)
+	i = 0;
+	result = malloc(sizeof(char) * (size + 1));
+	if (!result)
+		return (NULL);
+	while (i < size)
 	{
-		size_l++;
-		nb = nb / 10;
+		result[size - i - 1] = ((nb % 10) + 48);
+		nb /= 10;
+		i++;
 	}
-	return (size_l);
-}
-
-char	*fill_itoa(int n, int len, char *nb)
-{
-	while (len >= 0)
-	{
-		nb[len] = ((n % 10) + '0');
-		n = n / 10;
-		len--;
-	}
-	return (nb);
+	if (n < 0)
+		result[size - i] = '-';
+	result[i] = '\0';
+	return (result);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*nb;
-	int		len;
+	int		size;
+	int		nb;
+	char	*result;
 
-	len = find_size(n);
-	nb = malloc(sizeof(char) * (len + 1));
-	if (!nb)
-		return (0);
+	size = 0;
 	if (n == -2147483648)
-		ft_strlcpy(nb, "-2147483648", 12);
-	else if (n == 2147483647)
-		ft_strlcpy(nb, "2147483647", 11);
-	else if (n < 0)
 	{
-		n *= -1;
-		nb = fill_itoa(n, len - 1, nb);
-		nb[0] = '-';
+		result = ft_strdup("-2147483648");
+		return (result);
+	}
+	if (n < 0)
+	{
+		nb = -n;
+		size++;
 	}
 	else
-		nb = fill_itoa(n, len - 1, nb);
-	nb[len] = '\0';
-	return (nb);
+		nb = n;
+	while (n >= 10 || n <= -10)
+	{
+		n /= 10;
+		size++;
+	}
+	size++;
+	result = write_str(nb, size, n);
+	return (result);
 }

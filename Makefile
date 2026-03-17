@@ -18,6 +18,7 @@ SRCS 		=	main.c \
 				echo.c \
 				print_export.c \
 				export_utils.c \
+				set_export.c \
 				quick_string_sort.c \
 				env_variable.c
 

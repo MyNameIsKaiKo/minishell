@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_is2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/21 19:49:25 by jleray            #+#    #+#             */
-/*   Updated: 2025/10/21 19:49:25 by jleray           ###   ########.fr       */
+/*   Created: 2026/02/06 13:16:55 by nredouan          #+#    #+#             */
+/*   Updated: 2026/02/09 15:18:54 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_putstr_fd(char *s, int fd)
+int	ft_islower(int c)
 {
-	int	i;
+	return ((c >= 'a' && c <= 'z'));
+}
 
-	i = 0;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
+int	ft_isupper(int c)
+{
+	return ((c >= 'A' && c <= 'Z'));
 }

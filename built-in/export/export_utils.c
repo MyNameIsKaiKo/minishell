@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:18:29 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/12 13:41:58 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/13 15:14:41 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,28 @@ bool	env_search(char *name, t_env *env_var)
 	return (true);
 }
 
-char	*set_name(char *arg, int i)
+void	free_strings(char *name, char *value)
 {
-	if (arg[i - 1] == '+')
-		return (ft_substr(arg, 0, i - 1));
-	return (ft_substr(arg, 0, i));
+	free(name);
+	free(value);
+	ft_putstr_fd("export: allocation error\n", 2);
 }
 
-char	*set_value(char *arg, int i)
+bool	parser_export(char *arg)
 {
-	if (!arg[i])
-		return (NULL);
-	else if (arg[i] == '=')
+	int	i;
+
+	i = 0;
+	if (ft_isdigit(arg[i]))
+		return (false);
+	while (arg[i])
 	{
-		if (!arg[i + 1])
-			return (ft_strdup(""));
+		if ((arg[i] == '=' || (arg[i] == '+'
+					&& arg[i + 1] && arg[i + 1] == '=')) && i != 0)
+			return (true);
+		else if (!ft_isalpha(arg[i]) && arg[i] != '_')
+			return (false);
+		i++;
 	}
-	return (ft_substr(arg, i + 1, ft_strlen(arg)));
-}
-
-void	chose_value(t_env *env, char *name, char *value, char c)
-{
-	if (c == '+')
-		add_value(env, name, value);
-	else
-		change_value(env, name, value);
+	return (true);
 }

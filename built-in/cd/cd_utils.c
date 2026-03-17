@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 17:16:31 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/10 17:43:33 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/14 14:37:40 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*path_error(char *path, char *oldpath)
 	return (build_prompt());
 }
 
-void	set_pwd(t_env *pwd, t_env *old_pwd)
+void	set_dash_pwd(t_env *pwd, t_env *old_pwd)
 {
 	char	*tmp;
 
@@ -30,14 +30,28 @@ void	set_pwd(t_env *pwd, t_env *old_pwd)
 	chdir(pwd->value);
 }
 
-void	set_oldpwd(t_env *old_pwd)
+void	set_dash_oldpwd(t_env *old_pwd)
 {
 	char	*tmp;
 
 	tmp = old_pwd->value;
 	old_pwd->value = getcwd(NULL, 256);
-	chdir(tmp);
-	free(tmp);
+	if (!old_pwd->value)
+	{
+		ft_putendl_fd("cd: allocation error", 2);
+		old_pwd->value = tmp;
+	}
+	else
+	{
+		chdir(tmp);
+		free(tmp);
+	}
+}
+
+static char	*set_pwd_value(char *old_value, char *new_value)
+{
+	free(old_value);
+	return (new_value);
 }
 
 void	change_pwd(t_env *old_pwd, char *newpwd, char *oldpwd)
@@ -45,18 +59,21 @@ void	change_pwd(t_env *old_pwd, char *newpwd, char *oldpwd)
 	t_env	*pwd;
 
 	pwd = old_pwd;
-	while (pwd && ft_strncmp("PWD", pwd->name, 3))
+	while (pwd && ft_strcmp("PWD", pwd->name))
 		pwd = pwd->next;
-	while (old_pwd && ft_strncmp("OLDPWD", old_pwd->name, 6))
+	while (old_pwd && ft_strcmp("OLDPWD", old_pwd->name))
 		old_pwd = old_pwd->next;
-	if (pwd)
+	if (!newpwd || !oldpwd)
 	{
-		free(pwd->value);
-		pwd->value = newpwd;
+		ft_putendl_fd("cd: allocation error", 2);
+		if (!newpwd)
+			free(pwd->value);
+		if (!old_pwd)
+			free(old_pwd->value);
+		return ;
 	}
-	if (old_pwd)
-	{
-		free(old_pwd->value);
-		old_pwd->value = oldpwd;
-	}
+	if (pwd && newpwd)
+		pwd->value = set_pwd_value(pwd->value, newpwd);
+	if (old_pwd && oldpwd)
+		old_pwd->value = set_pwd_value(old_pwd->value, oldpwd);
 }

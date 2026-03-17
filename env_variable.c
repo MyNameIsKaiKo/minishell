@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/12 16:40:35 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/14 14:44:01 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ t_env	*first_env(char *name, char *value)
 	t_env	*env_var;
 
 	env_var = ft_calloc(1, sizeof(t_env));
+	if (!env_var)
+	{
+		ft_putstr_fd("allocation error\n", 2);
+		if (name)
+			free(name);
+		if (value)
+			free(value);
+		return (NULL);
+	}
 	env_var->name = name;
 	env_var->value = value;
 	env_var->prev = NULL;
@@ -60,6 +69,13 @@ void	add_env(t_env *env_var, char *name, char *value)
 
 	last = env_last(env_var);
 	last->next = ft_calloc(1, sizeof(t_env));
+	if (!last->next)
+	{
+		free(name);
+		free(value);
+		ft_putendl_fd("allocation error, env_var init failure", 2);
+		return ;
+	}
 	last->next->name = name;
 	last->next->value = value;
 	last->next->prev = last;

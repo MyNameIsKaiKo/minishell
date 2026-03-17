@@ -6,11 +6,12 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/12 17:01:11 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/17 10:09:48 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+#include <fcntl.h>
 
 static char    **find_directpath(char *env)
 {
@@ -120,7 +121,7 @@ void	clear(char **envp)
 {
 	char *arg[] =  {"clear", (char *)0};
 	execve("/usr/bin/clear", arg, envp);//TODO protect
-	//TODO contruire le path pour clear
+	//TODO contruire le path pour clear (et toutes les commandes concernées)
 }
 
 void	free_str(char **str)
@@ -150,6 +151,31 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	env_var = init_env(envp);
 	prompt = build_prompt();
+	if (!prompt || !env_var)
+	{
+		ft_putendl_fd("minishell: internal fatal error", 2);
+		if (env_var)
+			free_env(env_var);
+		return (1);	
+	}
+	int fd = open("Tom_and_jerry.txt", O_RDONLY);
+	char *gnl = get_next_line(fd);
+	int t = 0;
+	while (gnl)
+	{
+		printf("%s", gnl);
+		if (t < 7)
+			usleep(15000);
+		else if (t < 15)
+		{
+			usleep(100000);
+			t = 0;
+		}
+		free(gnl);
+		gnl = get_next_line(fd);
+		t++;
+	}
+	close(fd);
 	while (1)
 	{
 		tmp = readline(prompt);

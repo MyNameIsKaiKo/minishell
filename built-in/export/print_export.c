@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:21:09 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/12 16:41:11 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/17 10:14:25 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,19 @@ static void	name_dup(char **name_copy, t_env *env_var)
 
 /*Print an error message in case of non-alphabetical
 characters in the name of the variable we want to add.*/
-void	print_export_error(char *arg)
+void	print_export_error(char *arg, int err)
 {
-	ft_putstr_fd("export: \'", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putstr_fd("\': not a valid identifier\n", 2);
+	if (err == 0)
+	{
+		ft_putstr_fd("export: \'", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("\': not a valid identifier\n", 2);
+	}
+	else
+		ft_putendl_fd("export: allocation error", 2);
 }
 
-//Get the number of variables in env_var.
+/*Get the number of variables in env_var.*/
 int	ft_lst_env_size(t_env *lst)
 {
 	int	i;
@@ -51,6 +56,15 @@ int	ft_lst_env_size(t_env *lst)
 	return (i);
 }
 
+static void	print_export_var(t_env *env_var)
+{
+	printf("declare -x ");
+	if (!env_var->value)
+		printf("%s\n", env_var->name);
+	else
+		printf("%s=\"%s\"\n", env_var->name, env_var->value);
+}
+
 /*Print the list of all variables set in env_var in alphabetical order.*/
 void	print_export(t_env *env_var)
 {
@@ -63,17 +77,18 @@ void	print_export(t_env *env_var)
 	head = env_var;
 	size = ft_lst_env_size(env_var);
 	name_copy = ft_calloc(size + 1, sizeof(char *));
+	if (!name_copy)
+	{
+		print_export_error(NULL, 1);
+		return ;
+	}
 	name_dup(name_copy, env_var);
 	quick_sort(name_copy, 0, size - 1);
 	while (name_copy[i])
 	{
 		while (ft_strcmp(name_copy[i], env_var->name))
 			env_var = env_var->next;
-		printf("declare -x ");
-		if (!env_var->value)
-			printf("%s\n", env_var->name);
-		else
-			printf("%s=\"%s\"\n", env_var->name, env_var->value);
+		print_export_var(env_var);
 		env_var = head;
 		i++;
 	}

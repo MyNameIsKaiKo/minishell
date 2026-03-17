@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_print_ptr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/11 19:31:48 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/09 12:37:01 by nredouan         ###   ########.fr       */
+/*   Created: 2025/10/28 19:54:50 by nredouan          #+#    #+#             */
+/*   Updated: 2025/11/04 18:12:13 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_print_ptr(unsigned long long ptr, char *base)
 {
-	size_t	i;
+	int					write_size;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	write_size = 0;
+	if (!ptr)
+	{
+		write_size += write (1, "(nil)", 5);
+		return (write_size);
+	}
+	else
+	{
+		write_size += write (1, "0x", 2);
+		write_size += ft_putnbr_base_ptr(ptr, base);
+	}
+	return (write_size);
 }
