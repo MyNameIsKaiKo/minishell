@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/21 18:33:01 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/21 19:32:13 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ typedef enum e_token_ast
 	CMD_AST = 8
 }						t_token_ast;
 
+typedef enum e_side
+{
+	LEFT,
+	RIGHT,
+}						t_side;
+
 typedef struct s_ast
 {
 	enum e_token_ast	type;
@@ -34,9 +40,10 @@ typedef struct s_ast
 	struct s_ast		*left;
 	struct s_ast		*right;
 	struct s_ast		*head;
+	int					old_lexindex;
 }						t_ast;
 
-// --- ast Function ---
+//	--- ast Function ---
 t_ast					*make_tree(t_lexer **lex, t_ast **ast);
 
 //	--- ast_utils Function ---
@@ -44,4 +51,8 @@ t_lexer					*get_last_cpoint(t_lexer *lex);
 t_lexer					*getright(t_lexer *lex, int index);
 t_lexer					*getleft(t_lexer *lex, int index);
 
+//	--- ast node Fucntion ---
+t_ast					*nodenew(t_lexer **lexhead, t_lexer *checkpoint,
+							t_ast **ast);
+void					node_add(t_ast **ast, t_ast *new_node, t_side side);
 #endif

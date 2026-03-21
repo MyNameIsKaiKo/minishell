@@ -6,13 +6,13 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 15:22:27 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/21 19:19:18 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/21 19:38:36 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ast.h"
 
-void	get_ast_type(t_lexer *checkpoint, t_ast **ast)
+static void	get_ast_type(t_lexer *checkpoint, t_ast **ast)
 {
 	const t_token_type	type = checkpoint->type;
 
@@ -35,7 +35,7 @@ void	get_ast_type(t_lexer *checkpoint, t_ast **ast)
 }
 
 // TODO ON RETURN 0 PRINT SYNTAX ERROR
-int	handle_cmd(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
+static int	handle_cmd(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
 {
 	const int	index = checkpoint->index;
 	t_lexer		*next;
@@ -46,14 +46,15 @@ int	handle_cmd(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
 	{
 		merged_lex = lexer_merge(lexhead, index, index + 1, checkpoint->type);
 		(*node)->data = ft_strdup(merged_lex->data);
+		return (merged_lex->index);
 	}
 	else
 		(*node)->data = ft_strdup(checkpoint->data);
-	return (1);
+	return (checkpoint->index);
 }
 
 // TODO ON RETURN 0 PRINT SYNTAX ERROR
-int	handle_redir(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
+static int	handle_redir(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
 {
 	const int	index = checkpoint->index;
 	t_lexer		*next;
@@ -64,10 +65,11 @@ int	handle_redir(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
 		return (0);
 	merged_lex = lexer_merge(lexhead, index, index + 1, checkpoint->type);
 	(*node)->data = ft_strdup(merged_lex->data);
-	return (1);
+	(*node)->old_lexindex = merged_lex->index;
+	return (merged_lex->index);
 }
 
-int	handle_data(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
+static int	handle_data(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
 {
 	const t_token_ast	type = (*node)->type;
 	int					output;
@@ -81,7 +83,7 @@ int	handle_data(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
 	else
 	{
 		(*node)->data = ft_strdup(checkpoint->data);
-		output = 1;
+		output = checkpoint->index;
 	}
 	return (output);
 }
@@ -89,6 +91,7 @@ int	handle_data(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
 t_ast	*nodenew(t_lexer **lexhead, t_lexer *checkpoint, t_ast **ast)
 {
 	t_ast	*new_node;
+	int		index;
 
 	new_node = malloc(sizeof(t_ast));
 	if (!new_node)
@@ -97,12 +100,15 @@ t_ast	*nodenew(t_lexer **lexhead, t_lexer *checkpoint, t_ast **ast)
 		*ast = new_node;
 	new_node->head = *ast;
 	get_ast_type(checkpoint, &new_node);
-	if (!handle_data(lexhead, checkpoint, &new_node))
+	new_node->left = NULL;
+	new_node->right = NULL;
+	index = handle_data(lexhead, checkpoint, &new_node);
+	if (index == 0)
 	{
 		free(new_node->data);
 		return (NULL);
 	}
-	new_node->left = NULL;
-	new_node->right = NULL;
+	else
+		new_node->old_lexindex = index;
 	return (new_node);
 }
