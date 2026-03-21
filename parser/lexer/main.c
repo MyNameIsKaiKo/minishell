@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 12:52:58 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/06 19:33:04 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/21 13:34:39 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 	t_lexer *head;
 	char	*str;
 
-	str = "Je suis | une |phrase| ))((simple) >> \"et j'aime bien la < simplicite\" << && || &|";
+	str = "(echo oui || echo non) && echo true && Makefile < cat -e | ls -s > out";
 	lex = lexer(str);
 	head = lex;
 	if (!lex)

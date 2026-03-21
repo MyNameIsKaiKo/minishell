@@ -5,43 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/21 18:33:01 by jleray           ###   ########.fr       */
+/*   Created: 2026/03/12 13:26:02 by jleray            #+#    #+#             */
+/*   Updated: 2026/03/12 17:21:18 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
-# include "./lexer/lexer.h"
+# include "../include/libft/libft.h"
+# include "lexer/lexer.h"
 
-typedef enum e_token_ast
+typedef enum e_side
 {
-	PIPE_AST = 1,
-	OPERATOR_AST = 2,
-	HEREDOC_AST = 3,
-	APPEND_AST = 4,
-	REDIR_IN_AST = 5,
-	REDIR_OUT_AST = 6,
-	SUBPROCESS_AST = 7,
-	CMD_AST = 8
-}						t_token_ast;
+	LEFT = 1,
+	RIGHT = 2
+}						t_side;
 
 typedef struct s_ast
 {
-	enum e_token_ast	type;
+	enum e_token_type	type;
 	char				*data;
-	struct s_ast		*left;
 	struct s_ast		*right;
+	struct s_ast		*left;
 	struct s_ast		*head;
 }						t_ast;
 
-// --- ast Function ---
-t_ast					*make_tree(t_lexer **lex, t_ast **ast);
+// -- Node function --
+void					ast_free(t_ast **ast);
+void					node_add(t_ast **node, t_ast *new_node, t_side side);
+t_ast					*nodenew(char *data, int type, t_ast **head);
 
-//	--- ast_utils Function ---
-t_lexer					*get_last_cpoint(t_lexer *lex);
-t_lexer					*getright(t_lexer *lex, int index);
-t_lexer					*getleft(t_lexer *lex, int index);
-
+// -- Utils related Function --
+t_lexer					*get_last_op(t_lexer *lex, t_token_type operator);
+t_ast					*create_treenodes(t_lexer *lex, t_lexer *is_op,
+							t_ast **head);
 #endif

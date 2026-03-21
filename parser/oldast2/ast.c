@@ -5,42 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/21 14:50:45 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/21 17:13:01 by jleray           ###   ########.fr       */
+/*   Created: 2026/03/12 13:40:04 by jleray            #+#    #+#             */
+/*   Updated: 2026/03/13 14:34:13 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint, t_ast **ast)
+// Add a step to check for heredoc, append and redir before word.
+t_ast	*make_tree(char *str, t_ast **head)
 {
-	t_lexer	*right;
-	t_lexer	*left;
-	t_ast	*node;
-
-	left = getleft(*lexhead, checkpoint->index);
-	right = getright(*lexhead, checkpoint->index);
-	node = NULL; // todo nodenew(lexhead, checkpoint, ast);
-	if (!node)
-	{
-		// todo node_free
-		return (NULL);
-	}
-	node_add(&node, make_tree(&left, ast), LEFT);
-	node_add(&node, make_tree(&right, ast), RIGHT);
-}
-
-t_ast	*make_tree(t_lexer **lex, t_ast **ast)
-{
+	t_lexer	*lex;
 	t_lexer	*tmp;
-	t_ast	*node;
+	t_ast	*ast;
 
-	tmp = get_last_cpoint(*lex);
+	lex = lexer(str);
+	ast = NULL;
+	tmp = get_last_op(lex, OPERATOR);
 	if (!tmp)
-		return (NULL);
-	else
+		tmp = get_last_op(lex, PIPE);
+	if (tmp)
 	{
-		node = create_treenode(lex, tmp, ast);
+		ast = create_treenodes(lex, tmp, head);
+		if (!ast)
+			return (NULL);
 	}
-	return (NULL);
+	else
+		ast = nodenew(lex->data, WORD, head);
+	return (ast);
 }

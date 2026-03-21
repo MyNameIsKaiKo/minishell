@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/14 16:29:21 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/21 18:57:12 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef enum e_token_type
 	APPEND = 7,
 	OPERATOR = 8,
 	SUBPROCESS = 9,
-	CMD = 10
 }						t_token_type;
 
 typedef enum e_quote_states
@@ -56,6 +55,7 @@ void					lexer_add(t_lexer **head, t_lexer *to_add);
 void					lexer_free(t_lexer **lex);
 void					indexing_lex(t_lexer **lex);
 void					lexer_delone(t_lexer *to_del, t_lexer **head);
+void					lexerlst_trim(t_lexer **lex);
 
 // -- lexer --
 t_lexer					*lexer(char *str);
@@ -74,7 +74,7 @@ void					merge_word_ponct(t_lexer **lex);
 void					remove_remaning_ponct(t_lexer **lex);
 
 // -- lexer_merge function --
-void					lexer_merge(t_lexer **lex, int start, int stop,
+t_lexer					*lexer_merge(t_lexer **lex, int start, int stop,
 							int type);
 
 #endif

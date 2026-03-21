@@ -12,6 +12,7 @@ SOURCE = 	main.c \
 			./lexerlst/lexerlst_index.c \
 			./lexerlst/lexerlst_merge.c \
 			./lexerlst/lexerlst_delone.c \
+			./lexerlst/lexerlst_trim.c \
 			./utils/handle_parr.c \
 			./utils/handle_quote.c \
 			./utils/lexer_utils.c \

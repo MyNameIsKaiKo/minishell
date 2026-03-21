@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 19:56:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/06 18:21:53 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/21 18:56:56 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*merge_data(t_lexer *start_lex, int diff)
 	return (merged);
 }
 
-void	lexer_merge(t_lexer **lex, int start, int stop, int type)
+t_lexer	*lexer_merge(t_lexer **lex, int start, int stop, int type)
 {
 	t_lexer	*start_lex;
 	t_lexer	*new_lex;
@@ -54,4 +54,5 @@ void	lexer_merge(t_lexer **lex, int start, int stop, int type)
 		*lex = new_lex;
 	lexer_free(&start_lex);
 	indexing_lex(lex);
+	return (new_lex->index);
 }

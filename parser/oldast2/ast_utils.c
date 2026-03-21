@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:00:33 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/12 17:19:57 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/21 14:49:54 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,32 @@ t_lexer	*get_last_op(t_lexer *lex, t_token_type operator)
 	return (output);
 }
 
+static t_lexer	*getleft(t_lexer *lex, int op_index)
+{
+	t_lexer	*tmp;
+
+	tmp = lex;
+	if (op_index - 1 == 1)
+	{
+		tmp->next = NULL;
+		return (tmp);
+	}
+	else
+	{
+		while (tmp->index == op_index - 1)
+			tmp = tmp->next;
+		tmp->next = NULL;
+	}
+	return (lex);
+}
+
 static t_lexer	*getside(t_lexer *lex, t_side side, int op_index)
 {
 	t_lexer	*tmp;
 
 	if (side == LEFT)
 	{
-		tmp = find_by_index(lex, op_index - 1);
+		tmp = getleft(lex, op_index);
 		return (tmp);
 	}
 	else if (side == RIGHT)
