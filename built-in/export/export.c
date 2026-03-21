@@ -6,11 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:39:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/14 14:33:54 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/19 16:29:09 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../built_in.h"
 
 static void	change_value(t_env *env_var, char *name, char *value)
 {

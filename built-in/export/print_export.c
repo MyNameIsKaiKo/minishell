@@ -6,11 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:21:09 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/17 10:14:25 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/21 12:52:57 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../built_in.h"
 
 /*Copy the name of the variables for sorting them before the print.*/
 static void	name_dup(char **name_copy, t_env *env_var)
@@ -26,8 +26,6 @@ static void	name_dup(char **name_copy, t_env *env_var)
 	}
 }
 
-/*Print an error message in case of non-alphabetical
-characters in the name of the variable we want to add.*/
 void	print_export_error(char *arg, int err)
 {
 	if (err == 0)
@@ -65,7 +63,6 @@ static void	print_export_var(t_env *env_var)
 		printf("%s=\"%s\"\n", env_var->name, env_var->value);
 }
 
-/*Print the list of all variables set in env_var in alphabetical order.*/
 void	print_export(t_env *env_var)
 {
 	char	**name_copy;

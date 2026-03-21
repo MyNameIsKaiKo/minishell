@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env_var.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/03 13:37:33 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/19 16:28:54 by nredouan         ###   ########.fr       */
+/*   Created: 2026/03/21 11:27:53 by nredouan          #+#    #+#             */
+/*   Updated: 2026/03/21 13:25:59 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../built_in.h"
+#ifndef ENV_VAR_H
+# define ENV_VAR_H
 
-void	pwd(void)
+# include <unistd.h>
+# include <stdlib.h>
+# include "../include/libft/libft.h"
+
+typedef struct s_env
 {
-	char	pwd[256];
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*prev;
+}					t_env;
 
-	getcwd(pwd, 256);
-	printf("%s\n", pwd);
-}
+void				add_env(t_env *env_var, char *name, char *value);
+t_env				*init_env(char **envp);
+t_env				*first_env(char *name, char *value);
+void				free_env(t_env *env_var);
+
+#endif

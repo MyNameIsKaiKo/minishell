@@ -6,12 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/17 10:09:48 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/21 12:49:59 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-#include <fcntl.h>
 
 static char    **find_directpath(char *env)
 {
@@ -180,7 +179,6 @@ int	main(int argc, char **argv, char **envp)
 	{
 		tmp = readline(prompt);
 		add_history(tmp);
-		//fais des trucs
 		tmp2 = ft_split(tmp, ' ');
 		free(tmp);
 		if (tmp2 == NULL || !ft_strcmp("exit", tmp2[0]))

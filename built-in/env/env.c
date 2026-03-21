@@ -6,11 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 11:54:48 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/12 16:42:30 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/21 12:51:55 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../built_in.h"
 
 /*Print an error message in case of wrong argument,
 the env built-in don't need any argument*/
@@ -21,7 +21,6 @@ static void	print_env_error(char *arg)
 	ft_putstr_fd("\': No such file or directory\n", 2);
 }
 
-/*Print the list of all variables set in env_var.*/
 void	env(char **arg, t_env *env_var)
 {
 	if (arg[0])

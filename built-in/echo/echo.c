@@ -6,11 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 16:44:38 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/12 17:42:57 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/19 16:29:25 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../built_in.h"
 
 void	echo(char **args, t_env *env_var)
 {

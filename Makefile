@@ -5,7 +5,7 @@ RM			= rm -f
 
 OBJ_DIR		= obj
 
-VPATH		= built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env
+VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env
 
 SRCS 		=	main.c \
 				prompt.c \

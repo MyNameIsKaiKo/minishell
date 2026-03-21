@@ -6,11 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 17:16:31 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/14 14:37:40 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/19 16:29:41 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../built_in.h"
 
 char	*path_error(char *path, char *oldpath)
 {

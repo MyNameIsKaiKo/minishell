@@ -6,60 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/13 15:49:37 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/21 12:51:26 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
-
-// static int	count_words(char const *s)
-// {
-// 	int	i;
-// 	int	words;
-
-// 	i = 0;
-// 	words = 0;
-// 	if (!s || s[0] == '\0')
-// 		return (0);
-// 	while (s[i])
-// 	{
-// 		while (s[i] == ' ')
-// 			i++;
-// 		while (s[i] && s[i] != ' ')
-// 			i++;
-// 		if (s[i] != '\0')
-// 			words++;
-// 	}
-// 	if (i != 0 && s[i] == '\0' && s[i - 1] != ' ')
-// 		words++;
-// 	return (words);
-// }
-
-// static char	*cd_parser(const char *arg)//plus besoin
-// {
-// 	int		i;
-// 	int		words;
-// 	char	*path;
-
-// 	i = 0;
-// 	words = count_words(arg);
-// 	if (words == 0)
-// 		return (NULL);
-// 	while (arg[i] == ' ')
-// 		i++;
-// 	path = ft_strdup((char *)&arg[i]);
-// 	i = 0;
-// 	while (path[i])
-// 	{
-// 		if (path[i] == ' ' && words == 1)
-// 		{
-// 			path[i] = '\0';
-// 			break ;
-// 		}
-// 		i++;
-// 	}
-// 	return (path);
-// }
+#include "../built_in.h"
 
 static void	cd_home(t_env *env_var)
 {
@@ -113,7 +64,6 @@ static bool	check_cd_args(char **args)
 	return (true);
 }
 
-/*This function change the directory and the prompt.*/
 char	*cd(char **args, t_env *env_var)
 {
 	char	*oldpath;

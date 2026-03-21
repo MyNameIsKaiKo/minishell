@@ -2,3 +2,4 @@ minishell
 *.o
 obj
 readline.supp
+caca.c

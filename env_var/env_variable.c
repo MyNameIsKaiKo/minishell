@@ -6,11 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/14 14:44:01 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/21 11:28:14 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "env_var.h"
 
 /*Free every node of the the linked list.*/
 void	free_env(t_env *env_var)
