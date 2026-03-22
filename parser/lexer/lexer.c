@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/21 13:42:46 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/22 13:43:52 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static int	handle_singletype(char *s, char *og)
 	if (ft_strncmp(s, "|", 1) == 0 && *og == ' ')
 		return (PIPE);
 	if (ft_strncmp(s, "<", 1) == 0 && *og == ' ')
-		return (REDIR_OUT);
-	if (ft_strncmp(s, ">", 1) == 0 && *og == ' ')
 		return (REDIR_IN);
+	if (ft_strncmp(s, ">", 1) == 0 && *og == ' ')
+		return (REDIR_OUT);
 	if (!ft_strncmp(s, "\'", 1) || !ft_strncmp(s, "\"", 1))
 		return (PONCT);
 	if (!ft_strncmp(s, "(", 1) || !ft_strncmp(s, ")", 1))

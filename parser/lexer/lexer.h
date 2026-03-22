@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/21 18:57:12 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/22 13:35:11 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,30 @@
 
 # include "../../include/libft/libft.h"
 
+// typedef enum e_token_type
+// {
+	// WORD = 1,
+	// PIPE = 2,
+	// REDIR_IN = 3,
+	// REDIR_OUT = 4,
+	// PONCT = 5,
+	// HEREDOC = 6,
+	// APPEND = 7,
+	// OPERATOR = 8,
+	// SUBPROCESS = 9,
+// }						t_token_type;
+
 typedef enum e_token_type
 {
 	WORD = 1,
-	PIPE = 2,
+	SUBPROCESS = 2,
 	REDIR_IN = 3,
 	REDIR_OUT = 4,
 	PONCT = 5,
 	HEREDOC = 6,
 	APPEND = 7,
-	OPERATOR = 8,
-	SUBPROCESS = 9,
+	PIPE = 8,
+	OPERATOR = 9,
 }						t_token_type;
 
 typedef enum e_quote_states
