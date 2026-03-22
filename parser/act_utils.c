@@ -6,16 +6,24 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 15:30:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/21 19:40:55 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/22 17:32:24 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-static int	is_a_checkpoint(t_token_type lex_type)
+static int	is_a_checkpoint(t_token_type lex_type, t_token_type current)
 {
-	if (lex_type >= WORD && lex_type <= SUBPROCESS)
+	if (!current && (lex_type >= WORD && lex_type <= OPERATOR))
 		return (1);
+	if (current == OPERATOR && lex_type >= current)
+		return (1);
+	if (current == PIPE && lex_type >= current)
+		return (1);
+	if ((current >= REDIR_IN && current <= APPEND) && lex_type >= current)
+		return (1);
+	if ((current >= WORD && current <= SUBPROCESS) && lex_type >= current)
+		return (0);
 	return (0);
 }
 
@@ -23,21 +31,25 @@ t_lexer	*get_last_cpoint(t_lexer *lex)
 {
 	t_lexer	*output;
 
-	output = NULL;
+	if (!lex)
+		return (NULL);
+	output = lex;
+	if (!lex->next)
+		return (lex);
 	while (lex)
 	{
-		if (is_a_checkpoint(lex->type))
+		if (is_a_checkpoint(lex->type, output->type))
 			output = lex;
 		lex = lex->next;
 	}
 	return (output);
 }
 
-t_lexer	*getleft(t_lexer *lex, int index)
+t_lexer	*getleft(t_lexer **lex, int index)
 {
 	t_lexer	*tmp;
 
-	tmp = lex;
+	tmp = *lex;
 	if (index - 1 == 1)
 	{
 		tmp->next = NULL;
@@ -45,11 +57,12 @@ t_lexer	*getleft(t_lexer *lex, int index)
 	}
 	else
 	{
-		while (tmp->index == index - 1)
+		while (tmp->index != index - 1)
 			tmp = tmp->next;
 		tmp->next = NULL;
 	}
-	return (lex);
+	indexing_lex(lex);
+	return (*lex);
 }
 
 t_lexer	*getright(t_lexer *lex, int index)
@@ -58,6 +71,9 @@ t_lexer	*getright(t_lexer *lex, int index)
 
 	tmp = find_by_index(lex, index + 1);
 	if (tmp)
+	{
+		indexing_lex(&tmp);
 		return (tmp);
+	}
 	return (NULL);
 }

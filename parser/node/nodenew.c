@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 15:22:27 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/21 19:38:36 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/22 19:06:07 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,10 @@ static void	get_ast_type(t_lexer *checkpoint, t_ast **ast)
 // TODO ON RETURN 0 PRINT SYNTAX ERROR
 static int	handle_cmd(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
 {
-	const int	index = checkpoint->index;
-	t_lexer		*next;
-	t_lexer		*merged_lex;
+	int	output;
 
-	next = find_by_index(*lexhead, index + 1);
-	if (next && !ft_strncmp(next->data, "-", 1))
-	{
-		merged_lex = lexer_merge(lexhead, index, index + 1, checkpoint->type);
-		(*node)->data = ft_strdup(merged_lex->data);
-		return (merged_lex->index);
-	}
-	else
-		(*node)->data = ft_strdup(checkpoint->data);
-	return (checkpoint->index);
+	output = handle_cmd_merge(lexhead, checkpoint, node);
+	return (output);
 }
 
 // TODO ON RETURN 0 PRINT SYNTAX ERROR
@@ -64,6 +54,7 @@ static int	handle_redir(t_lexer **lexhead, t_lexer *checkpoint, t_ast **node)
 	if (!next || next->type != WORD)
 		return (0);
 	merged_lex = lexer_merge(lexhead, index, index + 1, checkpoint->type);
+	checkpoint = NULL;
 	(*node)->data = ft_strdup(merged_lex->data);
 	(*node)->old_lexindex = merged_lex->index;
 	return (merged_lex->index);
