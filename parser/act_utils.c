@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 15:30:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/22 17:32:24 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/22 21:13:21 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ static int	is_a_checkpoint(t_token_type lex_type, t_token_type current)
 		return (1);
 	if ((current >= REDIR_IN && current <= APPEND) && lex_type >= current)
 		return (1);
-	if ((current >= WORD && current <= SUBPROCESS) && lex_type >= current)
-		return (0);
+	if ((current >= WORD && current <= SUBPROCESS) && lex_type >= current
+		&& lex_type > SUBPROCESS)
+		return (1);
 	return (0);
 }
 
