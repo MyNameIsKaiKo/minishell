@@ -33,7 +33,7 @@ int	find_first_ponct(t_lexer *lex)
 
 	status = 0;
 	tmp = lex;
-	while (tmp->next)
+	while (tmp)
 	{
 		status = is_ponct(tmp);
 		if (status != 0)
