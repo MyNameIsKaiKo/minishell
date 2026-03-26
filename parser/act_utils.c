@@ -50,18 +50,15 @@ t_lexer	*getleft(t_lexer **lex, int index)
 {
 	t_lexer	*tmp;
 
+	if (!lex || !*lex)
+		return (NULL);
+	if (index <= 1)
+		return (NULL);
 	tmp = *lex;
-	if (index - 1 == 1)
-	{
+	while (tmp && tmp->next && tmp->next->index != index)
+		tmp = tmp->next;
+	if (tmp)
 		tmp->next = NULL;
-		return (tmp);
-	}
-	else
-	{
-		while (tmp->index != index - 1)
-			tmp = tmp->next;
-		tmp->next = NULL;
-	}
 	indexing_lex(lex);
 	return (*lex);
 }
