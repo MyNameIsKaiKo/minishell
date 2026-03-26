@@ -53,7 +53,7 @@ static int	handle_redit(t_lexer *checkpoint, t_ast *node)
 	return (checkpoint->index + 1);
 }
 
-t_ast *nodenew(t_lexer **lexhead, t_lexer *checkpoint, t_ast **ast)
+t_ast *nodenew(t_lexer **lexhead, t_lexer *checkpoint)
 {
 	t_ast *new_node;
 

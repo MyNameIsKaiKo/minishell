@@ -45,7 +45,7 @@ typedef struct s_ast
 }						t_ast;
 
 //	--- ast Function ---
-t_ast					*make_tree(t_lexer **lex, t_ast **ast);
+t_ast					*make_tree(t_lexer **lex);
 
 //	--- ast_utils Function ---
 t_lexer					*get_last_cpoint(t_lexer *lex);
@@ -53,8 +53,7 @@ t_lexer					*getright(t_lexer *lex, int index);
 t_lexer					*getleft(t_lexer **lex, int index);
 
 //	--- ast node Fucntion ---
-t_ast					*nodenew(t_lexer **lexhead, t_lexer *checkpoint,
-							t_ast **ast);
+t_ast					*nodenew(t_lexer **lexhead, t_lexer *checkpoint);
 void					node_add(t_ast **ast, t_ast *new_node, t_side side);
 void					ast_free(t_ast **ast);
 int						handle_cmd_merge(t_lexer **lexhead, t_lexer *checkpoint,

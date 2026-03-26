@@ -12,32 +12,26 @@
 
 #include "ast.h"
 
-t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint, t_ast **ast)
+t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint)
 {
 	t_lexer	*right;
 	t_lexer	*left;
 	t_ast	*node;
 
-	node = nodenew(lexhead, checkpoint, ast);
+	node = nodenew(lexhead, checkpoint);
 	if (!node)
-	{
-		ast_free(ast);
 		return (NULL);
-	}
 	right = getright(*lexhead, node->old_lexindex);
-	if (checkpoint->index != 1)
+	if (checkpoint->index > 1)
 		left = getleft(lexhead, node->old_lexindex);
 	else
 		left = NULL;
-	free(checkpoint->data);
-	free(checkpoint);
-	checkpoint = NULL;
 	node_add(&node, make_tree(&left, ast), LEFT);
 	node_add(&node, make_tree(&right, ast), RIGHT);
 	return (node);
 }
 
-t_ast	*make_tree(t_lexer **lex, t_ast **ast)
+t_ast	*make_tree(t_lexer **lex)
 {
 	t_lexer	*tmp;
 	t_ast	*node;
