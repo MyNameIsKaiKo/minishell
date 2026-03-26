@@ -65,7 +65,7 @@ static int	handle_subprocess(t_lexer *checkpoint, t_ast *node)
 	return (checkpoint->index);
 }
 
-void	handle_data(t_ast **new_node, t_ast *checkpoint)
+void	handle_node_data(t_ast **new_node, t_ast *checkpoint)
 {
 	if ((*new_node)->type == CMD_AST)
 		(*new_node)->old_lexindex = handle_cmds(checkpoint, *new_node);
