@@ -21,11 +21,11 @@
 
 static int	handle_singletype(char *s, char *og)
 {
-	if (ft_strncmp(s, "|", 1) == 0 && *og == ' ')
+	if (ft_strncmp(s, "|", 1) == 0 && *og != '|')
 		return (PIPE);
-	if (ft_strncmp(s, "<", 1) == 0 && *og == ' ')
+	if (ft_strncmp(s, "<", 1) == 0 && *og != '<')
 		return (REDIR_IN);
-	if (ft_strncmp(s, ">", 1) == 0 && *og == ' ')
+	if (ft_strncmp(s, ">", 1) == 0 && *og != '>')
 		return (REDIR_OUT);
 	if (!ft_strncmp(s, "\'", 1) || !ft_strncmp(s, "\"", 1))
 		return (PONCT);

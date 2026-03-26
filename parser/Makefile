@@ -1,6 +1,6 @@
 COMPILE =	cc
 
-CFLAGS =	-Werror -Wall -Wextra -g 
+CFLAGS =	-Wall -Wextra -g 
 
 SOURCE = 	main.c \
 			./lexer/lexer.c \

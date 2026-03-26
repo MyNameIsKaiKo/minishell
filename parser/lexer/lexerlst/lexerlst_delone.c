@@ -15,19 +15,18 @@
 void	lexer_delone(t_lexer *to_del, t_lexer **head)
 {
 	t_lexer	*previous;
-	t_lexer	*next;
 
-	if (to_del->next && to_del->index == 1)
+	if (to_del->index == 1)
 	{
-		next = to_del->next;
-		*head = next;
+		*head = to_del->next;
 	}
 	else
 	{
 		previous = find_by_index(*head, to_del->index - 1);
-		next = to_del->next;
-		previous->next = next;
+		if (previous)
+			previous->next = to_del->next;
 	}
-	free(to_del->data);
+	if (to_del->data)
+		free(to_del->data);
 	free(to_del);
 }

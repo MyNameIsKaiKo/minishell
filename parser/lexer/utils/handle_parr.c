@@ -29,20 +29,22 @@ int	find_parro(t_lexer **lex)
 int	find_parrc(t_lexer **lex, int parro)
 {
 	t_lexer	*tmp;
-	t_lexer	*is_parro;
-	int		is_another_open;
+	int		parro_count;
 
 	tmp = find_by_index(*lex, parro);
-	is_parro = tmp->next;
+	if (!tmp)
+		return (0);
+	parro_count = 1;
+	tmp = tmp->next;
 	while (tmp)
 	{
-		if (tmp->type == PONCT && !ft_strncmp(tmp->data, ")", 1))
+		if (tmp->type == PONCT && !ft_strncmp(tmp->data, "(", 1))
+			parro_count++;
+		else if (tmp->type == PONCT && !ft_strncmp(tmp->data, ")", 1))
 		{
-			is_another_open = find_parro(&is_parro);
-			if ((is_another_open == 0) || (tmp->index < is_another_open))
+			parro_count--;
+			if (parro_count == 0)
 				return (tmp->index);
-			else
-				return (0);
 		}
 		tmp = tmp->next;
 	}
