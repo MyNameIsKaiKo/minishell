@@ -40,13 +40,6 @@ t_ast	*make_tree(t_lexer **lex)
 	if (!tmp)
 		return (NULL);
 	else
-	{
-		node = create_treenode(lex, tmp, ast);
-		if (!node)
-		{
-			ast_free(ast);
-			return (NULL);
-		}
-	}
+		node = create_treenode(lex, tmp);
 	return (node);
 }
