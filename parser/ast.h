@@ -37,6 +37,7 @@ typedef struct s_ast
 {
 	enum e_token_ast	type;
 	char				*data;
+	char				**args;
 	struct s_ast		*left;
 	struct s_ast		*right;
 	struct s_ast		*head;
