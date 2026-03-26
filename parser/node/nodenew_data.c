@@ -65,11 +65,11 @@ static int	handle_subprocess(t_lexer *checkpoint, t_ast *node)
 	return (checkpoint->index);
 }
 
-void	handle_node_data(t_ast **new_node, t_ast *checkpoint)
+void	handle_node_data(t_ast **new_node, t_lexer *checkpoint)
 {
 	if ((*new_node)->type == CMD_AST)
 		(*new_node)->old_lexindex = handle_cmds(checkpoint, *new_node);
-	else if ((*new-node)->type >= HEREDOC_AST && (*new_node)->type <= REDIR_OUT_AST)
+	else if ((*new_node)->type >= HEREDOC_AST && (*new_node)->type <= REDIR_OUT_AST)
 		(*new_node)->old_lexindex = handle_redir(checkpoint, *new_node);
 	else if ((*new_node)->type == SUBPROCESS)
 		(*new_node)->old_lexindex = handle_subprocess(t_lexer *checkpoint);

@@ -58,5 +58,5 @@ void					node_add(t_ast **ast, t_ast *new_node, t_side side);
 void					ast_free(t_ast **ast);
 int						handle_cmd_merge(t_lexer **lexhead, t_lexer *checkpoint,
 							t_ast **node);
-void					handle_node_data(t_ast **new_node, t_ast *checkpoint);
+void					handle_node_data(t_ast **new_node, t_lexer *checkpoint);
 #endif
