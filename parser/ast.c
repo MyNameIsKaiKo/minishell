@@ -26,8 +26,8 @@ t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint)
 		left = getleft(lexhead, node->old_lexindex);
 	else
 		left = NULL;
-	node_add(&node, make_tree(&left, ast), LEFT);
-	node_add(&node, make_tree(&right, ast), RIGHT);
+	node_add(&node, make_tree(&left), LEFT);
+	node_add(&node, make_tree(&right), RIGHT);
 	return (node);
 }
 
