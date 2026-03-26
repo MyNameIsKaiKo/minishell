@@ -28,6 +28,15 @@ t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint)
 		left = NULL;
 	node_add(&node, make_tree(&left), LEFT);
 	node_add(&node, make_tree(&right), RIGHT);
+	if (node->type == PIPE_AST || node->type == OPERATOR_AST)
+	{
+		if (!node->left || !node->right)
+		{
+			ft_putstr_fd("syntax error", 2);
+			ast_free(&node);
+			return (NULL);
+		}
+	}
 	return (node);
 }
 

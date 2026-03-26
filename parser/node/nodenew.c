@@ -27,6 +27,7 @@ t_ast *nodenew(t_lexer **lexhead, t_lexer *checkpoint)
 	handle_node_data(&new_node, checkpoint);
 	if (new_node->old_lexindex == 0)
 	{
+		ft_putstr_fd("Syntax Error", 2);
 		ast_free(&new_node);
 		return(NULL);
 	}
