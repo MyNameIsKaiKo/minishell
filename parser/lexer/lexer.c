@@ -32,7 +32,7 @@ static int	handle_singletype(char *s, char *og)
 	if (!ft_strncmp(s, "(", 1) || !ft_strncmp(s, ")", 1))
 		return (PONCT);
 	if (!ft_strncmp(s, " ", 1))
-		return (PONCT);
+		return (SPACE);
 	return (0);
 }
 
@@ -105,8 +105,9 @@ t_lexer	*lexer(char *str)
 	if (lex)
 	{
 		handle_ponct(&lex);
-		merge_word_ponct(&lex);
-		remove_remaning_ponct(&lex);
+		merge_words(&lex);
+		remove_remaning_type(&lex, SPACE);
+		remove_remaining_type(&lex, PONCT);
 		lexerlst_trim(&lex);
 	}
 	else

@@ -12,7 +12,7 @@
 
 #include "../lexer.h"
 
-void	remove_remaning_ponct(t_lexer **lex)
+void	remove_remaning_type(t_lexer **lex, t_token_type type)
 {
 	t_lexer	*search;
 	t_lexer	*tmp;
@@ -21,7 +21,7 @@ void	remove_remaning_ponct(t_lexer **lex)
 	search = *lex;
 	while (search)
 	{
-		if (search->type == PONCT)
+		if (search->type == type)
 		{
 			tmp = search;
 			search = search->next;

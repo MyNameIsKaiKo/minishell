@@ -35,10 +35,11 @@ typedef enum e_token_type
 	REDIR_IN = 3,
 	REDIR_OUT = 4,
 	PONCT = 5,
-	HEREDOC = 6,
-	APPEND = 7,
-	PIPE = 8,
-	OPERATOR = 9,
+	SPACE = 6,
+	HEREDOC = 7,
+	APPEND = 8,
+	PIPE = 9,
+	OPERATOR = 10,
 }						t_token_type;
 
 typedef enum e_quote_states
@@ -84,7 +85,7 @@ void					combined_parr(t_lexer **lex);
 void					combined_quotes(t_lexer **lex);
 void					merge_words(t_lexer **lex);
 void					merge_word_ponct(t_lexer **lex);
-void					remove_remaning_ponct(t_lexer **lex);
+void					remove_remaning_type(t_lexer **lex, t_token_type type);
 
 // -- lexer_merge function --
 t_lexer					*lexer_merge(t_lexer **lex, int start, int stop,
