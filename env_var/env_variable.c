@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/21 11:28:14 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/25 13:55:07 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,7 @@ t_env	*init_env(char **envp)
 		j = 0;
 		i++;
 	}
+	if (!env_var)
+		env_var = first_env(ft_strdup("PWD"), getcwd(NULL, 0));
 	return (env_var);
 }

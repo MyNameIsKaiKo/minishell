@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 17:34:51 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/19 16:29:00 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/22 16:00:39 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ static int	partition(char **name_copy, int start, int end)
 	}
 }
 
-void	quick_sort(char **name_copy, int start, int end)
+void	quick_sort(char **name, int start, int end)
 {
 	int	p_index;
 
 	if (start < end)
 	{
-		p_index = partition(name_copy, start, end);
-		quick_sort(name_copy, start, p_index);
-		quick_sort(name_copy, p_index + 1, end);
+		p_index = partition(name, start, end);
+		quick_sort(name, start, p_index);
+		quick_sort(name, p_index + 1, end);
 	}
 }

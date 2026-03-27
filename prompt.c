@@ -6,28 +6,59 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:18:50 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/21 11:35:10 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/26 11:22:26 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-char	*build_prompt(void)
+static char	*do_the_join(char *dest, const char *src, int start)
+{
+	size_t	i;
+
+	i = 0;
+	while (src && src[i])
+	{
+		dest[start + i] = src[i];
+		i++;
+	}
+	return (dest);
+}
+
+static char	*ft_strjoinjoin(const char *s1, const char *s2, const char *s3)
+{
+	char	*dest;
+	size_t	size1;
+	size_t	size2;
+	size_t	size3;
+
+	if (!s1 || !s2 || !s3)
+		return (NULL);
+	size1 = ft_strlen(s1);
+	size2 = ft_strlen(s2);
+	size3 = ft_strlen(s3);
+	dest = ft_calloc(size1 + size2 + size3 + 1, sizeof(char));
+	if (!dest)
+		return (NULL);
+	dest = do_the_join(dest, s1, 0);
+	dest = do_the_join(dest, s2, size1);
+	dest = do_the_join(dest, s3, size1 + size2);
+	dest[size1 + size2 + size3] = '\0';
+	return (dest);
+}
+
+char	*build_prompt(t_silent_env *senv)
 {
 	char	*prompt;
 	char	*tmp;
 
-	tmp = getcwd(NULL, 256);
+	tmp = getcwd(NULL, 0);
 	if (!tmp)
-		return (NULL);
-	prompt = ft_strjoin("\033[35m<T&J minishell>", tmp);
+		prompt = ft_strjoinjoin("\001\033[35m\002<T&J minishell>", senv->pwd,
+				"$ \001\033[0m\002");
+	else
+		prompt = ft_strjoinjoin("\001\033[35m\002<T&J minishell>", tmp,
+				"$ \001\033[0m\002");
 	free(tmp);
-	if (!prompt)
-		return (NULL);
-	tmp = prompt;
-	prompt = ft_strjoin(prompt, "$ \033[0m");
-	free(tmp);
-	if (!prompt)
-		return (NULL);
 	return (prompt);
 }

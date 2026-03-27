@@ -20,7 +20,9 @@ SRCS 		=	main.c \
 				export_utils.c \
 				set_export.c \
 				quick_string_sort.c \
-				env_variable.c
+				env_variable.c \
+				general_utils.c \
+				wildcards.c
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

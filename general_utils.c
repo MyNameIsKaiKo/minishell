@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   general_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/03 13:37:33 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/26 17:46:11 by nredouan         ###   ########.fr       */
+/*   Created: 2026/03/27 16:02:59 by nredouan          #+#    #+#             */
+/*   Updated: 2026/03/27 16:03:27 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../built_in.h"
+#include "header.h"
 
-void	pwd(t_silent_env *senv)
+void	free_str(char **str)
 {
-	char	*pwd;
+	int	i;
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		printf("%s\n", senv->pwd);
-	else
-		printf("%s\n", pwd);
-	free(pwd);
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }

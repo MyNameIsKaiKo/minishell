@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/21 12:49:59 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:37:41 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ static void	handler(int signal)
 {
 	(void)signal;
 	write(1, "\n", 1);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 }
@@ -123,76 +124,77 @@ void	clear(char **envp)
 	//TODO contruire le path pour clear (et toutes les commandes concernées)
 }
 
-void	free_str(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
-	char	*prompt;
-	char	*tmp;
-	char	**tmp2;
-	t_env	*env_var;
-	pid_t	child;
+	char			*prompt;
+	char			*tmp;
+	char			**tmp2;
+	t_env			*env_var;
+	t_silent_env	senv;
+	pid_t			child;
 
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	env_var = init_env(envp);
-	prompt = build_prompt();
+	senv.pwd = getcwd(NULL, 0);
+	prompt = build_prompt(&senv);
 	if (!prompt || !env_var)
 	{
 		ft_putendl_fd("minishell: internal fatal error", 2);
-		if (env_var)
-			free_env(env_var);
+		free_env(env_var);
+		free(senv.pwd);
+		free(prompt);
 		return (1);	
 	}
-	int fd = open("Tom_and_jerry.txt", O_RDONLY);
-	char *gnl = get_next_line(fd);
-	int t = 0;
-	while (gnl)
-	{
-		printf("%s", gnl);
-		if (t < 7)
-			usleep(15000);
-		else if (t < 15)
-		{
-			usleep(100000);
-			t = 0;
-		}
-		free(gnl);
-		gnl = get_next_line(fd);
-		t++;
-	}
-	close(fd);
+	// int fd = open("Tom_and_jerry.txt", O_RDONLY);
+	// char *gnl = get_next_line(fd);
+	// int t = 0;
+	// while (gnl)
+	// {
+	// 	printf("%s", gnl);
+	// 	if (t < 7)
+	// 		usleep(15000);
+	// 	else if (t < 15)
+	// 	{
+	// 		usleep(100000);
+	// 		t = 0;
+	// 	}
+	// 	free(gnl);
+	// 	gnl = get_next_line(fd);
+	// 	t++;
+	// }
+	// close(fd);
 	while (1)
 	{
 		tmp = readline(prompt);
-		add_history(tmp);
+		if (tmp && tmp[0])
+			add_history(tmp);
 		tmp2 = ft_split(tmp, ' ');
 		free(tmp);
-		if (tmp2 == NULL || !ft_strcmp("exit", tmp2[0]))
+		if (!tmp2)
+		{
+			ft_putendl_fd("minishell: internal fatal error", 2);
+			continue ;
+		}
+		if (tmp2[0] && !ft_strcmp("exit", tmp2[0]))
 		{
 			free_str(tmp2);
 			break ;
 		}
+		if (!tmp2[0])
+		{
+			free_str(tmp2);
+			continue ;
+		}
 		if (!ft_strcmp("cd", tmp2[0]))
 		{
 			free(prompt);
-			prompt = cd(&tmp2[1], env_var);
+			prompt = cd(&tmp2[1], env_var, &senv);
 		}
 		else if (!ft_strcmp("pwd", tmp2[0]))
-			pwd();
+			pwd(&senv);
 		else if (!ft_strcmp("clear", tmp2[0]))
 		{
 			child = fork();//TODO protect
@@ -212,5 +214,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	rl_clear_history();
 	free_env(env_var);
+	free(senv.pwd);
 	free(prompt);
 }

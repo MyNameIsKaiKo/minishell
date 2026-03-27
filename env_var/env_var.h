@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 11:27:53 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/21 13:25:59 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:04:59 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ typedef struct s_env
 	struct s_env	*next;
 	struct s_env	*prev;
 }					t_env;
+
+typedef struct s_silent_env
+{
+	char	*pwd;
+}			t_silent_env;
 
 void				add_env(t_env *env_var, char *name, char *value);
 t_env				*init_env(char **envp);
