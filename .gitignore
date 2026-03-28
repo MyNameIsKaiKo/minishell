@@ -1,5 +1,5 @@
 minishell
 *.o
+*.json
 obj
 readline.supp
-caca.c
