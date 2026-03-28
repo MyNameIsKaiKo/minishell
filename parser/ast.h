@@ -6,13 +6,14 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/28 14:49:01 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 16:45:03 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
+# include "../minishell.h"
 # include "./lexer/lexer.h"
 
 typedef enum e_token_ast
@@ -33,6 +34,12 @@ typedef enum e_side
 	RIGHT,
 }						t_side;
 
+typedef struct s_filesfd
+{
+	int					fdin;
+	int					fdout;
+}						t_filesfd;
+
 typedef struct s_ast
 {
 	enum e_token_ast	type;
@@ -42,6 +49,7 @@ typedef struct s_ast
 	struct s_ast		*right;
 	struct s_ast		*head;
 	int					old_lexindex;
+	struct s_filesfd	filesfd;
 }						t_ast;
 
 //	--- ast Function ---
