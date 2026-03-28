@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/22 13:35:11 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 12:56:51 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 
 // typedef enum e_token_type
 // {
-	// WORD = 1,
-	// PIPE = 2,
-	// REDIR_IN = 3,
-	// REDIR_OUT = 4,
-	// PONCT = 5,
-	// HEREDOC = 6,
-	// APPEND = 7,
-	// OPERATOR = 8,
-	// SUBPROCESS = 9,
+// WORD = 1,
+// PIPE = 2,
+// REDIR_IN = 3,
+// REDIR_OUT = 4,
+// PONCT = 5,
+// HEREDOC = 6,
+// APPEND = 7,
+// OPERATOR = 8,
+// SUBPROCESS = 9,
 // }						t_token_type;
 
 typedef enum e_token_type
@@ -85,7 +85,7 @@ void					combined_parr(t_lexer **lex);
 void					combined_quotes(t_lexer **lex);
 void					merge_words(t_lexer **lex);
 void					merge_word_ponct(t_lexer **lex);
-void					remove_remaning_type(t_lexer **lex, t_token_type type);
+void					remove_remaining_type(t_lexer **lex, t_token_type type);
 
 // -- lexer_merge function --
 t_lexer					*lexer_merge(t_lexer **lex, int start, int stop,

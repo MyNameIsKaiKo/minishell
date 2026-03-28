@@ -6,17 +6,17 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 21:13:24 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/26 21:13:24 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 13:03:06 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ast.h"
 
-static	int	handle_cmd(t_lexer	*checkpoint, t_ast *node)
+static int	handle_cmds(t_lexer *checkpoint, t_ast *node)
 {
 	t_lexer	*tmp;
-	int	count;
-	int	i;
+	int		count;
+	int		i;
 
 	tmp = checkpoint;
 	count = 0;
@@ -69,10 +69,11 @@ void	handle_node_data(t_ast **new_node, t_lexer *checkpoint)
 {
 	if ((*new_node)->type == CMD_AST)
 		(*new_node)->old_lexindex = handle_cmds(checkpoint, *new_node);
-	else if ((*new_node)->type >= HEREDOC_AST && (*new_node)->type <= REDIR_OUT_AST)
+	else if ((*new_node)->type >= HEREDOC_AST
+		&& (*new_node)->type <= REDIR_OUT_AST)
 		(*new_node)->old_lexindex = handle_redir(checkpoint, *new_node);
-	else if ((*new_node)->type == SUBPROCESS)
-		(*new_node)->old_lexindex = handle_subprocess(*checkpoint, *new_node);
+	else if ((*new_node)->type == SUBPROCESS_AST)
+		(*new_node)->old_lexindex = handle_subprocess(checkpoint, *new_node);
 	else
 	{
 		(*new_node)->data = ft_strdup(checkpoint->data);

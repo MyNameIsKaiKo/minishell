@@ -1,20 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nodenew                                            :+:      :+:    :+:   */
+/*   nodenew.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:19:58 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/26 20:19:58 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 13:02:43 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ast.c"
+#include "../ast.h"
 
-t_ast *nodenew(t_lexer **lexhead, t_lexer *checkpoint)
+static void	get_ast_type(t_lexer *checkpoint, t_ast **ast)
 {
-	t_ast *new_node;
+	const t_token_type	type = checkpoint->type;
+
+	if (type == HEREDOC)
+		(*ast)->type = HEREDOC_AST;
+	else if (type == APPEND)
+		(*ast)->type = APPEND_AST;
+	else if (type == REDIR_IN)
+		(*ast)->type = REDIR_IN_AST;
+	else if (type == REDIR_OUT)
+		(*ast)->type = REDIR_OUT_AST;
+	else if (type == WORD)
+		(*ast)->type = CMD_AST;
+	else if (type == OPERATOR)
+		(*ast)->type = OPERATOR_AST;
+	else if (type == PIPE)
+		(*ast)->type = PIPE_AST;
+	else if (type == SUBPROCESS)
+		(*ast)->type = SUBPROCESS_AST;
+}
+
+t_ast	*nodenew(t_lexer *checkpoint)
+{
+	t_ast	*new_node;
 
 	new_node = malloc(sizeof(t_ast));
 	if (!new_node)
@@ -29,7 +51,7 @@ t_ast *nodenew(t_lexer **lexhead, t_lexer *checkpoint)
 	{
 		ft_putstr_fd("Syntax Error", 2);
 		ast_free(&new_node);
-		return(NULL);
+		return (NULL);
 	}
 	return (new_node);
 }

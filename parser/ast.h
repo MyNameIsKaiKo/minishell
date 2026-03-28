@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/22 19:03:21 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 12:52:40 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_lexer					*getright(t_lexer *lex, int index);
 t_lexer					*getleft(t_lexer **lex, int index);
 
 //	--- ast node Fucntion ---
-t_ast					*nodenew(t_lexer **lexhead, t_lexer *checkpoint);
+t_ast					*nodenew(t_lexer *checkpoint);
 void					node_add(t_ast **ast, t_ast *new_node, t_side side);
 void					ast_free(t_ast **ast);
 int						handle_cmd_merge(t_lexer **lexhead, t_lexer *checkpoint,

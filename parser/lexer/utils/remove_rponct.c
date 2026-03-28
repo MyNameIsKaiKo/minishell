@@ -6,13 +6,13 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 15:36:39 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/14 16:29:02 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 12:56:45 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lexer.h"
 
-void	remove_remaning_type(t_lexer **lex, t_token_type type)
+void	remove_remaining_type(t_lexer **lex, t_token_type type)
 {
 	t_lexer	*search;
 	t_lexer	*tmp;

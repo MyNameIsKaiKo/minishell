@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:50:45 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/22 15:36:20 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 12:52:54 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint)
 	t_lexer	*left;
 	t_ast	*node;
 
-	node = nodenew(lexhead, checkpoint);
+	node = nodenew(checkpoint);
 	if (!node)
 		return (NULL);
 	right = getright(*lexhead, node->old_lexindex);
