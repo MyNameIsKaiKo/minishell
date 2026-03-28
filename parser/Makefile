@@ -20,11 +20,11 @@ SOURCE = 	main.c \
 			./lexer/utils/word_and_ponct_merger.c \
 			./lexer/utils/remove_rponct.c \
 			./ast.c \
-			./act_utils.c \
+			./ast_utils.c \
 			./node/nodenew.c \
 			./node/node_add.c \
 			./node/node_free.c \
-			./node/nodenew_utils.c
+			./node/nodenew_data.c 
 
 LIBFT_DIR = ../include/libft
 LIBFT = $(LIBFT_DIR)/libft.a
