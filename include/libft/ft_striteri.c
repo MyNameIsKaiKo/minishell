@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/21 19:25:25 by jleray            #+#    #+#             */
-/*   Updated: 2025/10/21 19:25:25 by jleray           ###   ########.fr       */
+/*   Created: 2025/10/22 14:07:33 by nredouan          #+#    #+#             */
+/*   Updated: 2025/10/24 17:33:52 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char *))
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	int	i;
 
-	i = 0;
-	if (!s || !f)
+	if (!f || !s)
 		return ;
+	i = 0;
 	while (s[i])
 	{
-		(*f)(i, &s[i]);
+		f(i, &s[i]);
 		i++;
 	}
-	return ;
 }

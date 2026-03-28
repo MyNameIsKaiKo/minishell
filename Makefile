@@ -1,19 +1,34 @@
-NAME			= minishell
-CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g
-RM				= rm -f
+NAME		= minishell
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror -g
+RM			= rm -f
 
-OBJ_DIR			= obj
+OBJ_DIR		= obj
 
-# VPATH			= 
+VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env
 
-SRCS 			=	prompt.c
+SRCS 		=	main.c \
+				prompt.c \
+				cd.c \
+				cd_utils.c \
+				pwd.c \
+				unset.c \
+				env.c  \
+				export.c \
+				echo.c \
+				print_export.c \
+				export_utils.c \
+				set_export.c \
+				quick_string_sort.c \
+				env_variable.c \
+				general_utils.c \
+				wildcards.c
 
-OBJS			= $(SRCS:%.c=$(OBJ_DIR)/%.o)
+OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-LIBFT_DIR		= include/libft
-LIBFT			= $(LIBFT_DIR)/libft.a
-INCLUDES		= -I includes -I src -I $(LIBFT_DIR)
+LIBFT_DIR	= include/libft
+LIBFT		= $(LIBFT_DIR)/libft.a
+INCLUDES	= -I includes -I src -I $(LIBFT_DIR)
 
 all: $(NAME)
 
