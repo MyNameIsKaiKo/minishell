@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/28 12:56:37 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 14:27:27 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	handle_singletype(char *s, char *og)
 	if (!ft_strncmp(s, "(", 1) || !ft_strncmp(s, ")", 1))
 		return (PONCT);
 	if (!ft_strncmp(s, " ", 1))
-		return (SPACE);
+		return (WSPACE);
 	return (0);
 }
 
@@ -106,7 +106,7 @@ t_lexer	*lexer(char *str)
 	{
 		handle_ponct(&lex);
 		merge_words(&lex);
-		remove_remaining_type(&lex, SPACE);
+		remove_remaining_type(&lex, WSPACE);
 		remove_remaining_type(&lex, PONCT);
 		lexerlst_trim(&lex);
 	}

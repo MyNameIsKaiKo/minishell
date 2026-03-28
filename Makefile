@@ -7,7 +7,7 @@ OBJ_DIR		= obj
 
 VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node
 
-SRCS 		=	main.c \
+SRCS 		=	maintest.c \
 				prompt.c \
 				cd.c \
 				cd_utils.c \
@@ -28,7 +28,7 @@ SRCS 		=	main.c \
 				nodenew.c \
 				node_add.c \
 				node_free.c \
-				nodenew_data .c \
+				nodenew_data.c \
 				lexer.c \
 				handle_ponct.c \
 				lexerlst_add.c \
@@ -44,14 +44,14 @@ SRCS 		=	main.c \
 				lexer_utils.c \
 				word_merger.c \
 				word_and_ponct_merger.c \
-				remove_rponct.c \
+				remove_rponct.c 
 
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 LIBFT_DIR	= include/libft
 LIBFT		= $(LIBFT_DIR)/libft.a
-INCLUDES	= -I includes -I src -I $(LIBFT_DIR)
+INCLUDES	= -I includes -I src -I $(LIBFT_DIR) -I./parser/lexer -I./parser
 
 all: $(NAME)
 

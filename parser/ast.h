@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/28 12:52:40 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 14:49:01 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,7 @@ void					ast_free(t_ast **ast);
 int						handle_cmd_merge(t_lexer **lexhead, t_lexer *checkpoint,
 							t_ast **node);
 void					handle_node_data(t_ast **new_node, t_lexer *checkpoint);
+
+//	--- ast exec Function ---
+int						exec_tree(t_ast *tree);
 #endif

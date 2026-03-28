@@ -6,13 +6,13 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:50:45 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/28 12:52:54 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 14:43:21 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint)
+static t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint)
 {
 	t_lexer	*right;
 	t_lexer	*left;

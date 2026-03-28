@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/28 12:56:51 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/28 14:26:41 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum e_token_type
 	REDIR_IN = 3,
 	REDIR_OUT = 4,
 	PONCT = 5,
-	SPACE = 6,
+	WSPACE = 6,
 	HEREDOC = 7,
 	APPEND = 8,
 	PIPE = 9,
