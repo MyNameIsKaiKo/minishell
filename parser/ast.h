@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/28 16:45:03 by jleray           ###   ########.fr       */
+/*   Updated: 2026/03/29 12:35:42 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ typedef struct s_filesfd
 	int					fdout;
 }						t_filesfd;
 
+typedef struct s_data
+{
+	struct s_filesfd	filesfd;
+	struct s_env		**env;
+}						t_data;
+
 typedef struct s_ast
 {
 	enum e_token_ast	type;
@@ -49,7 +55,6 @@ typedef struct s_ast
 	struct s_ast		*right;
 	struct s_ast		*head;
 	int					old_lexindex;
-	struct s_filesfd	filesfd;
 }						t_ast;
 
 //	--- ast Function ---
@@ -69,5 +74,19 @@ int						handle_cmd_merge(t_lexer **lexhead, t_lexer *checkpoint,
 void					handle_node_data(t_ast **new_node, t_lexer *checkpoint);
 
 //	--- ast exec Function ---
-int						exec_tree(t_ast *tree);
+int						exec_tree(t_ast *tree, t_data data);
+
+//	--- ast exec cmd utils Function ---
+int						is_builtin(char *str);
+void					child_init(t_data data);
+char					*find_cmdpath(char **paths, char *cmd);
+char					**find_path(t_data data);
+
+//	--- free Function ---
+void					free_sarr(char **arr);
+
+//	--- cmd error Function ---
+int						cmd_path_error(char **args, char **paths, char *cmd);
+int						cmd_error(char *cmd);
+
 #endif
