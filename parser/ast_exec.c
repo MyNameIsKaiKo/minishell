@@ -23,7 +23,7 @@ int	exec_operator(t_ast *tree, t_data data)
 			exec_tree(tree->right, data);
 		return (1);
 	}
-	else if (ft_strncmp(tree->data, "||", 2))
+	else if (!ft_strncmp(tree->data, "||", 2))		
 	{
 		output = exec_tree(tree->left, data);
 		if (!output)

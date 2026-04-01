@@ -3,3 +3,5 @@ minishell
 *.json
 obj
 readline.supp
+
+compile_commands.json
