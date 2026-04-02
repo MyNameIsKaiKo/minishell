@@ -78,7 +78,7 @@ char	**find_path(t_data data)
 	char	**paths;
 
 	env = *data.env;
-	while (!ft_strncmp(env->name, "PATH", 4))
+	while (ft_strncmp(env->name, "PATH", 4))
 		env = env->next;
 	if (!env)
 		return (NULL);
