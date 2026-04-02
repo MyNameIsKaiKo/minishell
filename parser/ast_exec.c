@@ -47,12 +47,19 @@ int	exec_redir(t_ast *tree, t_data data)
 	fd = 0;
 	if (!ft_strcmp(tree->args[0], "<"))
 	{
+		if (data.filesfd.fdin > 1)
+			close(data.filesfd.fdin);
 		fd = open(tree->args[1], O_RDONLY);
 		data.filesfd.fdin = fd;
 	}
 	else if (!ft_strcmp(tree->args[0], ">") || !ft_strcmp(tree->args[0], ">>"))
 	{
-		fd = open(tree->args[1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		if (data.filesfd.fdout > 1)
+			close(data.filesfd.fdout);
+		if (!ft_strcmp(tree->args[0], ">"))
+			fd = open(tree->args[1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		else
+			fd = open(tree->args[1], O_CREAT | O_APPEND | O_WRONLY, 0644);
 		data.filesfd.fdout = fd;
 	}
 	if (tree->left)
