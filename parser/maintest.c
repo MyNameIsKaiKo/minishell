@@ -1,36 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   maintest.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 13:09:45 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/28 13:30:15 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/03 16:27:31 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 #include <stdio.h>
-
-void	print_tree(t_ast *tree)
-{
-	if (!tree)
-		return ;
-	print_tree(tree->left);
-	if (tree->data)
-		printf("Data : %s \n", tree->data);
-	if (tree->args)
-	{
-		int i = 0;
-
-		printf("Data :");
-		while (tree->args[i++])
-			printf(" %s ", tree->args[i-1]);
-		printf("\n");
-	}
-	print_tree(tree->right);
-}
 
 int	main(void)
 {
@@ -48,9 +29,14 @@ int	main(void)
 	if (!lex)
 		return (0);
 	printf("\n");
-	printf("--------------------");
+	printf("TEST LEAK");
 	printf("\n");
-	// while (lex)
+	lexer_free(&head);
+	ast_free(&asthead);
+	return (0);
+}
+
+// while (lex)
 	// {
 		// if (lex->type == WORD)
 			// type = ft_strdup("WORD");
@@ -74,7 +60,4 @@ int	main(void)
 		// lex = lex->next;
 		// free(type);
 	// }
-	print_tree(asthead);
-	lexer_free(&head);
-	return (0);
-}
+	// print_tree(asthead);
