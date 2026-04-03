@@ -21,10 +21,17 @@ SRCS 		=	maintest.c \
 				set_export.c \
 				quick_string_sort.c \
 				env_variable.c \
+				reverse_env.c \
 				general_utils.c \
 				wildcards.c \
 				ast.c \
+				ast_exec.c \
+				ast_exec_cmd.c \
+				ast_exec_cmd_utils.c \
+				ast_exec_pipe.c \
 				ast_utils.c \
+				free_tools.c \
+				cmd_error.c \
 				nodenew.c \
 				node_add.c \
 				node_free.c \

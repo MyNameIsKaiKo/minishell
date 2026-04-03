@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:43:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/03 15:57:28 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/03 16:53:24 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int	exec_redir(t_ast *tree, t_data data)
 	fd = 0;
 	if (!ft_strcmp(tree->args[0], "<"))
 	{
-		if (data.filesfd.fdin > 1)
+		if (data.filesfd.fdin > 2)
 			close(data.filesfd.fdin);
 		fd = open(tree->args[1], O_RDONLY);
 		data.filesfd.fdin = fd;
 	}
 	else if (!ft_strcmp(tree->args[0], ">") || !ft_strcmp(tree->args[0], ">>"))
 	{
-		if (data.filesfd.fdout > 1)
+		if (data.filesfd.fdout > 2)
 			close(data.filesfd.fdout);
 		if (!ft_strcmp(tree->args[0], ">"))
 			fd = open(tree->args[1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
@@ -86,6 +86,6 @@ int	exec_tree(t_ast *tree, t_data data)
 	else if (tree->type == SUBPROCESS_AST)
 		output = exec_subprocess(tree, data);
 	else
-		output = exec_cmds(tree);
+		output = exec_cmd(tree, data);
 	return (output);
 }
