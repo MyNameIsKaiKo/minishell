@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/03 17:26:40 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/03 17:53:38 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**find_path(t_data data)
 	char	**paths;
 
 	env = data.env;
-	while (env)
+	while (*env)
 	{
 		if (!ft_strncmp((*env)->name, "PATH", 4))
 			break ;

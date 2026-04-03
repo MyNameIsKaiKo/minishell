@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 12:09:38 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/29 12:22:06 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/03 18:20:30 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ char	**reverse_env(t_env **env)
 	while (tmp)
 	{
 		tmpstr = ft_strjoin(tmp->name, "=");
-		output[i - 1] = ft_strjoin(tmpstr, tmp->value);
+		output[i] = ft_strjoin(tmpstr, tmp->value);
 		free(tmpstr);
 		tmp = tmp->next;
+		i++;
 	}
 	return (output);
 }
