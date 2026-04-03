@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/29 12:41:47 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/03 17:14:16 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	exec_cmd(t_ast *tree, t_data data)
 	int		status;
 
 	status = 0;
+	printf("\nExecuting command : %s\n", tree->args[0]);
 	if (is_builtin(tree->args[0]))
 		exec_builtin();
 	else

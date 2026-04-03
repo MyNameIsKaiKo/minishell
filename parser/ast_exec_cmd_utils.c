@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/29 12:36:53 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/03 17:26:40 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,19 @@ static char	**find_directpath(t_env *env)
 
 char	**find_path(t_data data)
 {
-	t_env	*env;
+	t_env	**env;
 	char	**paths;
 
-	env = *data.env;
+	env = data.env;
 	while (env)
 	{
-		if (!ft_strncmp(env->name, "PATH", 4))
+		if (!ft_strncmp((*env)->name, "PATH", 4))
 			break ;
-		env = env->next;
+		(*env) = (*env)->next;
 	}
 	if (!env)
 		return (NULL);
-	paths = find_directpath(env);
+	paths = find_directpath(*env);
 	if (!paths)
 		return (NULL);
 	return (paths);
