@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:43:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/29 10:34:09 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/03 15:57:28 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,13 @@ int	exec_operator(t_ast *tree, t_data data)
 			exec_tree(tree->right, data);
 		return (1);
 	}
-	else if (!ft_strncmp(tree->data, "||", 2))		
+	else if (!ft_strncmp(tree->data, "||", 2))
 	{
 		output = exec_tree(tree->left, data);
 		if (!output)
 			exec_tree(tree->right, data);
 		return (1);
 	}
-	return (0);
-}
-
-int	exec_pipe(t_ast *tree, t_data data)
-{
-	(void)tree;
-	(void)data;
 	return (0);
 }
 
@@ -81,7 +74,7 @@ int	exec_subprocess(t_ast *tree, t_data data)
 
 int	exec_tree(t_ast *tree, t_data data)
 {
-	int		output;
+	int	output;
 
 	output = 0;
 	if (tree->type == OPERATOR_AST)

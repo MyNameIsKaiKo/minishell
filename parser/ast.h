@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/29 12:35:42 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/03 15:58:04 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void					handle_node_data(t_ast **new_node, t_lexer *checkpoint);
 
 //	--- ast exec Function ---
 int						exec_tree(t_ast *tree, t_data data);
+int						exec_pipe(t_ast *tree, t_data data);
+int						exec_cmd(t_ast *tree, t_data data);
 
 //	--- ast exec cmd utils Function ---
 int						is_builtin(char *str);
