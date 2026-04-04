@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:43:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/03 16:53:24 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/04 11:07:23 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,7 @@ int	exec_redir(t_ast *tree, t_data data)
 
 int	exec_subprocess(t_ast *tree, t_data data)
 {
-	if (tree->type == SUBPROCESS_AST)
-	{
-		if (!exec_tree(tree->left, data))
-			return (0);
-	}
+	exec_tree(tree->left, data);
 	return (1);
 }
 

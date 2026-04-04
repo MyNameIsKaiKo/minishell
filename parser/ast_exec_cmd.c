@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/03 17:14:16 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/04 06:53:26 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	exec_cmd(t_ast *tree, t_data data)
 			status = exec_child(tree, data);
 		waitpid(cmd, NULL, 0);
 		if (status != 1)
-			write(1, "TODO", 4);
+			printf("TODO : Status return and status error \n");
 	}
 	return (1);
 }
