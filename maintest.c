@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/03 18:01:06 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/04 05:55:29 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,6 @@ void	main_loop(char **prompt, t_env **env_var, t_silent_env *senv)
 		data.filesfd.fdout = STDOUT_FILENO;
 		data.env = env_var;
 		exec_tree(ast, data);
-		rl_clear_history();
-		free_env(*env_var);
-		free(senv->pwd);
-		free(*prompt);
 	}
 }
 
