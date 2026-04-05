@@ -6,16 +6,11 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/04 06:53:26 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/04 11:59:46 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
-
-int	exec_builtin(void)
-{
-	return (1);
-}
 
 int	exec_child(t_ast *tree, t_data data)
 {
@@ -51,7 +46,7 @@ int	exec_cmd(t_ast *tree, t_data data)
 	status = 0;
 	printf("\nExecuting command : %s\n", tree->args[0]);
 	if (is_builtin(tree->args[0]))
-		exec_builtin();
+		exec_builtin(tree, data);
 	else
 	{
 		cmd = fork();

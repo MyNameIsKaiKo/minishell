@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/03 17:53:38 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/04 11:47:32 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int	is_builtin(char *str)
 
 void	child_init(t_data data)
 {
-	if (data.filesfd.fdin > 1)
+	if (data.filesfd.fdin > 2)
 	{
 		dup2(data.filesfd.fdin, STDIN_FILENO);
 		close(data.filesfd.fdin);
 	}
-	if (data.filesfd.fdout > 1)
+	if (data.filesfd.fdout > 2)
 	{
 		dup2(data.filesfd.fdout, STDOUT_FILENO);
 		close(data.filesfd.fdout);

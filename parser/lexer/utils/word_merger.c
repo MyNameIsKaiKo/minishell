@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 17:36:34 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/15 12:58:32 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/04 12:22:12 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	merge_words(t_lexer **lex)
 {
-	t_lexer *tmp;
+	t_lexer	*tmp;
 
 	indexing_lex(lex);
 	tmp = *lex;

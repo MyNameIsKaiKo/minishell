@@ -28,6 +28,7 @@ SRCS 		=	maintest.c \
 				ast_exec.c \
 				ast_exec_cmd.c \
 				ast_exec_cmd_utils.c \
+				ast_exec_builtin.c \
 				ast_exec_pipe.c \
 				ast_utils.c \
 				free_tools.c \
