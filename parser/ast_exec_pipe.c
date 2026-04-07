@@ -64,6 +64,6 @@ int	exec_pipe(t_ast *tree, t_data data)
 	close(data.filesfd.fdin);
 	close(data.filesfd.fdout);
 	waitpid(first_child, NULL, 0);
-	waitpid(first_child, &status, 0);
+	waitpid(scd_child, &status, 0);
 	return (0);
 }
