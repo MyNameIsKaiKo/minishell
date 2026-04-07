@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:14:27 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/27 16:05:37 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/28 14:48:38 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,10 @@ char	**wildcards(char *pattern)
 	result = recup_names(pattern, result, i);
 	if (!result)
 		return (NULL);
+	if (!result[0])
+	{
+		result[0] = ft_strdup(pattern);
+		result[1] = NULL;
+	}
 	return (result);
 }

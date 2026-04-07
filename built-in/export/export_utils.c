@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:18:29 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/19 16:29:11 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:31:17 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ bool	parser_export(char *arg)
 		if ((arg[i] == '=' || (arg[i] == '+'
 					&& arg[i + 1] && arg[i + 1] == '=')) && i != 0)
 			return (true);
-		else if (!ft_isalpha(arg[i]) && arg[i] != '_')
+		else if (!ft_isalnum(arg[i]) && arg[i] != '_')
 			return (false);
 		i++;
 	}

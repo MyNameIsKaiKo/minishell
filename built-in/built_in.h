@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:55 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/26 11:19:40 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/04 18:48:03 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,23 @@
 # include "../env_var/env_var.h"
 
 /*Execute "cd" built-in: change current working directory*/
-char				*cd(char **args, t_env *env_var, t_silent_env *senv);
-char				*path_error(char *path, char *oldpath, t_silent_env *senv);
+char				*cd(char **args, t_env *env_var);
+char				*path_error(char *path, char *oldpath, t_env *env_var);
 void				set_dash_pwd(t_env *pwd,
-						t_env *old_pwd, t_silent_env *senv);
-void				set_dash_oldpwd(t_env *old_pwd);
-void				change_pwd(t_env *old_pwd,
-						char *newpwd, char *oldpwd, t_silent_env *senv);
+						t_env *old_pwd, t_env *env_var);
+void				set_dash_oldpwd(t_env *old_pwd, t_env *env_var);
+void				change_pwd(t_env *old_pwd, char *newpwd, char *oldpwd);
 
 /*Execute "pwd" built-in: write the path of the current working
 directory in the standard output*/
-void				pwd(t_silent_env *senv);
+void				pwd(char **args, t_env *env_var);
 
 /*Execute "unset" built-in: unset one or multiple env vars*/
 t_env				*unset(char **args, t_env *env_var);
 
 /*Execute "env" built-in: print the list of env vars,
 except those that have not been assigned a value*/
-void				env(char **arg, t_env *env_var);
+void				env(char **args, t_env *env_var);
 
 /*Execute "export" built-in: create new env vars,
 change value of an env var or print the list of env vars*/
@@ -61,6 +60,6 @@ void				quick_sort(char **name, int start, int end);
 /*Execute "echo" built-in: write arguments in the standard output*/
 void				echo(char **args, t_env *env_var);
 
-char				*build_prompt(t_silent_env *senv);
+char				*build_prompt(char *pwd);
 
 #endif

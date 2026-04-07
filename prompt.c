@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:18:50 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/26 11:22:26 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:24:07 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,13 @@ static char	*ft_strjoinjoin(const char *s1, const char *s2, const char *s3)
 	return (dest);
 }
 
-char	*build_prompt(t_silent_env *senv)
+char	*build_prompt(char *pwd)
 {
 	char	*prompt;
-	char	*tmp;
 
-	tmp = getcwd(NULL, 0);
-	if (!tmp)
-		prompt = ft_strjoinjoin("\001\033[35m\002<T&J minishell>", senv->pwd,
-				"$ \001\033[0m\002");
-	else
-		prompt = ft_strjoinjoin("\001\033[35m\002<T&J minishell>", tmp,
-				"$ \001\033[0m\002");
-	free(tmp);
+	prompt = ft_strjoinjoin("\001\033[35m\002<T&J minishell>", pwd,
+			"$ \001\033[0m\002");
+	if (!prompt)
+		return (NULL);
 	return (prompt);
 }

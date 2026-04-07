@@ -6,20 +6,14 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 13:37:33 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/26 17:46:11 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/04 18:48:43 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../built_in.h"
 
-void	pwd(t_silent_env *senv)
+void	pwd(char **args, t_env *env_var)
 {
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		printf("%s\n", senv->pwd);
-	else
-		printf("%s\n", pwd);
-	free(pwd);
+	(void)args;
+	printf("%s\n", env_var->s_pwd);
 }
