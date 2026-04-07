@@ -66,7 +66,10 @@ static void	find_scdq(t_lexer **lex, t_quotedata *data)
 	if (cdata.lex_index != 0 && data->lex_index != 0)
 		lexer_merge(lex, data->lex_index, cdata.lex_index, WORD);
 	else if (data->lex_index != 0)
-		tmp->type = WORD;
+	{
+		if (tmp)
+			tmp->type = WORD;
+	}
 }
 
 void	combined_quotes(t_lexer **lex)

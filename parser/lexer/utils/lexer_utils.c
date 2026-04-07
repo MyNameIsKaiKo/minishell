@@ -34,7 +34,7 @@ char	*strcjoin(char *s, char c)
 
 int	is_complete_w(char *str, char *og)
 {
-	if (*str && *og == ' ')
+	if (*str && (*og == ' ' || *og == '\t' || *og == '\n'))
 		return (1);
 	if (*og == '(' || *og == ')' || *og == '\'' || *og == '\"' || *og == '\0')
 		return (1);
