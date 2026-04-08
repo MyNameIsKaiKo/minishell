@@ -24,6 +24,7 @@ SRCS 		=	maintest.c \
 				reverse_env.c \
 				general_utils.c \
 				wildcards.c \
+				apply_wildcards.c \
 				ast.c \
 				ast_exec.c \
 				ast_exec_cmd.c \
@@ -55,7 +56,8 @@ SRCS 		=	maintest.c \
 				word_and_ponct_merger.c \
 				remove_rponct.c \
 				expander.c \
-				expand_var.c
+				expand_var.c \
+				apply_expend.c
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/05 18:54:15 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/08 18:21:00 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_lexer
 	struct s_lexer		*next;
 	struct s_lexer		*to_freen;
 	int					index;
+	int					is_squoted;
 }						t_lexer;
 
 // -- struct Function --

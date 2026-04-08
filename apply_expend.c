@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexerlst_new.c                                     :+:      :+:    :+:   */
+/*   apply_expend.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/20 23:46:22 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 18:21:15 by jleray           ###   ########.fr       */
+/*   Created: 2026/04/08 16:16:05 by jleray            #+#    #+#             */
+/*   Updated: 2026/04/08 16:34:11 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lexer.h"
+#include "minishell.h"
 
-t_lexer	*lexernew(char *data, int type)
+void	apply_expend(t_lexer **lex, t_data data)
 {
-	t_lexer	*lexernew;
+	t_lexer	*tmp;
 
-	lexernew = malloc(sizeof(t_lexer));
-	if (!lexernew)
-		return (NULL);
-	lexernew->data = data;
-	lexernew->type = type;
-	lexernew->next = NULL;
-	lexernew->to_freen = NULL;
-	lexernew->is_squoted = 0;
-	return (lexernew);
+	tmp = *lex;
+	while (tmp)
+	{
+		tmp->data = expander(tmp->data, *data.env);
+		tmp = tmp->next;
+	}
 }

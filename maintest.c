@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/04 05:55:29 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/08 19:25:12 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	handler(int signal)
 	rl_redisplay();
 }
 
-void	main_loop(char **prompt, t_env **env_var, t_silent_env *senv)
+void	main_loop(char **prompt, t_env **env_var)
 {
 	char	*tmp;
 	t_lexer	*lex;
@@ -38,17 +38,18 @@ void	main_loop(char **prompt, t_env **env_var, t_silent_env *senv)
 			free(tmp);
 			rl_clear_history();
 			free_env(*env_var);
-			free(senv->pwd);
 			free(*prompt);
 			break ;
 		}
-		lex = lexer(tmp);
-		free(tmp);
-		ast = make_tree(&lex);
-		lexer_free(&lex);
 		data.filesfd.fdin = STDIN_FILENO;
 		data.filesfd.fdout = STDOUT_FILENO;
 		data.env = env_var;
+		lex = lexer(tmp);
+		free(tmp);
+		apply_expend(&lex, data);
+		apply_wildcard(&lex);
+		ast = make_tree(&lex);
+		lexer_free(&lex);
 		exec_tree(ast, data);
 	}
 }
@@ -57,23 +58,19 @@ int	main(int ac, char **av, char **envp)
 {
 	t_env			*env_var;
 	char			*prompt;
-	t_silent_env	senv;
 
 	(void)ac;
-	(void)av;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
-	env_var = init_env(envp);
-	senv.pwd = getcwd(NULL, 0);
-	prompt = build_prompt(&senv);
+	env_var = init_env(envp, av[0]);
+	prompt = build_prompt(env_var->s_pwd);
 	if (!prompt || !env_var)
 	{
 		ft_putendl_fd("minishell: internal fatal error", 2);
 		free_env(env_var);
-		free(senv.pwd);
 		free(prompt);
 		return (1);
 	}
-	main_loop(&prompt, &env_var, &senv);
+	main_loop(&prompt, &env_var);
 	return (0);
 }

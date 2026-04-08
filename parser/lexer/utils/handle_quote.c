@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 11:14:23 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 15:40:36 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/08 19:15:42 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ static void	find_scdq(t_lexer **lex, t_quotedata *data)
 	else
 		get_scdq(tmp, &cdata, "\"");
 	if (cdata.lex_index != 0 && data->lex_index != 0)
-		lexer_merge(lex, data->lex_index, cdata.lex_index, WORD);
+	{
+		tmp = lexer_merge(lex, data->lex_index, cdata.lex_index, WORD);
+		if (data->state == SQUOTE)
+			tmp->is_squoted = 1;
+	}
 	else if (data->lex_index != 0)
 		tmp->type = WORD;
 }

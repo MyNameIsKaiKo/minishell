@@ -6,11 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:50:36 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/07 15:42:02 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/08 16:42:45 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "minishell.h"
 
 static char	*supp_dquote(char *result)
 {

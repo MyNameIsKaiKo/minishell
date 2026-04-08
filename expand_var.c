@@ -6,11 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 18:07:37 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/07 11:54:45 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/08 16:42:34 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "minishell.h"
 
 static t_env	*get_exp(char *arg, char *var, t_env *env_var, int *size)
 {

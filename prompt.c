@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:18:50 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/06 16:24:07 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/08 18:39:12 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*do_the_join(char *dest, const char *src, int start)
 	return (dest);
 }
 
-static char	*ft_strjoinjoin(const char *s1, const char *s2, const char *s3)
+char	*ft_strjoinjoin(const char *s1, const char *s2, const char *s3)
 {
 	char	*dest;
 	size_t	size1;

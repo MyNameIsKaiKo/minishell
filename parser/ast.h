@@ -6,14 +6,14 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/04 11:59:09 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/08 16:39:36 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
-# include "../minishell.h"
+# include "../header.h"
 # include "./lexer/lexer.h"
 
 typedef enum e_token_ast

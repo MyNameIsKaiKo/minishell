@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/06 18:41:13 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/08 19:32:58 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_env	*env_last(t_env *lst)
 
 /*Create the first node of the linked list env_var.
 "name" and "value" need to be allocated.*/
-t_env	*first_env(char *name, char *value)
+t_env	*first_env(char *name, char *value, char *executable)
 {
 	t_env	*env_var;
 
@@ -59,6 +59,7 @@ t_env	*first_env(char *name, char *value)
 	env_var->name = name;
 	env_var->value = value;
 	env_var->s_pwd = getcwd(NULL, 0);
+	env_var->exec = ft_strdup(executable);
 	env_var->prev = NULL;
 	env_var->next = NULL;
 	return (env_var);
@@ -81,14 +82,14 @@ void	add_env(t_env *env_var, char *name, char *value)
 	}
 	last->next->name = name;
 	last->next->value = value;
-	last->next->s_pwd = env_var->s_pwd;
+	last->next->exec = env_var->exec;
 	last->next->prev = last;
 	last->next->next = NULL;
 }
 
 /*Initialize the linked list env_var. We will use this list
 in every built-in of our Minishell program.*/
-t_env	*init_env(char **envp)
+t_env	*init_env(char **envp, char *executable)
 {
 	t_env	*env_var;
 	int		i;
@@ -103,7 +104,7 @@ t_env	*init_env(char **envp)
 			j++;
 		if (!env_var)
 			env_var = first_env(ft_substr(envp[i], 0, j),
-					ft_substr(envp[i], j + 1, ft_strlen(envp[i])));
+					ft_substr(envp[i], j + 1, ft_strlen(envp[i])), executable);
 		else
 			add_env(env_var, ft_substr(envp[i], 0, j),
 				ft_substr(envp[i], j + 1, ft_strlen(envp[i])));
@@ -111,6 +112,6 @@ t_env	*init_env(char **envp)
 		i++;
 	}
 	if (!env_var)
-		env_var = first_env(NULL, NULL);
+		env_var = first_env(NULL, NULL, executable);
 	return (env_var);
 }

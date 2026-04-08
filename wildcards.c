@@ -6,12 +6,12 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:14:27 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/28 14:48:38 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/08 16:40:46 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
-#include "header.h"
+#include "minishell.h"
 
 static int	count_obj(void)
 {
