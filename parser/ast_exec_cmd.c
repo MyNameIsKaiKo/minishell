@@ -51,10 +51,10 @@ int	exec_cmd(t_ast *tree, t_data data)
 	{
 		cmd = fork();
 		if (cmd == 0)
-			status = exec_child(tree, data);
-		waitpid(cmd, NULL, 0);
-		if (status != 1)
-			printf("TODO : Status return and status error \n");
+			exec_child(tree, data);
+		waitpid(cmd, &status, 0);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
 	}
 	return (1);
 }
