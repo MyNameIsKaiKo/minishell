@@ -19,25 +19,28 @@ int	exec_operator(t_ast *tree, t_data data)
 	if (!ft_strncmp(tree->data, "&&", 2))
 	{
 		output = exec_tree(tree->left, data);
-		if (output)
+		if (!output)
 			exec_tree(tree->right, data);
-		return (1);
+		return (output);
 	}
 	else if (!ft_strncmp(tree->data, "||", 2))
 	{
 		output = exec_tree(tree->left, data);
-		if (!output)
+		if (output)
 			exec_tree(tree->right, data);
-		return (1);
+		return (output);
 	}
-	return (0);
+	return (1);
 }
 
 int	exec_redir(t_ast *tree, t_data data)
 {
 	int	fd;
+	int	status;
 
 	fd = 0;
+	if (!ft_strcmp(tree->args[0], "<<"))
+		fd = handle_heredoc(tree->args[1]);
 	if (!ft_strcmp(tree->args[0], "<"))
 	{
 		if (data.filesfd.fdin > 2)
@@ -56,10 +59,10 @@ int	exec_redir(t_ast *tree, t_data data)
 		data.filesfd.fdout = fd;
 	}
 	if (tree->left)
-		exec_tree(tree->left, data);
+		status = exec_tree(tree->left, data);
 	if (tree->right)
-		exec_tree(tree->right, data);
-	return (fd);
+		status = exec_tree(tree->right, data);
+	return (0);
 }
 
 int	exec_subprocess(t_ast *tree, t_data data)

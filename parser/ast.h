@@ -80,6 +80,7 @@ int						exec_tree(t_ast *tree, t_data data);
 int						exec_pipe(t_ast *tree, t_data data);
 int						exec_cmd(t_ast *tree, t_data data);
 int						exec_builtin(t_ast *tree, t_data data);
+int						exec_heredoc(char *delimiter);
 
 //	--- ast exec cmd utils Function ---
 int						is_builtin(char *str);
