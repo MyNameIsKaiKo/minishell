@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:47:32 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/05 18:55:53 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/08 16:03:10 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	lexer_free(t_lexer **lex)
 		tmp = *lex;
 		if (tmp->data)
 			free(tmp->data);
-		(*lex) = (*lex)->to_freen;
+		(*lex) = (*lex)->next;
 		free(tmp);
 	}
 	*lex = NULL;
