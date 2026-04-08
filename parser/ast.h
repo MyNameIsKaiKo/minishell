@@ -38,7 +38,8 @@ typedef struct s_filesfd
 {
 	int					fdin;
 	int					fdout;
-	int					fdtmp;
+	int					fdintmp;
+	int					fdouttmp;
 }						t_filesfd;
 
 typedef struct s_data

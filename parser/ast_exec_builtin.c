@@ -16,13 +16,13 @@ static void	builtin_init(t_data *data)
 {
 	if (data->filesfd.fdin > 2)
 	{
-		data->filesfd.fdtmp = dup(STDIN_FILENO);
+		data->filesfd.fdintmp = dup(STDIN_FILENO);
 		dup2(data->filesfd.fdin, STDIN_FILENO);
 		close(data->filesfd.fdin);
 	}
 	if (data->filesfd.fdout > 2)
 	{
-		data->filesfd.fdtmp = dup(STDOUT_FILENO);
+		data->filesfd.fdouttmp = dup(STDOUT_FILENO);
 		dup2(data->filesfd.fdout, STDOUT_FILENO);
 		close(data->filesfd.fdout);
 	}
@@ -32,13 +32,13 @@ static void	buildin_closefd(t_data *data)
 {
 	if (data->filesfd.fdin > 2)
 	{
-		dup2(data->filesfd.fdtmp, data->filesfd.fdin);
-		close(data->filesfd.fdin);
+		dup2(data->filesfd.fdintmp, data->filesfd.fdin);
+		close(data->filesfd.fdintmp);
 	}
 	if (data->filesfd.fdout > 2)
 	{
-		dup2(data->filesfd.fdtmp, data->filesfd.fdout);
-		close(data->filesfd.fdout);
+		dup2(data->filesfd.fdouttmp, data->filesfd.fdout);
+		close(data->filesfd.fdouttmp);
 	}
 }
 
