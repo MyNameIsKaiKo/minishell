@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 02:17:06 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 02:17:06 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/08 15:34:13 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,22 @@
 
 int	exec_heredoc(char *delimiter)
 {
-	int	    pipefd[2];
+	int		pipefd[2];
 	char	*str;
 
-	if (pipe(pipefd == -1))
+	if (pipe(pipefd) == -1)
 		return (-1);
 	while (1)
 	{
-		str = readlien("> ");
-		if (!lien || !ft_strncmp(str, delimiter))
+		str = readline("> ");
+		if (!str || !ft_strcmp(str, delimiter))
 		{
 			free(str);
 			break ;
 		}
-
-		write(pipefd[1], read, ft_strlen(line));
+		write(pipefd[1], read, ft_strlen(str));
 		write(pipefd[1], "\n", 1);
-		free(read)
+		free(read);
 	}
 	close(pipefd[1]);
 	return (pipefd[0]);

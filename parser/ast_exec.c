@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:43:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/04 11:59:16 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/08 15:35:50 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	exec_operator(t_ast *tree, t_data data)
 	return (1);
 }
 
+// TODO add error on fd -1
 int	exec_redir(t_ast *tree, t_data data)
 {
 	int	fd;
@@ -40,7 +41,7 @@ int	exec_redir(t_ast *tree, t_data data)
 
 	fd = 0;
 	if (!ft_strcmp(tree->args[0], "<<"))
-		fd = handle_heredoc(tree->args[1]);
+		fd = exec_heredoc(tree->args[1]);
 	if (!ft_strcmp(tree->args[0], "<"))
 	{
 		if (data.filesfd.fdin > 2)

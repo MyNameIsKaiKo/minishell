@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_new.c                                        :+:      :+:    :+:   */
+/*   lexerlst_new.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:46:22 by jleray            #+#    #+#             */
-/*   Updated: 2026/02/20 23:46:22 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/05 19:04:17 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ t_lexer	*lexernew(char *data, int type)
 	lexernew->data = data;
 	lexernew->type = type;
 	lexernew->next = NULL;
+	lexernew->to_freen = NULL;
 	return (lexernew);
 }
