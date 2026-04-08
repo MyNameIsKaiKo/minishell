@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:39:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/19 16:29:09 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/04 17:07:09 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,10 @@ static t_env	*exec_export(char *arg, t_env *env_var, int separator)
 		free_strings(name, value);
 		return (env_var);
 	}
-	if (!env_var)
+	if (!env_var->name && !env_var->value)
 	{
-		env_var = first_env(name, value);
-		if (!env_var)
-		{
-			free_strings(name, value);
-			return (NULL);
-		}
+		env_var->name = name;
+		env_var->value = value;		
 	}
 	else if (!env_search(name, env_var))
 		add_env(env_var, name, value);

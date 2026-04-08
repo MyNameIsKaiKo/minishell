@@ -21,6 +21,8 @@ SOURCES =	ft_is.c \
 			ft_strmapi.c \
 			ft_striteri.c \
 			ft_put.c \
+			ft_tab_size.c \
+			ft_tab_char_copy.c \
 			ft_lstnew_bonus.c \
 			ft_lstadd_front_bonus.c \
 			ft_lstsize_bonus.c \

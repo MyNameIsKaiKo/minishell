@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 13:16:55 by nredouan          #+#    #+#             */
-/*   Updated: 2026/02/09 15:18:54 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/03/29 12:55:20 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,9 @@ int	ft_islower(int c)
 int	ft_isupper(int c)
 {
 	return ((c >= 'A' && c <= 'Z'));
+}
+
+int	ft_isspace(int c)
+{
+	return ((c >= 9 && c <= 13) || c == ' ');
 }

@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_export.c                                       :+:      :+:    :+:   */
+/*   ft_tab_size.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/13 13:54:41 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/04 17:45:40 by nredouan         ###   ########.fr       */
+/*   Created: 2026/03/31 21:21:16 by nredouan          #+#    #+#             */
+/*   Updated: 2026/04/02 18:11:21 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../built_in.h"
-
-char	*set_name(char *arg, int i)
+int	ft_tab_size(char **tab)
 {
-	if (arg[i - 1] == '+')
-		return (ft_substr(arg, 0, i - 1));
-	return (ft_substr(arg, 0, i));
-}
+	int	i;
 
-char	*set_value(char *arg, int i)
-{
-	if (!arg[i])
-		return (NULL);
-	else if (arg[i] == '=')
-	{
-		if (!arg[i + 1])
-			return (ft_strdup(""));
-	}
-	return (ft_substr(arg, i + 1, ft_strlen(arg)));
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }

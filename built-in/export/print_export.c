@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:21:09 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/21 12:52:57 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/04 16:13:25 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ int	ft_lst_env_size(t_env *lst)
 
 static void	print_export_var(t_env *env_var)
 {
-	printf("declare -x ");
 	if (!env_var->value)
-		printf("%s\n", env_var->name);
+	{
+		if (env_var->name)
+			printf("declare -x %s\n", env_var->name);
+	}
 	else
-		printf("%s=\"%s\"\n", env_var->name, env_var->value);
+		printf("declare -x %s=\"%s\"\n", env_var->name, env_var->value);
 }
 
 void	print_export(t_env *env_var)

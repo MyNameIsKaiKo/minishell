@@ -6,18 +6,18 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 16:44:38 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/30 17:15:00 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/06 13:37:34 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../built_in.h"
 
-bool	check_option(char *args)
+static bool	check_option(char *args)
 {
 	int		i;
 	
 	i = 0;
-	if (!(*args))
+	if (!args)
 		return (false);
 	if (args[i] == '-')
 	{
@@ -38,12 +38,7 @@ void	echo(char **args, t_env *env_var)
 	i = 0;
 	(void)env_var;
 	option = check_option(args[0]);
-	if (!(*args))
-	{
-		write(1, "\n", 1);
-		return ;
-	}
-	while (args[i])
+	while (args && args[i])
 	{
 		if (i == 0 && option)
 		{
