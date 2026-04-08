@@ -62,6 +62,7 @@ static int	handle_subprocess(t_lexer *checkpoint, t_ast *node)
 	sub_lex = lexer(content);
 	free(content);
 	node->left = make_tree(&sub_lex);
+	// TODO free sub lex
 	return (checkpoint->index);
 }
 
