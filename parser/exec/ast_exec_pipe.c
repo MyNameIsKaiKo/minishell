@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 15:57:13 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 13:29:36 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 15:47:54 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ void	handle_first(t_ast *tree, t_data data, int pipefd[2])
 		close(pipefd[1]);
 		exit(127);
 	}
-	dup2(data.filesfd.fdin, STDIN_FILENO);
+	else if (data.filesfd.fdin > 2)
+	{
+		dup2(data.filesfd.fdin, STDIN_FILENO);
+		close(data.filesfd.fdin);
+	}
 	dup2(pipefd[1], STDOUT_FILENO);
-	close(data.filesfd.fdin);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	exit(exec_tree(tree->left, data));
@@ -37,8 +40,11 @@ void	handle_scd(t_ast *tree, t_data data, int pipefd[2])
 		exit(127);
 	}
 	dup2(pipefd[0], STDIN_FILENO);
-	dup2(data.filesfd.fdout, STDOUT_FILENO);
-	close(data.filesfd.fdout);
+	if (data.filesfd.fdout > 2)
+	{
+		dup2(data.filesfd.fdout, STDOUT_FILENO);
+		close(data.filesfd.fdout);
+	}
 	close(pipefd[0]);
 	close(pipefd[1]);
 	exit(exec_tree(tree->right, data));
