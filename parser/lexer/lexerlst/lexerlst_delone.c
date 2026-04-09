@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 15:11:25 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/14 15:19:26 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 12:29:16 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	lexer_delone(t_lexer *to_del, t_lexer **head)
 	{
 		previous = find_by_index(*head, to_del->index - 1);
 		if (previous)
-			previous->next = to_del->next;
+			lexer_set_next(&previous, to_del->next);
 	}
 	if (to_del->data)
 		free(to_del->data);

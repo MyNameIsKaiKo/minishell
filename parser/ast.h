@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 16:39:36 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 13:02:57 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int						exec_pipe(t_ast *tree, t_data data);
 int						exec_cmd(t_ast *tree, t_data data);
 int						exec_builtin(t_ast *tree, t_data data);
 int						exec_heredoc(char *delimiter);
+int						exec_redir(t_ast *tree, t_data data);
 
 //	--- ast exec cmd utils Function ---
 int						is_builtin(char *str);

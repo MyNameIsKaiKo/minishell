@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 18:21:00 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 11:55:56 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void					lexer_free(t_lexer **lex);
 void					indexing_lex(t_lexer **lex);
 void					lexer_delone(t_lexer *to_del, t_lexer **head);
 void					lexerlst_trim(t_lexer **lex);
+void					lexer_abs_free(t_lexer **lex);
+void					lexer_set_next(t_lexer **lex, t_lexer *next);
 
 // -- lexer --
 t_lexer					*lexer(char *str);

@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:43:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 16:05:40 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 13:02:30 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,37 +34,6 @@ int	exec_operator(t_ast *tree, t_data data)
 }
 
 // TODO add error on fd -1
-int	exec_redir(t_ast *tree, t_data data)
-{
-	int	fd;
-	int	status;
-
-	fd = 0;
-	if (!ft_strcmp(tree->args[0], "<<"))
-		fd = exec_heredoc(tree->args[1]);
-	if (!ft_strcmp(tree->args[0], "<"))
-	{
-		if (data.filesfd.fdin > 2)
-			close(data.filesfd.fdin);
-		fd = open(tree->args[1], O_RDONLY);
-		data.filesfd.fdin = fd;
-	}
-	else if (!ft_strcmp(tree->args[0], ">") || !ft_strcmp(tree->args[0], ">>"))
-	{
-		if (data.filesfd.fdout > 2)
-			close(data.filesfd.fdout);
-		if (!ft_strcmp(tree->args[0], ">"))
-			fd = open(tree->args[1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
-		else
-			fd = open(tree->args[1], O_CREAT | O_APPEND | O_WRONLY, 0644);
-		data.filesfd.fdout = fd;
-	}
-	if (tree->left)
-		status = exec_tree(tree->left, data);
-	if (tree->right)
-		status = exec_tree(tree->right, data);
-	return (0);
-}
 
 int	exec_subprocess(t_ast *tree, t_data data)
 {

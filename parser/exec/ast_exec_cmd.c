@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/04 11:59:46 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 12:35:16 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	exec_cmd(t_ast *tree, t_data data)
 	status = 0;
 	printf("\nExecuting command : %s\n", tree->args[0]);
 	if (is_builtin(tree->args[0]))
-		exec_builtin(tree, data);
+		status = exec_builtin(tree, data);
 	else
 	{
 		cmd = fork();
@@ -56,5 +56,5 @@ int	exec_cmd(t_ast *tree, t_data data)
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 	}
-	return (1);
+	return (status);
 }

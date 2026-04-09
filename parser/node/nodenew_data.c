@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 21:13:24 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/28 13:03:06 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 12:00:38 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	handle_subprocess(t_lexer *checkpoint, t_ast *node)
 	sub_lex = lexer(content);
 	free(content);
 	node->left = make_tree(&sub_lex);
-	// TODO free sub lex
+	lexer_abs_free(&sub_lex);
 	return (checkpoint->index);
 }
 

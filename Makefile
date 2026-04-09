@@ -5,7 +5,7 @@ RM			= rm -f
 
 OBJ_DIR		= obj
 
-VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node
+VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node:parser/exec
 
 SRCS 		=	maintest.c \
 				prompt.c \
@@ -32,6 +32,7 @@ SRCS 		=	maintest.c \
 				ast_exec_builtin.c \
 				ast_exec_pipe.c \
 				ast_exec_heredoc.c \
+				ast_exec_redir.c \
 				ast_utils.c \
 				free_tools.c \
 				cmd_error.c \

@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 19:56:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/22 13:12:45 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 11:58:35 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ t_lexer	*lexer_merge(t_lexer **lex, int start, int stop, int type)
 	data = merge_data(start_lex, stop - start);
 	new_lex = lexernew(data, type);
 	tmp = find_by_index(*lex, stop + 1);
-	new_lex->next = tmp;
+	lexer_set_next(&new_lex, tmp);
 	tmp = find_by_index(*lex, stop);
 	tmp->next = NULL;
 	tmp = find_by_index(*lex, start - 1);
 	if (tmp)
-		tmp->next = new_lex;
+		lexer_set_next(&tmp, new_lex);
 	else
 		*lex = new_lex;
 	lexer_free(&start_lex);
