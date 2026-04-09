@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 19:25:12 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 12:04:16 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void	main_loop(char **prompt, t_env **env_var)
 		apply_expend(&lex, data);
 		apply_wildcard(&lex);
 		ast = make_tree(&lex);
-		lexer_free(&lex);
+		lexer_abs_free(&lex);
 		exec_tree(ast, data);
+		ast_free(&ast);
 	}
 }
 

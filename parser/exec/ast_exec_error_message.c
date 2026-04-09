@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexerlst_delone.c                                  :+:      :+:    :+:   */
+/*   ast_exec_error_message.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/14 15:11:25 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 12:29:16 by jleray           ###   ########.fr       */
+/*   Created: 2026/04/09 13:25:55 by jleray            #+#    #+#             */
+/*   Updated: 2026/04/09 13:27:31 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lexer.h"
+#include "ast.h"
 
-void	lexer_delone(t_lexer *to_del, t_lexer **head)
+int	pipe_error(t_data data)
 {
-	t_lexer	*previous;
-
-	if (to_del->index == 1)
-	{
-		*head = to_del->next;
-	}
-	else
-	{
-		previous = find_by_index(*head, to_del->index - 1);
-		if (previous)
-			lexer_set_next(&previous, to_del->next);
-	}
-	if (to_del->data)
-		free(to_del->data);
-	free(to_del);
+	perror("T&J Shell : ");
+	close(data.filesfd.fdin);
+	close(data.filesfd.fdout);
+	return (1);
 }

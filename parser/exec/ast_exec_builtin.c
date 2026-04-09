@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 11:43:54 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/04 12:08:05 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 12:36:25 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,16 @@ static void	buildin_closefd(t_data *data)
 	}
 }
 
-void	find_builtin(t_ast *tree, t_data data)
+static int	find_builtin(t_ast *tree, t_data data)
 {
 	t_env	**env;
+	int		status;
 
 	env = data.env;
+	status = 0;
 	if (!ft_strcmp(tree->args[0], "echo"))
 		echo(tree->args + 1, *env);
+	return (status);
 }
 
 int	exec_builtin(t_ast *tree, t_data data)
