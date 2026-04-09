@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 13:02:57 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 14:41:47 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int						exec_tree(t_ast *tree, t_data data);
 int						exec_pipe(t_ast *tree, t_data data);
 int						exec_cmd(t_ast *tree, t_data data);
 int						exec_builtin(t_ast *tree, t_data data);
-int						exec_heredoc(char *delimiter);
+int						exec_heredoc(char *delimiter, t_data *data);
 int						exec_redir(t_ast *tree, t_data data);
 
 //	--- ast exec cmd utils Function ---
@@ -96,4 +96,6 @@ void					free_sarr(char **arr);
 int						cmd_path_error(char **args, char **paths, char *cmd);
 int						cmd_error(char *cmd);
 
+//	--- exec_error_message ---
+int						pipe_error(t_data data);
 #endif

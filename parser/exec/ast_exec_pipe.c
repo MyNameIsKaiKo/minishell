@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 15:57:13 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/03 16:14:45 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 13:29:36 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	exec_pipe(t_ast *tree, t_data data)
 	int		status;
 
 	if (pipe(pipefd))
-		return (0);
+		return (pipe_error(data));
 	first_child = fork();
 	if (first_child == 0)
 		handle_first(tree, data, pipefd);
@@ -65,5 +65,7 @@ int	exec_pipe(t_ast *tree, t_data data)
 	close(data.filesfd.fdout);
 	waitpid(first_child, NULL, 0);
 	waitpid(scd_child, &status, 0);
-	return (0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
 }

@@ -33,6 +33,7 @@ SRCS 		=	maintest.c \
 				ast_exec_pipe.c \
 				ast_exec_heredoc.c \
 				ast_exec_redir.c \
+				ast_exec_error_message.c \
 				ast_utils.c \
 				free_tools.c \
 				cmd_error.c \

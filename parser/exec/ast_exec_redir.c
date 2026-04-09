@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 12:53:59 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 13:02:45 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 14:14:46 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	exec_redir(t_ast *tree, t_data data)
 
 	fd = 0;
 	if (!ft_strcmp(tree->args[0], "<<"))
-		fd = exec_heredoc(tree->args[1]);
+		exec_heredoc(tree->args[1], &data);
 	if (!ft_strcmp(tree->args[0], "<"))
 	{
 		if (data.filesfd.fdin > 2)
@@ -53,5 +53,5 @@ int	exec_redir(t_ast *tree, t_data data)
 		status = exec_tree(tree->left, data);
 	if (tree->right)
 		status = exec_tree(tree->right, data);
-	return (0);
+	return (status);
 }
