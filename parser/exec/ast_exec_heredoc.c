@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 02:17:06 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 14:14:13 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 17:53:29 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	exec_heredoc(char *delimiter, t_data *data)
 			free(str);
 			break ;
 		}
-		write(pipefd[1], read, ft_strlen(str));
+		write(pipefd[1], str, ft_strlen(str));
 		write(pipefd[1], "\n", 1);
-		free(read);
+		free(str);
 	}
 	close(pipefd[1]);
 	data->filesfd.fdin = pipefd[0];
