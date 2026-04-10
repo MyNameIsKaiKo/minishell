@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/27 16:37:41 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/07 15:40:31 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ int	main(int argc, char **argv, char **envp)
 	char			*tmp;
 	char			**tmp2;
 	t_env			*env_var;
-	t_silent_env	senv;
 	pid_t			child;
 
 	(void)argc;
@@ -138,13 +137,29 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	env_var = init_env(envp);
-	senv.pwd = getcwd(NULL, 0);
-	prompt = build_prompt(&senv);
+	env_var->exec = ft_strdup(argv[0]);
+	prompt = build_prompt(env_var->s_pwd);
+	// printf("Noeud 1 :\n");
+	// printf("Env name :%s\n", env_var->name);
+	// printf("Env value :%s\n", env_var->value);
+	// printf("Env pwd :%s\n", env_var->s_pwd);
+	// printf("Env previous :%p\n", env_var->prev);
+	// printf("Env next :%p\n", env_var->next);
+	// printf("-------------------------------\n");
+	// if (env_var->next)
+	// {
+	// 	printf("Noeud 2 :\n");
+	// 	printf("Env name :%s\n", env_var->next->name);
+	// 	printf("Env value :%s\n", env_var->next->value);
+	// 	printf("Env pwd :%s\n", env_var->next->s_pwd);
+	// 	printf("Env previous :%p\n", env_var->next->prev);
+	// 	printf("Env next :%p\n", env_var->next->next);
+	// 	printf("-------------------------------\n");
+	// }
 	if (!prompt || !env_var)
 	{
 		ft_putendl_fd("minishell: internal fatal error", 2);
 		free_env(env_var);
-		free(senv.pwd);
 		free(prompt);
 		return (1);	
 	}
@@ -169,15 +184,27 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		tmp = readline(prompt);
-		if (tmp && tmp[0])
+		if (!tmp)
+			break ;
+		if (tmp[0])
 			add_history(tmp);
 		tmp2 = ft_split(tmp, ' ');
+		// if (!ft_strcmp(tmp2[0], "export"))
+		// {
+		// 	free_str(tmp2);
+		// 	tmp2 = malloc(1000);
+		// 	tmp2[0] = ft_strdup("export");
+		// 	tmp2[1] = ft_strdup("ARG=\"coucou papa                    X\"");
+		// 	tmp2[2] = NULL;
+		// }
 		free(tmp);
 		if (!tmp2)
 		{
 			ft_putendl_fd("minishell: internal fatal error", 2);
 			continue ;
 		}
+		for (int i = 0; tmp2[i]; i++)
+			tmp2[i] = expander(tmp2[i], env_var);
 		if (tmp2[0] && !ft_strcmp("exit", tmp2[0]))
 		{
 			free_str(tmp2);
@@ -191,10 +218,10 @@ int	main(int argc, char **argv, char **envp)
 		if (!ft_strcmp("cd", tmp2[0]))
 		{
 			free(prompt);
-			prompt = cd(&tmp2[1], env_var, &senv);
+			prompt = cd(&tmp2[1], env_var);
 		}
 		else if (!ft_strcmp("pwd", tmp2[0]))
-			pwd(&senv);
+			pwd(NULL, env_var);
 		else if (!ft_strcmp("clear", tmp2[0]))
 		{
 			child = fork();//TODO protect
@@ -211,9 +238,21 @@ int	main(int argc, char **argv, char **envp)
 		else if (!ft_strcmp("echo", tmp2[0]))
 			echo(&tmp2[1], env_var);
 		free_str(tmp2);
+		// t_env *printer = env_var;
+		// int i = 0;
+		// while (printer->next)
+		// {
+		// 	printf("Noeud %d :\n", i + 1);
+		// 	printf("Env name :%s\n", printer->next->name);
+		// 	printf("Env value :%s\n", printer->next->value);
+		// 	printf("Env pwd :%s\n", printer->next->s_pwd);
+		// 	printf("Env previous :%p\n", printer->next->prev);
+		// 	printf("Env next :%p\n", printer->next->next);
+		// 	printf("-------------------------------\n");
+		// 	printer = printer->next;
+		// }
 	}
 	rl_clear_history();
 	free_env(env_var);
-	free(senv.pwd);
 	free(prompt);
 }

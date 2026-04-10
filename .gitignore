@@ -1,5 +1,6 @@
 minishell
 *.o
-*.json
 obj
+main.c
+.gitignore
 readline.supp
