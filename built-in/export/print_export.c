@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:21:09 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/04 16:13:25 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/10 14:47:06 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	name_dup(char **name_copy, t_env *env_var)
 	}
 }
 
-void	print_export_error(char *arg, int err)
+int	print_export_error(char *arg, int err)
 {
 	if (err == 0)
 	{
@@ -36,6 +36,7 @@ void	print_export_error(char *arg, int err)
 	}
 	else
 		ft_putendl_fd("export: allocation error", 2);
+	return (1);
 }
 
 /*Get the number of variables in env_var.*/

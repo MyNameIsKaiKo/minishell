@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 15:16:42 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/04 17:10:20 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/10 14:36:48 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_env	*supp_node(const char *name, t_env *env_var)
 	return (head);
 }
 
-t_env	*unset(char **args, t_env *env_var)
+int	unset(char **args, t_env *env_var)
 {
 	t_env	*node;
 	int		i;
@@ -50,7 +50,7 @@ t_env	*unset(char **args, t_env *env_var)
 	while (args[i])
 	{
 		if (!env_var->name && !env_var->value)
-			return (env_var);
+			return (0);
 		node = env_var;
 		while (node && ft_strcmp(args[i], node->name))
 			node = node->next;
@@ -59,5 +59,5 @@ t_env	*unset(char **args, t_env *env_var)
 			continue ;
 		env_var = supp_node(node->name, env_var);
 	}
-	return (env_var);
+	return (0);
 }

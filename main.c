@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/07 15:40:31 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/10 16:02:13 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ int	main(int argc, char **argv, char **envp)
 		// 	tmp2[2] = NULL;
 		// }
 		free(tmp);
+		int	exit_status = 255;
 		if (!tmp2)
 		{
 			ft_putendl_fd("minishell: internal fatal error", 2);
@@ -218,10 +219,11 @@ int	main(int argc, char **argv, char **envp)
 		if (!ft_strcmp("cd", tmp2[0]))
 		{
 			free(prompt);
-			prompt = cd(&tmp2[1], env_var);
+			exit_status = cd(&tmp2[1], env_var);
+			prompt = build_prompt(env_var->s_pwd);
 		}
 		else if (!ft_strcmp("pwd", tmp2[0]))
-			pwd(NULL, env_var);
+			exit_status = pwd(NULL, env_var);
 		else if (!ft_strcmp("clear", tmp2[0]))
 		{
 			child = fork();//TODO protect
@@ -230,13 +232,13 @@ int	main(int argc, char **argv, char **envp)
 			waitpid(child, NULL, 0);//TODO protect
 		}
 		else if (!ft_strcmp("unset", tmp2[0]))
-			env_var = unset(&tmp2[1], env_var);
+			exit_status = unset(&tmp2[1], env_var);
 		else if (!ft_strcmp("export", tmp2[0]))
-			env_var = export(&tmp2[1], env_var);
+			exit_status = export(&tmp2[1], env_var);
 		else if (!ft_strcmp("env", tmp2[0]))
-			env(&tmp2[1], env_var);
+			exit_status = env(&tmp2[1], env_var);
 		else if (!ft_strcmp("echo", tmp2[0]))
-			echo(&tmp2[1], env_var);
+			exit_status = echo(&tmp2[1], env_var);
 		free_str(tmp2);
 		// t_env *printer = env_var;
 		// int i = 0;

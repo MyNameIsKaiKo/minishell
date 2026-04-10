@@ -6,18 +6,18 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 17:16:31 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/04 18:36:47 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/10 15:48:31 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../built_in.h"
 
-char	*path_error(char *path, char *oldpath, t_env *env_var)
+int	path_error(char *path, char *oldpath)
 {
 	ft_putstr_fd("cd: ", 2);
 	perror(path);
 	free(oldpath);
-	return (build_prompt(env_var->s_pwd));
+	return (1);
 }
 
 void	set_dash_pwd(t_env *pwd, t_env *old_pwd, t_env *env_var)
