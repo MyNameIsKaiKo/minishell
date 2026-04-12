@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:43:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/11 16:53:20 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/12 19:16:54 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,21 @@
 
 int	exec_operator(t_ast *tree, t_data data)
 {
-	int	output;
+	int		output;
+	t_env	**env;
 
+	env = data.env;
 	if (!ft_strncmp(tree->data, "&&", 2))
 	{
 		output = exec_tree(tree->left, data);
-		if (!output)
+		if (!output && (*env)->is_valid_exit != 1)
 			output = exec_tree(tree->right, data);
 		return (output);
 	}
 	else if (!ft_strncmp(tree->data, "||", 2))
 	{
 		output = exec_tree(tree->left, data);
-		if (output)
+		if (output && (*env)->is_valid_exit != 1)
 			output = exec_tree(tree->right, data);
 		return (output);
 	}

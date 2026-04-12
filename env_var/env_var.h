@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 11:27:53 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/12 18:16:02 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/12 19:09:32 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ typedef struct s_env
 	char			*s_pwd;
 	char			*exec;
 	int				exit_status;
+	int				is_valid_exit;
 	struct s_env	*next;
 	struct s_env	*prev;
+	char			**prompt;
 }					t_env;
 
 void				add_env(t_env *env_var, char *name, char *value);

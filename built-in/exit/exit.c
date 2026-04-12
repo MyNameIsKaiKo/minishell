@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:55:54 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/12 17:20:31 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:10:38 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ static bool	exit_verif(char *args)
 int	minish_exit(char **args, t_env *env_var)
 {
 	int	i;
-	
+
 	i = -1;
-	while (args[++i]);
+	while (args[++i])
+		;
 	if (i > 1)
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
@@ -53,12 +54,12 @@ int	minish_exit(char **args, t_env *env_var)
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(args[0], 2);
 		ft_putendl_fd(": numeric argument required", 2);
-		env_var->exit_status =  2;
+		env_var->exit_status = 2;
 	}
 	else if (args[0])
 		env_var->exit_status = ft_atoll(args[0]) % 256;
 	if (env_var->exit_status < 0)
 		env_var->exit_status *= -1;
+	env_var->is_valid_exit = 1;
 	return (env_var->exit_status);
-	//doit exit minishell
 }

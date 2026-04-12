@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 18:12:17 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/12 19:24:44 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ void	main_loop(char **prompt, t_env **env_var)
 		tmp = readline(*prompt);
 		if (tmp && tmp[0])
 			add_history(tmp);
-		if (!ft_strcmp(tmp, "exit"))
+		if (!tmp[0])
 		{
 			free(tmp);
 			rl_clear_history();
 			free_env(*env_var);
-			free(*prompt);
 			break ;
 		}
 		data.filesfd.fdin = STDIN_FILENO;
@@ -52,26 +51,34 @@ void	main_loop(char **prompt, t_env **env_var)
 		lexer_abs_free(&lex);
 		exec_tree(ast, data);
 		ast_free(&ast);
+		if ((*env_var)->is_valid_exit)
+		{
+			rl_clear_history();
+			break ;
+		}
 	}
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	t_env			*env_var;
-	char			*prompt;
+	t_env	*env_var;
+	int		output;
+	char	*prompt;
 
 	(void)ac;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	env_var = init_env(envp, av[0]);
 	prompt = build_prompt(env_var->s_pwd);
-	if (!prompt || !env_var)
+	env_var->prompt = &prompt;
+	if (!env_var || !(*env_var->prompt))
 	{
 		ft_putendl_fd("minishell: internal fatal error", 2);
 		free_env(env_var);
-		free(prompt);
 		return (1);
 	}
-	main_loop(&prompt, &env_var);
-	return (0);
+	main_loop(env_var->prompt, &env_var);
+	output = env_var->exit_status;
+	free_env(env_var);
+	return (output);
 }
