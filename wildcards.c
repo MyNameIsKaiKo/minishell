@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:14:27 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/28 14:48:38 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/11 14:42:29 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static bool	wild_check(char *pattern, char *str, int index_p, int index_s)
 		return (wild_check(pattern, str, index_p + 1, index_s + 1));
 	if (pattern[index_p] == '*')
 	{
+		while (pattern[index_p + 1] && pattern[index_p + 1] == '*')
+			index_p++;
 		if (wild_check(pattern, str, index_p + 1, index_s))
 			return (true);
 		if (str[index_s])

@@ -6,11 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:50:36 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/09 16:03:02 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/12 14:42:16 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 static void	skip_squote(char *result, int *i, int *j)
 {
@@ -63,8 +63,8 @@ static char	*search_and_expand(char *result, int *i, t_env *env)
 	int	end;
 
 	end = *i + 1;
-	while (result[end]
-		&& (ft_isalnum(result[end]) || result[end] == '_'))
+	while (result[end] && ((ft_isalnum(result[end])
+			|| result[end] == '_') || result[end] == '?'))
 		end++;
 	if (end != *i + 1)
 	{

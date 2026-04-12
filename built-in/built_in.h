@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:55 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/10 15:48:38 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/11 17:19:13 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	quick_sort(char **name, int start, int end);
 
 /*Execute "echo" built-in: write arguments in the standard output*/
 int		echo(char **args, t_env *env_var);
+
+/*Exit function*/
+void	exit_minish(char **args, t_env *env_var);
 
 char	*build_prompt(char *pwd);
 

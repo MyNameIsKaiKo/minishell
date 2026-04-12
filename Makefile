@@ -5,7 +5,7 @@ RM			= rm -f
 
 OBJ_DIR		= obj
 
-VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env
+VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env:expander
 
 SRCS 		=	main.c \
 				prompt.c \
@@ -24,7 +24,8 @@ SRCS 		=	main.c \
 				general_utils.c \
 				wildcards.c \
 				expander.c \
-				expand_var.c
+				expand_var.c \
+				expand_copy.c
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

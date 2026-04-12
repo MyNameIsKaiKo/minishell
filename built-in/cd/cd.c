@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/10 16:03:55 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/11 17:13:44 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	cd_home(t_env *env_var)
 		home = home->next;
 	if (!home || !home->value)
 	{
-		ft_putendl_fd("cd: HOME not set", 2);
+		ft_putendl_fd("minishell: cd: HOME not set", 2);
 		return (1);
 	}
 	if (!home->value[0])
@@ -48,7 +48,7 @@ static int	cd_dash(t_env *env_var, char *oldpath)
 		old_pwd = old_pwd->next;
 	if (!old_pwd || !old_pwd->value)
 	{
-		ft_putendl_fd("cd: OLDPWD not set", 2);
+		ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
 		return (1);
 	}
 	else
@@ -81,7 +81,7 @@ int	cd(char **args, t_env *env_var)
 
 	exit_status = 0;
 	if (!check_cd_args(args))
-		ft_putendl_fd("cd: too many arguments", 2);
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
 	else
 	{
 		if (!args[0])

@@ -6,107 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/10 16:02:13 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/11 19:35:05 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-static char    **find_directpath(char *env)
-{
-    char    **paths;
-    char    *path;
-    int        i;
-
-    if (!ft_strncmp(env, "PATH=", 5))
-    {
-        paths = ft_split(env + 5, ':');
-        if (!paths)
-            return (NULL);
-        i = 0;
-        while (paths[i++])
-        {
-            path = paths[i - 1];
-            paths[i - 1] = ft_strjoin(path, "/");
-            if (!paths[i - 1])
-            {
-                write (1, "ERROR\n", 6);
-                return (NULL);
-            }
-            free(path);
-        }
-    }
-    else
-        return (NULL);
-    return (paths);
-}
-
-static char    **find_path(char **env)
-{
-    int        i;
-    char    **paths;
-
-    i = 0;
-    while (env[i] && ft_strncmp(env[i], "PATH=", 5))
-        i++;
-    if (!env[i])
-        return (NULL);
-    paths = find_directpath(env[i]);
-    if (!paths)
-        return (NULL);
-    return (paths);
-}
-
-static char    *find_cmdpath(char **paths, char *cmd)
-{
-    int        i;
-    char    *path;
-
-    i = 0;
-    if ((cmd[0] == '/' || ft_strncmp(cmd, "./", 2) == 0) && access(cmd,
-            X_OK) == 0)
-    {
-        path = ft_strdup(cmd);
-        if (!path)
-            return (NULL);
-        return (path);
-    }
-    while (paths[i])
-    {
-        path = ft_strjoin(paths[i], cmd);
-        if (!path)
-            return (NULL);
-        if (access(path, X_OK) == 0)
-            return (path);
-        free(path);
-        i++;
-    }
-    return (NULL);
-}
-
-int    exec(char *cmd, char **env)
-{
-    char    **paths;
-    char    **args;
-    char    *path;
-
-    paths = find_path(env);
-    if (!paths)
-        write (1, "ERROR\n", 6);
-    args = ft_split(cmd, ' ');
-    if (!args)
-    {
-        write(2, "Command not found\n", 18);
-        write (1, "ERROR\n", 6);
-        exit(1);//TODO changer exit pour fonction d'exit
-    }
-    path = find_cmdpath(paths, args[0]);
-    if (!path)
-        write (1, "ERROR\n", 6);
-    if (execve(path, args, env) == -1)
-        write (1, "ERROR\n", 6);
-    return (0);
-}
 
 static void	handler(int signal)
 {
@@ -120,8 +24,7 @@ static void	handler(int signal)
 void	clear(char **envp)
 {
 	char *arg[] =  {"clear", (char *)0};
-	execve("/usr/bin/clear", arg, envp);//TODO protect
-	//TODO contruire le path pour clear (et toutes les commandes concernées)
+	execve("/usr/bin/clear", arg, envp);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -198,7 +101,8 @@ int	main(int argc, char **argv, char **envp)
 		// 	tmp2[2] = NULL;
 		// }
 		free(tmp);
-		int	exit_status = 255;
+		free(env_var->exit_status);
+		env_var->exit_status = ft_itoa(255);
 		if (!tmp2)
 		{
 			ft_putendl_fd("minishell: internal fatal error", 2);
@@ -219,26 +123,42 @@ int	main(int argc, char **argv, char **envp)
 		if (!ft_strcmp("cd", tmp2[0]))
 		{
 			free(prompt);
-			exit_status = cd(&tmp2[1], env_var);
+			free(env_var->exit_status);
+			env_var->exit_status = ft_itoa(cd(&tmp2[1], env_var));
 			prompt = build_prompt(env_var->s_pwd);
 		}
 		else if (!ft_strcmp("pwd", tmp2[0]))
-			exit_status = pwd(NULL, env_var);
+		{
+			free(env_var->exit_status);
+			env_var->exit_status = ft_itoa(pwd(NULL, env_var));
+		}
 		else if (!ft_strcmp("clear", tmp2[0]))
 		{
-			child = fork();//TODO protect
+			child = fork();
 			if (child == 0)
 				clear(envp);
-			waitpid(child, NULL, 0);//TODO protect
+			waitpid(child, NULL, 0);
 		}
 		else if (!ft_strcmp("unset", tmp2[0]))
-			exit_status = unset(&tmp2[1], env_var);
+		{
+			free(env_var->exit_status);
+			env_var->exit_status = ft_itoa(unset(&tmp2[1], env_var));
+		}
 		else if (!ft_strcmp("export", tmp2[0]))
-			exit_status = export(&tmp2[1], env_var);
+		{
+			free(env_var->exit_status);
+			env_var->exit_status = ft_itoa(export(&tmp2[1], env_var));
+		}
 		else if (!ft_strcmp("env", tmp2[0]))
-			exit_status = env(&tmp2[1], env_var);
+		{
+			free(env_var->exit_status);
+			env_var->exit_status = ft_itoa(env(&tmp2[1], env_var));
+		}
 		else if (!ft_strcmp("echo", tmp2[0]))
-			exit_status = echo(&tmp2[1], env_var);
+		{
+			free(env_var->exit_status);
+			env_var->exit_status = ft_itoa(echo(&tmp2[1], env_var));
+		}
 		free_str(tmp2);
 		// t_env *printer = env_var;
 		// int i = 0;

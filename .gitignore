@@ -4,3 +4,5 @@ obj
 main.c
 .gitignore
 readline.supp
+exit
+exit.c

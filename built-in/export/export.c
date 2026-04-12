@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:39:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/10 17:42:31 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/11 15:07:20 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	add_value(t_env *env_var, char *name, char *value)
 	env_var->value = ft_strjoin(env_var->value, value);
 	if (!env_var->value)
 	{
-		ft_putstr_fd("export: allocation error\n", 2);
+		ft_putstr_fd("minishell: export: allocation error\n", 2);
 		env_var->value = value;
 	}
 	else

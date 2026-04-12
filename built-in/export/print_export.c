@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:21:09 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/10 14:47:06 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/11 15:06:20 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	print_export_error(char *arg, int err)
 {
 	if (err == 0)
 	{
-		ft_putstr_fd("export: \'", 2);
+		ft_putstr_fd("minishell: export: \'", 2);
 		ft_putstr_fd(arg, 2);
 		ft_putstr_fd("\': not a valid identifier\n", 2);
 	}

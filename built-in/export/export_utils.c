@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:18:29 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/07 12:31:17 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/11 15:07:47 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_strings(char *name, char *value)
 {
 	free(name);
 	free(value);
-	ft_putstr_fd("export: allocation error\n", 2);
+	ft_putstr_fd("minishell: export: allocation error\n", 2);
 }
 
 bool	parser_export(char *arg)

@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/06 18:41:13 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/11 19:18:52 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	free_env(t_env *env_var)
 
 	free(env_var->s_pwd);
 	free(env_var->exec);
+	free(env_var->exit_status);
 	while (env_var)
 	{
 		free(env_var->name);
@@ -59,6 +60,7 @@ t_env	*first_env(char *name, char *value)
 	env_var->name = name;
 	env_var->value = value;
 	env_var->s_pwd = getcwd(NULL, 0);
+	env_var->exit_status = ft_itoa(0);
 	env_var->prev = NULL;
 	env_var->next = NULL;
 	return (env_var);
@@ -82,6 +84,7 @@ void	add_env(t_env *env_var, char *name, char *value)
 	last->next->name = name;
 	last->next->value = value;
 	last->next->s_pwd = env_var->s_pwd;
+	last->next->exit_status = env_var->exit_status;
 	last->next->prev = last;
 	last->next->next = NULL;
 }
