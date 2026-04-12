@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/23 14:40:22 by jleray            #+#    #+#             */
-/*   Updated: 2025/10/23 14:40:22 by jleray           ###   ########.fr       */
+/*   Created: 2025/10/22 16:42:45 by nredouan          #+#    #+#             */
+/*   Updated: 2025/10/23 12:42:28 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 t_list	*ft_lstnew(void *content)
 {
-	int		i;
-	t_list	*output;
+	t_list	*new;
 
-	i = 0;
-	output = malloc(sizeof(t_list));
-	if (!output)
-		return (0);
-	output->content = content;
-	output->next = NULL;
-	return (output);
+	new = malloc(sizeof(t_list));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
 }

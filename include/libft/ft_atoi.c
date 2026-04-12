@@ -3,36 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 14:02:42 by jleray            #+#    #+#             */
-/*   Updated: 2025/10/14 14:02:42 by jleray           ###   ########.fr       */
+/*   Created: 2025/10/18 17:59:29 by nredouan          #+#    #+#             */
+/*   Updated: 2025/12/17 19:38:00 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_atoi(const char *nptr)
 {
+	int	sign;
 	int	i;
-	int	neg;
-	int	res;
+	int	result;
 
+	sign = 1;
 	i = 0;
-	neg = 1;
-	res = 0;
+	result = 0;
 	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;
-	while (nptr[i] == '-' || nptr[i] == '+')
+	if (nptr[i] == '-')
 	{
-		if (nptr[i] == '-')
-			neg *= -1;
-		if (nptr[i + 1] == '-' || nptr[i + 1] == '+')
-			return (0);
+		sign *= -1;
 		i++;
 	}
+	else if (nptr[i] == '+')
+		i++;
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
-		res = res * 10 + ((char)nptr[i] - '0');
+		result = (result * 10) + nptr[i] - 48;
 		i++;
 	}
-	return (res * neg);
+	return (result * sign);
+}
+
+long long int	ft_atoll(const char *nptr)
+{
+	int				i;
+	long long int	sign;
+	long long int	result;
+
+	sign = 1;
+	i = 0;
+	result = 0;
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
+		i++;
+	if (nptr[i] == '-')
+	{
+		sign *= -1;
+		i++;
+	}
+	else if (nptr[i] == '+')
+		i++;
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		result = (result * 10) + nptr[i] - 48;
+		i++;
+	}
+	return (result * sign);
 }
