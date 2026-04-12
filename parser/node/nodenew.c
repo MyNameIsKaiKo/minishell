@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:19:58 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/28 13:02:43 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/12 17:55:23 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_ast	*nodenew(t_lexer *checkpoint)
 	if (new_node->old_lexindex == -1)
 	{
 		ft_putstr_fd("Syntax Error", 2);
-		ast_free(&new_node)
+		ast_free(&new_node);
 		return (NULL);
 	}
 	return (new_node);
