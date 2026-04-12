@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 21:13:24 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 12:00:38 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/12 18:11:15 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,20 @@ static int	handle_cmds(t_lexer *checkpoint, t_ast *node)
 
 static int	handle_redir(t_lexer *checkpoint, t_ast *node)
 {
+	int	output;
+
 	if (!checkpoint->next || checkpoint->next->type != WORD)
-		return (0);
+		return (-1);
 	node->args = malloc(sizeof(char *) * 3);
 	if (!node->args)
 		return (0);
 	node->args[0] = ft_strdup(checkpoint->data);
 	node->args[1] = ft_strdup(checkpoint->next->data);
 	node->args[2] = NULL;
-	return (checkpoint->index + 1);
+	output = checkpoint->index;
+	if (checkpoint->type != HEREDOC)
+		output += 1;
+	return (output);
 }
 
 static int	handle_subprocess(t_lexer *checkpoint, t_ast *node)

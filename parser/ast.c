@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:50:45 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/05 18:49:22 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/11 16:58:30 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint)
 	{
 		if (!node->left || !node->right)
 		{
-			ft_putstr_fd("syntax error", 2);
+			ft_putstr_fd("Syntax Error\n", 2);
 			ast_free(&node);
 			return (NULL);
 		}

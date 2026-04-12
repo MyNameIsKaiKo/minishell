@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:43:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 13:02:30 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/11 16:53:20 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,18 @@ int	exec_operator(t_ast *tree, t_data data)
 	{
 		output = exec_tree(tree->left, data);
 		if (!output)
-			exec_tree(tree->right, data);
+			output = exec_tree(tree->right, data);
 		return (output);
 	}
 	else if (!ft_strncmp(tree->data, "||", 2))
 	{
 		output = exec_tree(tree->left, data);
 		if (output)
-			exec_tree(tree->right, data);
+			output = exec_tree(tree->right, data);
 		return (output);
 	}
 	return (1);
 }
-
-// TODO add error on fd -1
 
 int	exec_subprocess(t_ast *tree, t_data data)
 {
