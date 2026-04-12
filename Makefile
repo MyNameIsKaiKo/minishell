@@ -9,17 +9,18 @@ VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-i
 
 SRCS 		=	maintest.c \
 				prompt.c \
-				cd.c \
-				cd_utils.c \
 				pwd.c \
 				unset.c \
 				env.c  \
-				export.c \
 				echo.c \
+				cd.c \
+				cd_utils.c \
+				export.c \
 				print_export.c \
 				export_utils.c \
 				set_export.c \
 				quick_string_sort.c \
+				exit.c \
 				env_variable.c \
 				reverse_env.c \
 				general_utils.c \
@@ -59,7 +60,11 @@ SRCS 		=	maintest.c \
 				remove_rponct.c \
 				expander.c \
 				expand_var.c \
+<<<<<<< HEAD
 				apply_expend.c
+=======
+				expand_copy.c
+>>>>>>> Tom
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

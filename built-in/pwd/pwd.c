@@ -6,14 +6,15 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 13:37:33 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/04 18:48:43 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/11 15:34:16 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../built_in.h"
 
-void	pwd(char **args, t_env *env_var)
+int	pwd(char **args, t_env *env_var)
 {
 	(void)args;
 	printf("%s\n", env_var->s_pwd);
+	return (0);
 }

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/28 14:50:36 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/09 17:21:04 by jleray           ###   ########.fr       */
+/*   Created: 2026/04/12 18:17:55 by jleray            #+#    #+#             */
+/*   Updated: 2026/04/12 18:18:18 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+
+#include "../header.h"
 
 static void	skip_squote(char *result, int *i, int *j)
 {
@@ -63,7 +64,8 @@ static char	*search_and_expand(char *result, int *i, t_env *env)
 	int	end;
 
 	end = *i + 1;
-	while (result[end] && (ft_isalnum(result[end]) || result[end] == '_'))
+	while (result[end] && ((ft_isalnum(result[end])
+			|| result[end] == '_') || result[end] == '?'))
 		end++;
 	if (end != *i + 1)
 	{

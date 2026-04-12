@@ -1,7 +1,8 @@
 minishell
 *.o
-*.json
 obj
 readline.supp
-
 compile_commands.json
+main.c
+.gitignore
+readline.supp

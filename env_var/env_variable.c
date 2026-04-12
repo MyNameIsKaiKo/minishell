@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/08 19:32:58 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/12 18:16:31 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_env	*first_env(char *name, char *value, char *executable)
 	env_var->value = value;
 	env_var->s_pwd = getcwd(NULL, 0);
 	env_var->exec = ft_strdup(executable);
+	env_var->exit_status = 0;
 	env_var->prev = NULL;
 	env_var->next = NULL;
 	return (env_var);
@@ -83,6 +84,8 @@ void	add_env(t_env *env_var, char *name, char *value)
 	last->next->name = name;
 	last->next->value = value;
 	last->next->exec = env_var->exec;
+	last->next->s_pwd = env_var->s_pwd;
+	last->next->exit_status = env_var->exit_status;
 	last->next->prev = last;
 	last->next->next = NULL;
 }
