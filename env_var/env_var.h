@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 11:27:53 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/11 19:16:40 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/12 14:53:43 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_env
 	char			*value;
 	char			*s_pwd;
 	char			*exec;
-	char			*exit_status;
+	int				exit_status;
 	struct s_env	*next;
 	struct s_env	*prev;
 }					t_env;

@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 14:38:58 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/12 14:47:16 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/12 15:07:26 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,18 @@ static int	copy_exec(char *result, t_env *env, int i)
 
 static int	copy_exit_status(char *result, t_env *env, int i)
 {
-	int	j;
+	char	*exit_status;
+	int		j;
 
 	j = 0;
-	while (env && env->exit_status && env->exit_status[j])
+	exit_status = ft_itoa(env->exit_status);
+	while (exit_status && exit_status && exit_status[j])
 	{
-		result[i] = env->exit_status[j];
+		result[i] = exit_status[j];
 		i += 1;
 		j++;
 	}
+	free(exit_status);
 	return (i);
 }
 

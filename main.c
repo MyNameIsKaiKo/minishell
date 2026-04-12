@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/11 19:35:05 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/12 15:50:24 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ int	main(int argc, char **argv, char **envp)
 		// 	tmp2[2] = NULL;
 		// }
 		free(tmp);
-		free(env_var->exit_status);
-		env_var->exit_status = ft_itoa(255);
 		if (!tmp2)
 		{
 			ft_putendl_fd("minishell: internal fatal error", 2);
@@ -112,6 +110,8 @@ int	main(int argc, char **argv, char **envp)
 			tmp2[i] = expander(tmp2[i], env_var);
 		if (tmp2[0] && !ft_strcmp("exit", tmp2[0]))
 		{
+			env_var->exit_status = minish_exit(&tmp2[1], env_var);
+			printf("minishell exit_status : %d\n", env_var->exit_status);
 			free_str(tmp2);
 			break ;
 		}
@@ -123,15 +123,11 @@ int	main(int argc, char **argv, char **envp)
 		if (!ft_strcmp("cd", tmp2[0]))
 		{
 			free(prompt);
-			free(env_var->exit_status);
-			env_var->exit_status = ft_itoa(cd(&tmp2[1], env_var));
+			env_var->exit_status = cd(&tmp2[1], env_var);
 			prompt = build_prompt(env_var->s_pwd);
 		}
 		else if (!ft_strcmp("pwd", tmp2[0]))
-		{
-			free(env_var->exit_status);
-			env_var->exit_status = ft_itoa(pwd(NULL, env_var));
-		}
+			env_var->exit_status = pwd(NULL, env_var);
 		else if (!ft_strcmp("clear", tmp2[0]))
 		{
 			child = fork();
@@ -140,25 +136,13 @@ int	main(int argc, char **argv, char **envp)
 			waitpid(child, NULL, 0);
 		}
 		else if (!ft_strcmp("unset", tmp2[0]))
-		{
-			free(env_var->exit_status);
-			env_var->exit_status = ft_itoa(unset(&tmp2[1], env_var));
-		}
+			env_var->exit_status = unset(&tmp2[1], env_var);
 		else if (!ft_strcmp("export", tmp2[0]))
-		{
-			free(env_var->exit_status);
-			env_var->exit_status = ft_itoa(export(&tmp2[1], env_var));
-		}
+			env_var->exit_status = export(&tmp2[1], env_var);
 		else if (!ft_strcmp("env", tmp2[0]))
-		{
-			free(env_var->exit_status);
-			env_var->exit_status = ft_itoa(env(&tmp2[1], env_var));
-		}
+			env_var->exit_status = env(&tmp2[1], env_var);
 		else if (!ft_strcmp("echo", tmp2[0]))
-		{
-			free(env_var->exit_status);
-			env_var->exit_status = ft_itoa(echo(&tmp2[1], env_var));
-		}
+			env_var->exit_status = echo(&tmp2[1], env_var);
 		free_str(tmp2);
 		// t_env *printer = env_var;
 		// int i = 0;
