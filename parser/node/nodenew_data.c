@@ -43,7 +43,7 @@ static int	handle_cmds(t_lexer *checkpoint, t_ast *node)
 static int	handle_redir(t_lexer *checkpoint, t_ast *node)
 {
 	if (!checkpoint->next || checkpoint->next->type != WORD)
-		return (0);
+		return (-1);
 	node->args = malloc(sizeof(char *) * 3);
 	if (!node->args)
 		return (0);

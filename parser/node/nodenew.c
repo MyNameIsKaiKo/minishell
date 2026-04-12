@@ -45,12 +45,13 @@ t_ast	*nodenew(t_lexer *checkpoint)
 	new_node->data = NULL;
 	new_node->left = NULL;
 	new_node->right = NULL;
+	new_node->old_lexindex = -1;
 	get_ast_type(checkpoint, &new_node);
 	handle_node_data(&new_node, checkpoint);
-	if (new_node->old_lexindex == 0)
+	if (new_node->old_lexindex == -1)
 	{
 		ft_putstr_fd("Syntax Error", 2);
-		ast_free(&new_node);
+		ast_free(&new_node)
 		return (NULL);
 	}
 	return (new_node);

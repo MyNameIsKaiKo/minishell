@@ -44,6 +44,8 @@ int	exec_cmd(t_ast *tree, t_data data)
 	int		status;
 
 	status = 0;
+	if (!tree || !tree->args || !tree->args[0])
+		return (1);
 	printf("\nExecuting command : %s\n", tree->args[0]);
 	if (is_builtin(tree->args[0]))
 		status = exec_builtin(tree, data);
