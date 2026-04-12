@@ -20,14 +20,14 @@ int	exec_operator(t_ast *tree, t_data data)
 	{
 		output = exec_tree(tree->left, data);
 		if (!output)
-			exec_tree(tree->right, data);
+			output = exec_tree(tree->right, data);
 		return (output);
 	}
 	else if (!ft_strncmp(tree->data, "||", 2))
 	{
 		output = exec_tree(tree->left, data);
 		if (output)
-			exec_tree(tree->right, data);
+			output = exec_tree(tree->right, data);
 		return (output);
 	}
 	return (1);
