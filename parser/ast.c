@@ -23,7 +23,7 @@ static t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint)
 		return (NULL);
 	right = getright(*lexhead, node->old_lexindex);
 	if (checkpoint->index > 1)
-		left = getleft(lexhead, node->old_lexindex);
+		left = getleft(lexhead, checkpoint->index);
 	else
 		left = NULL;
 	node_add(&node, make_tree(&left), LEFT);

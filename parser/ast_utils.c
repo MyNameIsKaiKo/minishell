@@ -6,24 +6,28 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 15:30:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/22 21:13:21 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/14 18:08:28 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
+static int	is_priority(t_token_type type)
+{
+	if (type == OPERATOR)
+		return (1);
+	if (type == PIPE)
+		return (2);
+	if (type >= REDIR_IN && type <= APPEND)
+		return (3);
+	if (type == WORD || type == SUBPROCESS)
+		return (4);
+	return (5);
+}
+
 static int	is_a_checkpoint(t_token_type lex_type, t_token_type current)
 {
-	if (!current && (lex_type >= WORD && lex_type <= OPERATOR))
-		return (1);
-	if (current == OPERATOR && lex_type >= current)
-		return (1);
-	if (current == PIPE && lex_type >= current)
-		return (1);
-	if ((current >= REDIR_IN && current <= APPEND) && lex_type >= current)
-		return (1);
-	if ((current >= WORD && current <= SUBPROCESS) && lex_type >= current
-		&& lex_type > SUBPROCESS)
+	if (is_priority(lex_type) <= is_priority(current))
 		return (1);
 	return (0);
 }

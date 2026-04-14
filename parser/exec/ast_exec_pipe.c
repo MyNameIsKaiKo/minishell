@@ -21,6 +21,8 @@ void	handle_first(t_ast *tree, t_data data, int pipefd[2])
 		exit(127);
 	}
 	close(pipefd[0]);
+	if (data.filesfd.fdout > 2)
+		close(data.filesfd.fdout);
 	data.filesfd.fdout = pipefd[1];
 	exit(exec_tree(tree->left, data));
 }
@@ -34,6 +36,8 @@ void	handle_scd(t_ast *tree, t_data data, int pipefd[2])
 		exit(127);
 	}
 	close(pipefd[1]);
+	if (data.filesfd.fdin > 2)
+		close(data.filesfd.fdin);
 	data.filesfd.fdin = pipefd[0];
 	exit(exec_tree(tree->right, data));
 }
@@ -41,8 +45,8 @@ void	handle_scd(t_ast *tree, t_data data, int pipefd[2])
 int	exec_pipe(t_ast *tree, t_data data)
 {
 	int		pipefd[2];
-	pid_t	first_child;
 	pid_t	scd_child;
+	pid_t	first_child;
 	int		status;
 
 	if (pipe(pipefd))
