@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 15:30:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/14 18:08:28 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 18:32:58 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static int	is_priority(t_token_type type)
 
 static int	is_a_checkpoint(t_token_type lex_type, t_token_type current)
 {
+	if (lex_type == WORD && current == WORD)
+		return (0);
 	if (is_priority(lex_type) <= is_priority(current))
 		return (1);
 	return (0);
