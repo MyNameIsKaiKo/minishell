@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:43:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/11 16:53:20 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 18:21:55 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	exec_operator(t_ast *tree, t_data data)
 
 int	exec_subprocess(t_ast *tree, t_data data)
 {
-	int	output;
+	int		output;
 	pid_t	subprocess;
 
 	output = 0;
@@ -46,16 +46,13 @@ int	exec_subprocess(t_ast *tree, t_data data)
 		return (1);
 	if (subprocess == 0)
 	{
-		status = exec_tree(tree->left, data);
-		exit(status);
+		output = exec_tree(tree->left, data);
+		exit(output);
 	}
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
+	waitpid(subprocess, &output, 0);
+	if (WIFEXITED(output))
+		return (WEXITSTATUS(output));
 	return (1);
-}
-	
-	return (output);
 }
 
 int	exec_tree(t_ast *tree, t_data data)

@@ -3,20 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/02 18:07:37 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/08 16:42:34 by jleray           ###   ########.fr       */
+/*   Created: 2026/04/12 18:17:04 by jleray            #+#    #+#             */
+/*   Updated: 2026/04/12 18:17:30 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../header.h"
 
 static t_env	*get_exp(char *arg, char *var, t_env *env_var, int *size)
 {
 	if (!ft_strcmp(var, "0"))
 	{
 		*size = ft_strlen(arg) - *size + ft_strlen(env_var->exec) + 1;
+		return (env_var);
+	}
+	if (!ft_strcmp(var, "?"))
+	{
+		*size = ft_strlen(arg) - *size + ft_intlen(env_var->exit_status) + 1;
 		return (env_var);
 	}
 	while (env_var && ft_strcmp(var, env_var->name))
@@ -26,33 +31,6 @@ static t_env	*get_exp(char *arg, char *var, t_env *env_var, int *size)
 	else
 		*size = ft_strlen(arg) - *size + ft_strlen(env_var->value) + 1;
 	return (env_var);
-}
-
-static void	expand_copy(char *result, int *i, t_env *env, bool is_exec)
-{
-	int	j;
-
-	j = 0;
-	if (!env || (env->name && !env->value))
-		return ;
-	if (!is_exec)
-	{
-		while (env && env->exec && env->exec[j])
-		{
-			result[*i] = env->exec[j];
-			*i += 1;
-			j++;
-		}
-	}
-	else
-	{
-		while (env && env->value && env->value[j])
-		{
-			result[*i] = env->value[j];
-			*i += 1;
-			j++;
-		}
-	}
 }
 
 char	*expand_var(char *arg, int start, int *end, t_env *env)
@@ -73,7 +51,7 @@ char	*expand_var(char *arg, int start, int *end, t_env *env)
 	{
 		if (j == start)
 		{
-			expand_copy(result, &i, env, ft_strcmp(var, "0"));
+			expand_copy(result, &i, env, var);
 			j += (*end - start);
 			*end = i;
 		}

@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 11:43:54 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 12:36:25 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 18:23:15 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	find_builtin(t_ast *tree, t_data data)
 
 int	exec_builtin(t_ast *tree, t_data data)
 {
-	int	status
+	int	status;
 
 	builtin_init(&data);
 	status = find_builtin(tree, data);

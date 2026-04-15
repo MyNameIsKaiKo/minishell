@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:16:00 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 19:10:14 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/09 17:30:53 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*strtosa(char **sa)
 		tmp = output;
 		i++;
 	}
-	free_sarr(sa);
 	return (output);
 }
 
@@ -47,10 +46,10 @@ t_lexer	*insert_lexer(t_lexer **head, t_lexer *tmp, char *str)
 
 	new = lexer(str);
 	new_last = lexer_last(new);
-	new_last->next = tmp->next;
+	lexer_set_next(&new_last, tmp->next);
 	previous = find_by_index(*head, tmp->index - 1);
 	if (previous)
-		previous->next = new;
+		lexer_set_next(&previous, new);
 	else
 		*head = new;
 	tmp->next = NULL;
@@ -73,6 +72,8 @@ void	apply_wildcard(t_lexer **lex)
 			wildcards_sa = wildcards(tmp->data);
 			wildcards_compil = strtosa(wildcards_sa);
 			tmp = insert_lexer(lex, tmp, wildcards_compil);
+			free_sarr(wildcards_sa);
+			free(wildcards_compil);
 		}
 		tmp = tmp->next;
 	}

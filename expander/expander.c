@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
+/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/28 14:50:36 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/08 16:42:45 by jleray           ###   ########.fr       */
+/*   Created: 2026/04/12 18:17:55 by jleray            #+#    #+#             */
+/*   Updated: 2026/04/12 18:18:18 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 
-static char	*supp_dquote(char *result)
+#include "../header.h"
+
+static void	skip_squote(char *result, int *i, int *j)
+{
+	(*j)++;
+	while (result[*i + *j] && result[*i + *j] != '\'')
+	{
+		result[*i] = result[*i + *j];
+		(*i)++;
+	}
+	(*j)++;
+}
+
+static char	*supp_quote(char *result)
 {
 	int	i;
 	int	j;
@@ -23,6 +35,11 @@ static char	*supp_dquote(char *result)
 	{
 		while (result[i + j] && result[i + j] == '\"')
 			j++;
+		if (result[i + j] == '\'')
+		{
+			skip_squote(result, &i, &j);
+			continue ;
+		}
 		if (result[i + j])
 		{
 			result[i] = result[i + j];
@@ -33,24 +50,13 @@ static char	*supp_dquote(char *result)
 	return (result);
 }
 
-static char	*not_expand(char *result, int *i)
+static void	not_expand(char *result, int *i)
 {
-	int	save_end;
-
-	while (result[*i + 1] && result[*i + 1] != '\'')
-	{
-		result[*i] = result[*i + 1];
+	(*i)++;
+	while (result[*i] && result[*i] != '\'')
 		(*i)++;
-	}
-	save_end = *i;
-	while (result[*i + 1] && result[*i + 2])
-	{
-		result[*i] = result[*i + 2];
+	if (result[*i])
 		(*i)++;
-	}
-	result[*i] = '\0';
-	*i = save_end;
-	return (result);
 }
 
 static char	*search_and_expand(char *result, int *i, t_env *env)
@@ -58,8 +64,8 @@ static char	*search_and_expand(char *result, int *i, t_env *env)
 	int	end;
 
 	end = *i + 1;
-	while (result[end]
-		&& (ft_isalnum(result[end]) || result[end] == '_'))
+	while (result[end] && ((ft_isalnum(result[end])
+			|| result[end] == '_') || result[end] == '?'))
 		end++;
 	if (end != *i + 1)
 	{
@@ -80,7 +86,7 @@ char	*expander(char *args, t_env *env)
 	{
 		if (result[i] == '\'')
 		{
-			result = not_expand(result, &i);
+			not_expand(result, &i);
 			continue ;
 		}
 		if (result[i] == '$')
@@ -90,9 +96,7 @@ char	*expander(char *args, t_env *env)
 		}
 		i++;
 	}
-	result = supp_dquote(result);
+	result = supp_quote(result);
 	free(args);
 	return (result);
 }
-
-

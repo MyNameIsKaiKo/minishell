@@ -5,21 +5,22 @@ RM			= rm -f
 
 OBJ_DIR		= obj
 
-VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node:parser/exec
+VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/exit:built-in/env:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node:parser/exec:expander
 
 SRCS 		=	maintest.c \
 				prompt.c \
-				cd.c \
-				cd_utils.c \
 				pwd.c \
 				unset.c \
 				env.c  \
-				export.c \
 				echo.c \
+				cd.c \
+				cd_utils.c \
+				export.c \
 				print_export.c \
 				export_utils.c \
 				set_export.c \
 				quick_string_sort.c \
+				exit.c \
 				env_variable.c \
 				reverse_env.c \
 				general_utils.c \
@@ -59,7 +60,8 @@ SRCS 		=	maintest.c \
 				remove_rponct.c \
 				expander.c \
 				expand_var.c \
-				apply_expend.c
+				apply_expend.c \
+				expand_copy.c
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
