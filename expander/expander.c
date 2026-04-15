@@ -6,10 +6,9 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:55 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 18:25:18 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/15 19:37:37 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../header.h"
 
@@ -44,21 +43,21 @@ static char	*supp_quote(char *result)
 	j = 0;
 	while (result[i + j])
 	{
-		if (result[i + j] && result[i + j] == '\"')
+		if (result[i + j] && (result[i + j] == '\"' || result[i + j] == '\''))
 		{
-			skip_dquote(result, &i, &j);
+			if (!check_unclose(result, result[i + j], i + j))
+			{
+				i++;
+				continue ;
+			}
+			if (result[i + j] == '\"')
+				skip_dquote(result, &i, &j);
+			else
+				skip_squote(result, &i, &j);
 			continue ;
 		}
-		if (result[i + j] == '\'')
-		{
-			skip_squote(result, &i, &j);
-			continue ;
-		}
-		if (result[i + j])
-		{
-			result[i] = result[i + j];
-			i++;
-		}
+		result[i] = result[i + j];
+		i++;
 	}
 	result[i] = '\0';
 	return (result);
@@ -66,29 +65,28 @@ static char	*supp_quote(char *result)
 
 char	*expander(char *args, t_env *env)
 {
-	char	*result;
 	int		i;
 
 	i = 0;
-	result = ft_strdup(args);
-	while (result[i])
+	while (args[i])
 	{
-		if (result[i] == '\'' || result[i] == '\"')
+		if (args[i] == '\'' || args[i] == '\"' || args[i] == '$')
 		{
-			if (result[i] == '\'')
-				not_expand(result, &i);
-			else if (result[i] == '\"')
-				result = expand_dquotes(result, &i, env);
-			continue ;
-		}
-		if (result[i] == '$')
-		{
-			result = search_and_expand(result, &i, env);
+			if (!check_unclose(args, args[i], i))
+			{
+				i++;
+				continue ;
+			}
+			if (args[i] == '\'')
+				not_expand(args, &i);
+			else if (args[i] == '\"')
+				args = expand_dquotes(args, &i, env);
+			else if (args[i] == '$')
+				args = search_and_expand(args, &i, env);
 			continue ;
 		}
 		i++;
 	}
-	result = supp_quote(result);
-	free(args);
-	return (result);
+	args = supp_quote(args);
+	return (args);
 }

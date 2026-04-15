@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 18:22:43 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/15 19:37:47 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,27 @@ char	*expand_dquotes(char *result, int *i, t_env *env)
 	return (result);
 }
 
+bool	check_unclose(char *arg, char quote, int i)
+{
+	if (arg[i] == '$')
+		return (true);
+	i++;
+	while (arg[i])
+	{
+		if (arg[i] == quote)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 char	*search_and_expand(char *result, int *i, t_env *env)
 {
 	int	end;
 
 	end = *i + 1;
 	while (result[end] && ((ft_isalnum(result[end])
-			|| result[end] == '_') || result[end] == '?'))
+				|| result[end] == '_') || result[end] == '?'))
 		end++;
 	if (end != *i + 1)
 	{
