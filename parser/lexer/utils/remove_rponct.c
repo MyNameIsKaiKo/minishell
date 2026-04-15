@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 15:36:39 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 12:29:04 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 22:13:51 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	remove_remaining_type(t_lexer **lex, t_token_type type)
 		{
 			tmp = search;
 			search = search->next;
-			lexer_delone(tmp, lex);
+			lexer_delone(&tmp, lex);
 		}
 		else
 			search = search->next;

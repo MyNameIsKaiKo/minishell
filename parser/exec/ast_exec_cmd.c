@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/11 16:47:08 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 20:35:42 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,19 @@ int	exec_child(t_ast *tree, t_data data)
 	child_init(data);
 	paths = find_path(data);
 	if (!paths)
-		cmd_error(tree->args[0]);
+		cmd_error(tree->args[0], &tree->head, data.env);
 	path = find_cmdpath(paths, tree->args[0]);
 	if (!path)
-		cmd_path_error(paths, tree->args[0]);
+		cmd_path_error(paths, tree->args[0], &tree, data.env);
 	env = reverse_env(data.env);
 	if (!env)
-		cmd_env_error(paths, path, tree->args[0]);
-	if (execve(path, tree->args, env) == -1)
-	{
-		free(path);
-		free_sarr(paths);
-		free_sarr(env);
-		exit(1);
-	}
-	return (1);
+		cmd_env_error(paths, path, &tree, data.env);
+	execve(path, tree->args, env);
+	free_all_in_child(&tree, data.env);
+	free(path);
+	free_sarr(paths);
+	free_sarr(env);
+	exit(1);
 }
 
 int	exec_cmd(t_ast *tree, t_data data)
@@ -47,7 +45,6 @@ int	exec_cmd(t_ast *tree, t_data data)
 	status = 0;
 	if (!tree || !tree->args || !tree->args[0])
 		return (1);
-	printf("\nExecuting command : %s\n", tree->args[0]);
 	if (is_builtin(tree->args[0]))
 		status = exec_builtin(tree, data);
 	else

@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/12 19:07:41 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 20:39:35 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_env(t_env *env_var)
 {
 	t_env	*tmp;
 
+	if (!env_var)
+		return ;
 	free(env_var->s_pwd);
 	free(env_var->exec);
 	free(*env_var->prompt);
@@ -29,6 +31,7 @@ void	free_env(t_env *env_var)
 		env_var = env_var->next;
 		free(tmp);
 	}
+	env_var = NULL;
 }
 
 /*Get the last node of the linked list env_var.*/
