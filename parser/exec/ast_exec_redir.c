@@ -47,8 +47,9 @@ int	exec_redir(t_ast *tree, t_data data)
 		fd = exec_redirout_append(&tree, &data);
 	if (fd <= -1)
 	{
-		perror("T&J Shell :");
-		return (127);
+		perror("T&J Shell ");
+		(*data.env)->exit_status = 1;
+		return (1);
 	}
 	if (tree->left)
 		status = exec_tree(tree->left, data);

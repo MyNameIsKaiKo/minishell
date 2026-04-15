@@ -67,5 +67,7 @@ int	exec_pipe(t_ast *tree, t_data data)
 	waitpid(scd_child, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
 	return (1);
 }
