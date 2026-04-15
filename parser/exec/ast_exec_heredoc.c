@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 02:17:06 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/12 18:23:01 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 18:35:43 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exec_heredoc(char *delimiter, t_data *data)
 		return (-1);
 	while (1)
 	{
-		str = readline("> ");
+		str = readline("heredoc> ");
 		if (!str || !ft_strcmp(str, delimiter))
 		{
 			free(str);
