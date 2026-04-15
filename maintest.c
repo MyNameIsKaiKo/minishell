@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 12:04:16 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 18:16:11 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	main_loop(char **prompt, t_env **env_var)
 			printf("exit\n");
 			break ;
 		}
-		if (tmp[0] == "\0")
+		if (tmp[0] == '\0')
 		{
 			free(tmp);
 			continue ;
