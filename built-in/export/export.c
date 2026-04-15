@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:39:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/11 15:07:20 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/14 17:09:41 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,29 +81,28 @@ static t_env	*exec_export(char *arg, t_env *env_var, int separator)
 
 int	export(char **args, t_env *env_var)
 {
-	int	exit_status;
 	int	i;
 	int	j;
 
-	i = -1;
-	j = 0;
-	exit_status = 0;
+	i = 0;
+	env_var->exit_status = 0;
 	if (!check_export_args(args))
 		print_export(env_var);
 	else
 	{
-		while (args[++i])
+		while (args[i])
 		{
+			j = 0;
 			if (!parser_export(args[i]))
-				exit_status = print_export_error(args[i], 0);
+				env_var->exit_status = print_export_error(args[i], 0);
 			else
 			{
 				while (args[i][j] && args[i][j] != '=')
 					j++;
 				env_var = exec_export(args[i], env_var, j);
 			}
-			j = 0;
+			i++;
 		}
 	}
-	return (exit_status);
+	return (env_var->exit_status);
 }

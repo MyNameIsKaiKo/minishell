@@ -5,7 +5,7 @@ RM			= rm -f
 
 OBJ_DIR		= obj
 
-VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/exit:built-in/env:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node:parser/exec:expander
+VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env:built-in/exit:expander:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node:parser/exec:parser/*
 
 SRCS 		=	maintest.c \
 				prompt.c \
@@ -59,7 +59,11 @@ SRCS 		=	maintest.c \
 				word_and_ponct_merger.c \
 				remove_rponct.c \
 				expander.c \
+<<<<<<< HEAD
 				expand_var.c \
+=======
+				expand_utils.c \
+>>>>>>> 7c73e54 (Fix expander with "", fix exit with LLONG overflow)
 				apply_expend.c \
 				expand_copy.c
 

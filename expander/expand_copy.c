@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 14:38:58 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/12 15:07:26 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/14 17:48:13 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,13 @@ void	expand_copy(char *result, int *i, t_env *env, char *var)
 		*i = copy_exit_status(result, env, *i);
 	else
 		*i = copy_env_value(result, env, *i);
+}
+
+void	not_expand(char *result, int *i)
+{
+	(*i)++;
+	while (result[*i] && result[*i] != '\'')
+		(*i)++;
+	if (result[*i])
+		(*i)++;
 }

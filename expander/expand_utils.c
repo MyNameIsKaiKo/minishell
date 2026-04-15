@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_var.c                                       :+:      :+:    :+:   */
+/*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/12 18:17:30 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 18:22:43 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,42 @@ static t_env	*get_exp(char *arg, char *var, t_env *env_var, int *size)
 	else
 		*size = ft_strlen(arg) - *size + ft_strlen(env_var->value) + 1;
 	return (env_var);
+}
+
+char	*expand_dquotes(char *result, int *i, t_env *env)
+{
+	(*i)++;
+	while (result[*i] && result[*i] != '\"')
+	{
+		if (result[*i] == '$')
+		{
+			result = search_and_expand(result, i, env);
+			continue ;
+		}
+		(*i)++;
+	}
+	return (result);
+}
+
+char	*search_and_expand(char *result, int *i, t_env *env)
+{
+	int	end;
+
+	end = *i + 1;
+	while (result[end] && ((ft_isalnum(result[end])
+			|| result[end] == '_') || result[end] == '?'))
+		end++;
+	if (end != *i + 1)
+	{
+		result = expand_var(result, *i, &end, env);
+		if ((end - 1) > 0)
+			*i = end - 1;
+		else
+			(*i)++;
+	}
+	else
+		(*i)++;
+	return (result);
 }
 
 char	*expand_var(char *arg, int start, int *end, t_env *env)
