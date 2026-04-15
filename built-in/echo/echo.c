@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 16:44:38 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/10 16:04:30 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/15 21:59:28 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	echo(char **args, t_env *env_var)
 				i++;
 		}
 		ft_putstr_fd(args[i], 1);
-		if (args[i + 1])
+		if (args[i][0] && args[i + 1] && args[i + 1][0])
 			write(1, " ", 1);
 		i++;
 	}

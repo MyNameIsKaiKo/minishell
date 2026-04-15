@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_wildcards.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:16:00 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 17:30:53 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 22:19:57 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,16 @@
 
 static int	is_wildcard(char *str, int state)
 {
-	if (ft_strchr(str, '*') && !state)
-		return (1);
+	int	i = 0;
+	
+	while (str[i])
+	{
+		if (str[i] == '=')
+			state = 1;
+		if (str[i] == '*' && !state)
+			return (1);
+		i++;
+	}
 	return (0);
 }
 

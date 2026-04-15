@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 19:37:47 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/15 22:48:57 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,14 @@ char	*search_and_expand(char *result, int *i, t_env *env)
 			(*i)++;
 	}
 	else
-		(*i)++;
+	{
+		while (result[end])
+		{
+			result[end - 1] = result[end];
+			end++;
+		}
+		result[end - 1] = '\0';
+	}
 	return (result);
 }
 
