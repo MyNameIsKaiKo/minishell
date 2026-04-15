@@ -59,11 +59,7 @@ SRCS 		=	maintest.c \
 				word_and_ponct_merger.c \
 				remove_rponct.c \
 				expander.c \
-<<<<<<< HEAD
-				expand_var.c \
-=======
 				expand_utils.c \
->>>>>>> 7c73e54 (Fix expander with "", fix exit with LLONG overflow)
 				apply_expend.c \
 				expand_copy.c
 
