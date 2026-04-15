@@ -5,7 +5,7 @@ RM			= rm -f
 
 OBJ_DIR		= obj
 
-VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node:parser/exec
+VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/exit:built-in/env:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node:parser/exec:expander
 
 SRCS 		=	maintest.c \
 				prompt.c \
@@ -60,11 +60,8 @@ SRCS 		=	maintest.c \
 				remove_rponct.c \
 				expander.c \
 				expand_var.c \
-<<<<<<< HEAD
-				apply_expend.c
-=======
+				apply_expend.c \
 				expand_copy.c
->>>>>>> Tom
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
