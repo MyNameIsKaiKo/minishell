@@ -52,9 +52,7 @@ static int	handle_redir(t_lexer *checkpoint, t_ast *node)
 	node->args[0] = ft_strdup(checkpoint->data);
 	node->args[1] = ft_strdup(checkpoint->next->data);
 	node->args[2] = NULL;
-	output = checkpoint->index;
-	if (checkpoint->type != HEREDOC)
-		output += 1;
+	output = checkpoint->index + 1;
 	return (output);
 }
 

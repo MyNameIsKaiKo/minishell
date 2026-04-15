@@ -86,9 +86,7 @@ char	**wildcards(char *pattern)
 {
 	char			**result;
 	int				i;
-	int				j;
 
-	j = 0;
 	i = count_obj();
 	if (i == 0)
 		return (NULL);

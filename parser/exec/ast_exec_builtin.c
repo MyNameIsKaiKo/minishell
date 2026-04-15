@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ast.h"
+#include <unistd.h>
 
 static void	builtin_init(t_data *data)
 {
@@ -32,12 +33,12 @@ static void	buildin_closefd(t_data *data)
 {
 	if (data->filesfd.fdin > 2)
 	{
-		dup2(data->filesfd.fdintmp, data->filesfd.fdin);
+		dup2(data->filesfd.fdintmp, STDIN_FILENO);
 		close(data->filesfd.fdintmp);
 	}
 	if (data->filesfd.fdout > 2)
 	{
-		dup2(data->filesfd.fdouttmp, data->filesfd.fdout);
+		dup2(data->filesfd.fdouttmp, STDOUT_FILENO);
 		close(data->filesfd.fdouttmp);
 	}
 }

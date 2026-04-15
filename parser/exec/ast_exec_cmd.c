@@ -18,6 +18,8 @@ int	exec_child(t_ast *tree, t_data data)
 	char	*path;
 	char	**env;
 
+	if (ft_strcmp(tree->args[0], ".") == 0)
+		exit(2);
 	child_init(data);
 	paths = find_path(data);
 	if (!paths)
@@ -29,22 +31,40 @@ int	exec_child(t_ast *tree, t_data data)
 	if (!env)
 		cmd_env_error(paths, path, &tree, data.env);
 	execve(path, tree->args, env);
+	perror("T&J Shell")
 	free_all_in_child(&tree, data.env);
 	free(path);
 	free_sarr(paths);
 	free_sarr(env);
-	exit(1);
+	exit(126);
+}
+
+static int	handle_empty_cmd(t_ast *tree, t_data data)
+{
+	if (!tree->args[0] || tree->args[0][0] == '\0')
+	{
+		if (tree->args[0] && tree->args[0][0] == '\0')
+		{
+			write(2, "T&J Shell : command not founct\n", 31);
+			(*data.env)->exit_status = 127;
+			return (127);
+		}
+		return (0);
+	}
+	return (1);
 }
 
 int	exec_cmd(t_ast *tree, t_data data)
 {
 	pid_t	cmd;
 	int		status;
-	int		sig;
 
 	status = 0;
+	status = handle_empty_cmd(tree, data);
+	if (status != 1)
+		return (status);
 	if (!tree || !tree->args || !tree->args[0])
-		return (1);
+		return (0);
 	if (is_builtin(tree->args[0]))
 		status = exec_builtin(tree, data);
 	else
@@ -54,13 +74,10 @@ int	exec_cmd(t_ast *tree, t_data data)
 			exec_child(tree, data);
 		waitpid(cmd, &status, 0);
 		if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
+			status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
-		{
-			sig = WTERMSIG(status);
-			if (sig == SIGINT)
-				return (130);
-		}
+			status = 128 + WTERMSIG(status);
 	}
+	(*data.env)->exit_status = status;
 	return (status);
 }
