@@ -42,6 +42,7 @@ int	exec_cmd(t_ast *tree, t_data data)
 {
 	pid_t	cmd;
 	int		status;
+	int		sig;
 
 	status = 0;
 	if (!tree || !tree->args || !tree->args[0])
@@ -57,6 +58,12 @@ int	exec_cmd(t_ast *tree, t_data data)
 		waitpid(cmd, &status, 0);
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+		{
+			sig = WTERMSIG(status);
+			if (sig == SIGINT)
+				return (130);
+		}
 	}
 	return (status);
 }

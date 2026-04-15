@@ -33,6 +33,7 @@ int	exec_redir(t_ast *tree, t_data data)
 	int	status;
 
 	fd = 0;
+	status = 0;
 	if (!ft_strcmp(tree->args[0], "<<"))
 		fd = exec_heredoc(tree->args[1], &data);
 	if (!ft_strcmp(tree->args[0], "<"))
@@ -53,5 +54,7 @@ int	exec_redir(t_ast *tree, t_data data)
 		status = exec_tree(tree->left, data);
 	if (tree->right)
 		status = exec_tree(tree->right, data);
+	if (fd > 2)
+		close (fd);
 	return (status);
 }

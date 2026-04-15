@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+static void	handler_exec(int signal)
+{
+	(void)signal;
+	write(1, "\n", 1);
+}
+
 static void	handler(int signal)
 {
 	(void)signal;
@@ -31,16 +37,18 @@ void	main_loop(char **prompt, t_env **env_var)
 	while (1)
 	{
 		tmp = readline(*prompt);
-		if (tmp && tmp[0])
-			add_history(tmp);
-		if (!ft_strcmp(tmp, "exit"))
+		if (!tmp)
 		{
-			free(tmp);
 			rl_clear_history();
-			free_env(*env_var);
-			free(*prompt);
+			printf("exit\n");
 			break ;
 		}
+		if (tmp[0] == "\0")
+		{
+			free(tmp);
+			continue ;
+		}
+		add_history(tmp);
 		data.filesfd.fdin = STDIN_FILENO;
 		data.filesfd.fdout = STDOUT_FILENO;
 		data.env = env_var;
@@ -50,28 +58,38 @@ void	main_loop(char **prompt, t_env **env_var)
 		apply_wildcard(&lex);
 		ast = make_tree(&lex);
 		lexer_abs_free(&lex);
+		signal(SIGINT, handler_exec);
 		exec_tree(ast, data);
+		signal(SIGINT, handler);
 		ast_free(&ast);
+		if ((*env_var)->is_valid_exit)
+		{
+			rl_clear_history();
+			break ;
+		}
 	}
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	t_env			*env_var;
-	char			*prompt;
+	t_env	*env_var;
+	int		output;
+	char	*prompt;
 
 	(void)ac;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	env_var = init_env(envp, av[0]);
 	prompt = build_prompt(env_var->s_pwd);
-	if (!prompt || !env_var)
+	env_var->prompt = &prompt;
+	if (!env_var || !(*env_var->prompt))
 	{
 		ft_putendl_fd("minishell: internal fatal error", 2);
 		free_env(env_var);
-		free(prompt);
 		return (1);
 	}
-	main_loop(&prompt, &env_var);
-	return (0);
+	main_loop(env_var->prompt, &env_var);
+	output = env_var->exit_status;
+	free_env(env_var);
+	return (output);
 }
