@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 19:23:01 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 00:14:34 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	main_loop(char **prompt, t_env **env_var)
 	t_lexer	*lex;
 	t_ast	*ast;
 	t_data	data;
+	t_ast	*head;
 
 	while (1)
 	{
@@ -41,7 +42,8 @@ void	main_loop(char **prompt, t_env **env_var)
 		free(tmp);
 		apply_expend(&lex, data);
 		apply_wildcard(&lex);
-		ast = make_tree(&lex, NULL);
+		head = NULL;
+		ast = make_tree(&lex, &head);
 		if (lex && !ast)
 		{
 			lexer_abs_free(&lex);

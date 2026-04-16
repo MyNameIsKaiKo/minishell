@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:19:58 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 20:01:17 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 00:16:19 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_ast	*nodenew(t_lexer *checkpoint, t_ast **head)
 	new_node = malloc(sizeof(t_ast));
 	if (!new_node)
 		return (NULL);
+	if (head && !(*head))
+		*head = new_node;
 	if (!head)
 		new_node->head = new_node;
 	else

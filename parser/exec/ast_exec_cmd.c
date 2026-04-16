@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 23:20:28 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 01:33:32 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	exec_child(t_ast *tree, t_data data)
 	char	**env;
 
 	if (ft_strcmp(tree->args[0], ".") == 0)
-		exit(2);
+		exit_on_point(&tree, data.env);
 	child_init(data);
 	paths = find_path(data);
 	path = find_cmdpath(paths, tree->args[0]);
@@ -70,6 +70,10 @@ int	exec_cmd(t_ast *tree, t_data data)
 		cmd = fork();
 		if (cmd == 0)
 			exec_child(tree, data);
+		if (data.filesfd.fdin > 2)
+			close(data.filesfd.fdin);
+		if (data.filesfd.fdout > 2)
+			close(data.filesfd.fdout);
 		waitpid(cmd, &status, 0);
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
