@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 22:12:54 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/16 22:49:06 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void					combined_quotes(t_lexer **lex);
 void					merge_words(t_lexer **lex);
 void					merge_word_ponct(t_lexer **lex);
 void					remove_remaining_type(t_lexer **lex, t_token_type type);
+void					replace_arg(t_lexer **lex);
 
 // -- lexer_merge function --
 t_lexer					*lexer_merge(t_lexer **lex, int start, int stop,
