@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 12:26:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 18:30:14 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/16 23:20:40 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	cmd_path_error(char **paths, char *cmd, t_ast **tree, t_env **env)
 	free(error_msg);
 	free_sarr(paths);
 	free_all_in_child(tree, env);
-	exit(0);
+	exit(127);
 }
 
 void	cmd_env_error(char **paths, char *path, t_ast **tree, t_env **env)
