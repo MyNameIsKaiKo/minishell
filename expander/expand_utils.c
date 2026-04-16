@@ -6,11 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:04 by jleray            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2026/04/16 18:22:56 by nredouan         ###   ########.fr       */
-=======
-/*   Updated: 2026/04/16 17:51:20 by nredouan         ###   ########.fr       */
->>>>>>> 92c2741 (Fix wildcards : not apply when in a variable value in export or unset, fix echo)
+/*   Updated: 2026/04/16 18:25:37 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
