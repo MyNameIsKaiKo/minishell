@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 14:55:54 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/13 18:21:06 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/16 23:14:23 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ static int	exit_verif(char *arg)
 
 	i = 0;
 	sign = 1;
-	if (arg && (arg[0] == '-' || arg[0] == '+'))
+	while (arg && arg[i] && ft_isspace(arg[i]))
+		i++;
+	if (arg && (arg[i] == '-' || arg[i] == '+'))
 	{
-		if (arg[0] == '-')
+		if (arg[i] == '-')
 			sign *= -1;
 		i++;
 	}
