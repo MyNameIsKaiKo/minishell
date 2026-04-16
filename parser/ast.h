@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/12 18:35:52 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 20:33:40 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_ast
 }						t_ast;
 
 //	--- ast Function ---
-t_ast					*make_tree(t_lexer **lex);
+t_ast					*make_tree(t_lexer **lex, t_ast **head);
 
 //	--- ast_utils Function ---
 t_lexer					*get_last_cpoint(t_lexer *lex);
@@ -68,12 +68,13 @@ t_lexer					*getright(t_lexer *lex, int index);
 t_lexer					*getleft(t_lexer **lex, int index);
 
 //	--- ast node Fucntion ---
-t_ast					*nodenew(t_lexer *checkpoint);
+t_ast					*nodenew(t_lexer *checkpoint, t_ast **head);
 void					node_add(t_ast **ast, t_ast *new_node, t_side side);
 void					ast_free(t_ast **ast);
 int						handle_cmd_merge(t_lexer **lexhead, t_lexer *checkpoint,
 							t_ast **node);
-void					handle_node_data(t_ast **new_node, t_lexer *checkpoint);
+void					handle_node_data(t_ast **new_node, t_lexer *checkpoint,
+							t_ast **head);
 
 //	--- ast exec Function ---
 int						exec_tree(t_ast *tree, t_data data);
@@ -93,9 +94,12 @@ char					**find_path(t_data data);
 void					free_sarr(char **arr);
 
 //	--- cmd error Function ---
-int						cmd_path_error(char **paths, char *cmd);
-int						cmd_error(char *cmd);
-void					cmd_env_error(char **paths, char *path, char *cmd);
+int						cmd_path_error(char **paths, char *cmd, t_ast **head,
+							t_env **env);
+int						cmd_error(char *cmd, t_ast **tree, t_env **env);
+void					cmd_env_error(char **paths, char *path, t_ast **tree,
+							t_env **env);
+void					free_all_in_child(t_ast **tree, t_env **env);
 
 //	--- exec_error_message ---
 int						pipe_error(t_data data);

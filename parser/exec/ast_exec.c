@@ -72,5 +72,6 @@ int	exec_tree(t_ast *tree, t_data data)
 		output = exec_subprocess(tree, data);
 	else
 		output = exec_cmd(tree, data);
+	(*data.env)->exit_status = output;
 	return (output);
 }

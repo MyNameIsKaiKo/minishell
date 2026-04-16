@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 11:55:56 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 22:12:54 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_lexer					*lexernew(char *data, int type);
 void					lexer_add(t_lexer **head, t_lexer *to_add);
 void					lexer_free(t_lexer **lex);
 void					indexing_lex(t_lexer **lex);
-void					lexer_delone(t_lexer *to_del, t_lexer **head);
+void					lexer_delone(t_lexer **to_del, t_lexer **head);
 void					lexerlst_trim(t_lexer **lex);
 void					lexer_abs_free(t_lexer **lex);
 void					lexer_set_next(t_lexer **lex, t_lexer *next);

@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 18:18:53 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 22:51:46 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,14 @@ void	main_loop(char **prompt, t_env **env_var)
 		free(tmp);
 		apply_expend(&lex, data);
 		apply_wildcard(&lex);
-		ast = make_tree(&lex);
+		ast = make_tree(&lex, NULL);
+		if (lex && !ast)
+		{
+			lexer_abs_free(&lex);
+			(*env_var)->exit_status = 2;
+			ft_putstr_fd("Syntax Error\n", 2);
+			continue ;
+		}
 		lexer_abs_free(&lex);
 		signal(SIGINT, handler_exec);
 		exec_tree(ast, data);

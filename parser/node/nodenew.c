@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:19:58 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/12 17:58:58 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/15 20:01:17 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,24 @@ static void	get_ast_type(t_lexer *checkpoint, t_ast **ast)
 		(*ast)->type = SUBPROCESS_AST;
 }
 
-t_ast	*nodenew(t_lexer *checkpoint)
+t_ast	*nodenew(t_lexer *checkpoint, t_ast **head)
 {
 	t_ast	*new_node;
 
 	new_node = malloc(sizeof(t_ast));
 	if (!new_node)
 		return (NULL);
+	if (!head)
+		new_node->head = new_node;
+	else
+		new_node->head = *head;
 	new_node->args = NULL;
 	new_node->data = NULL;
 	new_node->left = NULL;
 	new_node->right = NULL;
 	new_node->old_lexindex = -1;
 	get_ast_type(checkpoint, &new_node);
-	handle_node_data(&new_node, checkpoint);
+	handle_node_data(&new_node, checkpoint, head);
 	if (new_node->old_lexindex == -1)
 	{
 		ft_putstr_fd("Syntax Error : Node new\n", 2);
