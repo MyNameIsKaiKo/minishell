@@ -6,26 +6,11 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 22:51:46 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/16 19:23:01 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	handler_exec(int signal)
-{
-	(void)signal;
-	write(1, "\n", 1);
-}
-
-static void	handler(int signal)
-{
-	(void)signal;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
 
 void	main_loop(char **prompt, t_env **env_var)
 {

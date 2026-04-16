@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:12:00 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 18:44:09 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/16 19:31:16 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,20 @@
 # include "lexer.h"
 # include "libft.h"
 
-volatile sig_atomic_t	g_sigint;
-
 //	--- Built in Function ---
-char					*build_prompt(char *pwd);
+char	*build_prompt(char *pwd);
 
 //	--- Expand Function ---
-char					*expand_var(char *arg, int start, int *end, t_env *env);
-char					*expander(char *args, t_env *env);
-void					apply_expend(t_lexer **lex, t_data data);
+char	*expand_var(char *arg, int start, int *end, t_env *env);
+char	*expander(char *args, t_env *env);
+void	apply_expend(t_lexer **lex, t_data data);
 
 // --- Wildscards Function
-char					**wildcards(char *pattern);
-void					apply_wildcard(t_lexer **lex);
+char	**wildcards(char *pattern);
+void	apply_wildcard(t_lexer **lex);
 
 //	--- Utils Function ---
-void					free_str(char **str);
-char					*ft_strjoinjoin(const char *s1, const char *s2,
-							const char *s3);
+void	free_str(char **str);
+char	*ft_strjoinjoin(const char *s1, const char *s2, const char *s3);
 
 #endif
