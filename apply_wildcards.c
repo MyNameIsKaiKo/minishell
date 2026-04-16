@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:16:00 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 22:19:57 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/15 23:07:28 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*strtosa(char **sa)
 
 	i = 1;
 	tmp = ft_strdup(sa[0]);
+	if (!sa[1])
+		return (tmp);
 	while (sa[i])
 	{
 		output = ft_strjoinjoin(tmp, " ", sa[i]);
