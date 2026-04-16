@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 12:26:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 20:37:19 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/16 18:03:22 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_all_in_child(t_ast **tree, t_env **env)
 	if (env)
 		free_env(*env);
 	ast_free(&node->head);
+	rl_clear_history();
 }
 
 int	cmd_path_error(char **paths, char *cmd, t_ast **tree, t_env **env)
