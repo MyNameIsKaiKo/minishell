@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 16:44:38 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/15 23:40:48 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/16 22:47:28 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ int	echo(char **args, t_env *env_var)
 	i = 0;
 	(void)env_var;
 	option = check_option(args[0]);
+	if (option)
+	{
+		while (args[i] && check_option(args[i]))
+			i++;
+	}
 	while (args && args[i])
 	{
-		if (i == 0 && option)
-		{
-			while (check_option(args[i]))
-				i++;
-		}
 		ft_putstr_fd(args[i], 1);
-		if (args[i] && args[i + 1])
+		if (args[i + 1])
 			write(1, " ", 1);
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 14:12:00 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 18:50:58 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/16 23:03:29 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*build_prompt(char *pwd);
 char	*expand_var(char *arg, int start, int *end, t_env *env);
 char	*expander(char *args, t_env *env);
 void	apply_expend(t_lexer **lex, t_data data);
+char	*supp_quote(char *result);
 
 // --- Wildscards Function
 char	**wildcards(char *pattern);
