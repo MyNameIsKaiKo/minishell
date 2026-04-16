@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 18:16:00 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 23:07:28 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/16 23:02:33 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 static int	is_wildcard(char *str, int state)
 {
-	int	i = 0;
-	
+	int	i;
+
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '=')

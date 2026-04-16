@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 11:27:59 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/15 19:25:31 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/16 20:06:52 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*expander(char *args, t_env *env);
 char	*expand_var(char *arg, int start, int *end, t_env *env);
 void	expand_copy(char *result, int *i, t_env *env, char *var);
 char	*search_and_expand(char *result, int *i, t_env *env);
-char	*expand_dquotes(char *result, int *i, t_env *env);
 void	not_expand(char *result, int *i);
 bool	check_unclose(char *arg, char quote, int i);
 

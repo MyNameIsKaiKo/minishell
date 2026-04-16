@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 18:32:01 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/16 23:33:07 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,6 @@ static t_env	*get_exp(char *arg, char *var, t_env *env_var, int *size)
 	return (env_var);
 }
 
-char	*expand_dquotes(char *result, int *i, t_env *env)
-{
-	(*i)++;
-	while (result[*i] && result[*i] != '\"')
-	{
-		if (result[*i] == '$')
-		{
-			if (result[(*i) + 1] && !ft_isalnum(result[(*i) + 1]))
-			{
-				(*i)++;
-				break ;
-			}
-			result = search_and_expand(result, i, env);
-			continue ;
-		}
-		(*i)++;
-	}
-	return (result);
-}
-
 bool	check_unclose(char *arg, char quote, int i)
 {
 	if (arg[i] == '$')
@@ -67,32 +47,19 @@ bool	check_unclose(char *arg, char quote, int i)
 	return (false);
 }
 
-char	*search_and_expand(char *result, int *i, t_env *env)
+static	int	get_end_var(char *result, int i)
 {
 	int	end;
 
-	end = *i + 1;
-	while (result[end] && ((ft_isalnum(result[end])
-				|| result[end] == '_') || result[end] == '?'))
+	end = i + 1;
+	while (result[end] && (ft_isalnum(result[end])
+			|| result[end] == '_' || result[end] == '?'))
+	{
 		end++;
-	if (end != *i + 1)
-	{
-		result = expand_var(result, *i, &end, env);
-		if ((end - 1) >= 0)
-			*i = end - 1;
-		else
-			(*i)++;
+		if (result[end - 1] == '?')
+			break ;
 	}
-	else
-	{
-		while (result[end])
-		{
-			result[end - 1] = result[end];
-			end++;
-		}
-		result[end - 1] = '\0';
-	}
-	return (result);
+	return (end);
 }
 
 char	*expand_var(char *arg, int start, int *end, t_env *env)
@@ -121,5 +88,33 @@ char	*expand_var(char *arg, int start, int *end, t_env *env)
 	}
 	free(arg);
 	free(var);
+	return (result);
+}
+
+char	*search_and_expand(char *result, int *i, t_env *env)
+{
+	int	end;
+
+	end = get_end_var(result, *i);
+	if (end != *i + 1)
+	{
+		result = expand_var(result, *i, &end, env);
+		if ((end - 1) >= 0)
+			*i = end - 1;
+	}
+	else
+	{
+		if (!result[end] || ft_isspace(result[end]))
+			(*i)++;
+		else
+		{
+			while (result[end])
+			{
+				result[end - 1] = result[end];
+				end++;
+			}
+			result[end - 1] = '\0';
+		}
+	}
 	return (result);
 }
