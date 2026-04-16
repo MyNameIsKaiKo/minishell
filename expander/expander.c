@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:55 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 23:00:40 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/16 23:38:47 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	skip_dquote(char *result, int *i, int *j)
 	(*j)++;
 }
 
-static char	*expand_dquotes(char *result, int *i, t_env *env)
+char	*expand_dquotes(char *result, int *i, t_env *env)
 {
 	(*i)++;
 	while (result[*i] && result[*i] != '\"')
