@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 20:35:42 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/16 17:54:25 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	exec_child(t_ast *tree, t_data data)
 	if (!env)
 		cmd_env_error(paths, path, &tree, data.env);
 	execve(path, tree->args, env);
-	perror("T&J Shell")
+	perror("T&J Shell");
 	free_all_in_child(&tree, data.env);
 	free(path);
 	free_sarr(paths);
