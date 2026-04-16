@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:39:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/14 17:09:41 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/15 21:36:58 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,21 +88,18 @@ int	export(char **args, t_env *env_var)
 	env_var->exit_status = 0;
 	if (!check_export_args(args))
 		print_export(env_var);
-	else
+	else while (args[i])
 	{
-		while (args[i])
+		j = 0;
+		if (!parser_export(args[i]))
+			env_var->exit_status |= print_export_error(args[i], 0);
+		else
 		{
-			j = 0;
-			if (!parser_export(args[i]))
-				env_var->exit_status = print_export_error(args[i], 0);
-			else
-			{
-				while (args[i][j] && args[i][j] != '=')
-					j++;
-				env_var = exec_export(args[i], env_var, j);
-			}
-			i++;
+			while (args[i][j] && args[i][j] != '=')
+				j++;
+			env_var = exec_export(args[i], env_var, j);
 		}
+		i++;
 	}
 	return (env_var->exit_status);
 }
