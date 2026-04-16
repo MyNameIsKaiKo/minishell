@@ -6,7 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:04 by jleray            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/04/16 18:22:56 by nredouan         ###   ########.fr       */
+=======
+/*   Updated: 2026/04/16 17:51:20 by nredouan         ###   ########.fr       */
+>>>>>>> 92c2741 (Fix wildcards : not apply when in a variable value in export or unset, fix echo)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +44,11 @@ char	*expand_dquotes(char *result, int *i, t_env *env)
 	{
 		if (result[*i] == '$')
 		{
+			if (result[(*i) + 1] && !ft_isalnum(result[(*i) + 1]))
+			{
+				(*i)++;
+				break ;
+			}
 			result = search_and_expand(result, i, env);
 			continue ;
 		}
@@ -73,7 +82,7 @@ char	*search_and_expand(char *result, int *i, t_env *env)
 	if (end != *i + 1)
 	{
 		result = expand_var(result, *i, &end, env);
-		if ((end - 1) > 0)
+		if ((end - 1) >= 0)
 			*i = end - 1;
 		else
 			(*i)++;
