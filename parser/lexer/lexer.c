@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 16:25:00 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/16 22:49:49 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ t_lexer	*lexer(char *str)
 		remove_remaining_type(&lex, WSPACE);
 		remove_remaining_type(&lex, PONCT);
 		lexerlst_trim(&lex);
+		replace_arg(&lex);
 	}
 	else
 		return (NULL);

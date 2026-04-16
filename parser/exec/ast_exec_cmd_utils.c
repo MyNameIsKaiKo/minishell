@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 20:52:53 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/16 23:20:19 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ char	*find_cmdpath(char **paths, char *cmd)
 		path = ft_strdup(cmd);
 		return (path);
 	}
+	if (!paths)
+		return (NULL);
 	while (paths[i])
 	{
 		path = ft_strjoin(paths[i], cmd);

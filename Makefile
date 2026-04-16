@@ -8,6 +8,7 @@ OBJ_DIR		= obj
 VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env:built-in/exit:expander:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node:parser/exec:parser/*
 
 SRCS 		=	maintest.c \
+				signals.c \
 				prompt.c \
 				pwd.c \
 				unset.c \
@@ -43,6 +44,7 @@ SRCS 		=	maintest.c \
 				node_free.c \
 				nodenew_data.c \
 				lexer.c \
+				replace_arg.c \
 				handle_ponct.c \
 				lexerlst_add.c \
 				lexerlst_new.c \
