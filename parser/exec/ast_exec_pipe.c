@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 15:57:13 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/12 18:23:25 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/16 18:14:52 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	handle_first(t_ast *tree, t_data data, int pipefd[2])
 {
+	int	status;
+
 	if (data.filesfd.fdin < 0)
 	{
 		close(pipefd[0]);
@@ -24,11 +26,16 @@ void	handle_first(t_ast *tree, t_data data, int pipefd[2])
 	if (data.filesfd.fdout > 2)
 		close(data.filesfd.fdout);
 	data.filesfd.fdout = pipefd[1];
-	exit(exec_tree(tree->left, data));
+	status = exec_tree(tree->left, data);
+	ast_free(&tree->head);
+	free_env(*(data.env));
+	exit(status);
 }
 
 void	handle_scd(t_ast *tree, t_data data, int pipefd[2])
 {
+	int	status;
+
 	if (data.filesfd.fdout < 0)
 	{
 		close(pipefd[0]);
@@ -39,7 +46,10 @@ void	handle_scd(t_ast *tree, t_data data, int pipefd[2])
 	if (data.filesfd.fdin > 2)
 		close(data.filesfd.fdin);
 	data.filesfd.fdin = pipefd[0];
-	exit(exec_tree(tree->right, data));
+	status = exec_tree(tree->right, data);
+	ast_free(&tree->head);
+	free_env(*(data.env));
+	exit(status);
 }
 
 int	exec_pipe(t_ast *tree, t_data data)
