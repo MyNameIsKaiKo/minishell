@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 23:20:19 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 02:52:55 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,27 +96,29 @@ char	**find_path(t_data data)
 
 char	*find_cmdpath(char **paths, char *cmd)
 {
-	int		i;
-	char	*path;
+	int			i;
+	char		*path;
+	struct stat	st;
 
 	i = 0;
 	if ((cmd[0] == '/' || ft_strncmp(cmd, "./", 2) == 0) && access(cmd,
 			X_OK) == 0)
 	{
+		if (stat(cmd, &st) == 0 && S_ISREG(st.st_mode))
+			return (cmd);
 		path = ft_strdup(cmd);
 		return (path);
 	}
 	if (!paths)
 		return (NULL);
-	while (paths[i])
+	while (paths[i++])
 	{
-		path = ft_strjoin(paths[i], cmd);
+		path = ft_strjoin(paths[i - 1], cmd);
 		if (!path)
 			return (NULL);
 		if (access(path, X_OK) == 0)
 			return (path);
 		free(path);
-		i++;
 	}
 	return (NULL);
 }

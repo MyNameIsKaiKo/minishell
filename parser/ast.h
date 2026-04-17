@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/17 01:33:10 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 02:04:57 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int						cmd_error(char *cmd, t_ast **tree, t_env **env);
 void					cmd_env_error(char **paths, char *path, t_ast **tree,
 							t_env **env);
 void					free_all_in_child(t_ast **tree, t_env **env);
-int						exit_on_point(t_ast **tree, t_env **env);
+int						exit_on_point(t_ast **tree, t_env **env, t_data data);
 
 //	--- exec_error_message ---
 int						pipe_error(t_data data);

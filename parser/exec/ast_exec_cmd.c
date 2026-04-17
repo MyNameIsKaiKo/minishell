@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/17 01:33:32 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 02:05:30 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	exec_child(t_ast *tree, t_data data)
 	char	**env;
 
 	if (ft_strcmp(tree->args[0], ".") == 0)
-		exit_on_point(&tree, data.env);
+		exit_on_point(&tree, data.env, data);
 	child_init(data);
 	paths = find_path(data);
 	path = find_cmdpath(paths, tree->args[0]);
