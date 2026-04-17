@@ -40,6 +40,7 @@ SRCS 		=	maintest.c \
 				ast_utils.c \
 				free_tools.c \
 				cmd_error.c \
+				cmd_error_scd.c \
 				nodenew.c \
 				node_add.c \
 				node_free.c \

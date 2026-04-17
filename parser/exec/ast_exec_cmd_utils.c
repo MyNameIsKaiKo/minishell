@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/17 19:29:07 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 19:55:12 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,13 @@ static char	*join_the_path(char **paths, char *cmd)
 	return (NULL);
 }
 
-char	*find_cmdpath(char **paths, char *cmd)
+char	*find_cmdpath(char **paths, t_ast **tree, t_env **env)
 {
 	char		*path;
 	struct stat	st;
+	char		*cmd;
 
+	cmd = (*tree)->args[0];
 	if ((cmd[0] == '/' || ft_strncmp(cmd, "./", 2) == 0))
 	{
 		if (stat(cmd, &st) == 0 && S_ISREG(st.st_mode) && !access(cmd, X_OK))
@@ -109,7 +111,7 @@ char	*find_cmdpath(char **paths, char *cmd)
 			path = ft_strdup(cmd);
 			return (path);
 		}
-		return (NULL);
+		directory_error(paths, cmd, tree, env);
 	}
 	path = join_the_path(paths, cmd);
 	return (path);

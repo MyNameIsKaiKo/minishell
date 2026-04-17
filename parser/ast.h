@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/17 02:04:57 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 19:54:13 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int						exec_redir(t_ast *tree, t_data data);
 //	--- ast exec cmd utils Function ---
 int						is_builtin(char *str);
 void					child_init(t_data data);
-char					*find_cmdpath(char **paths, char *cmd);
+char					*find_cmdpath(char **paths, t_ast **tree, t_env **env);
 char					**find_path(t_data data);
 
 //	--- free Function ---
@@ -101,6 +101,8 @@ void					cmd_env_error(char **paths, char *path, t_ast **tree,
 							t_env **env);
 void					free_all_in_child(t_ast **tree, t_env **env);
 int						exit_on_point(t_ast **tree, t_env **env, t_data data);
+void					directory_error(char **paths, char *cmd, t_ast **tree,
+							t_env **env);
 
 //	--- exec_error_message ---
 int						pipe_error(t_data data);
