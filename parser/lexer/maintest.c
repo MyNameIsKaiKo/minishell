@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 12:52:58 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 23:10:28 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 17:53:53 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(void)
 	char	*str2;
 
 	str = "(echo oui || echo non)&&echo true || <Makefile cat -e|ls -s >out";
-	str2 = "cat -e << eof | cat << eof -e";
+	str2 = "cat -e << eof | cat << eof && /ls";
 	lex = lexer(str2);
 	head = lex;
 	if (!lex)

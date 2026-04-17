@@ -6,30 +6,11 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/17 02:52:55 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 18:17:43 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
-
-int	is_builtin(char *str)
-{
-	if (!ft_strcmp(str, "echo"))
-		return (1);
-	if (!ft_strcmp(str, "cd"))
-		return (1);
-	if (!ft_strcmp(str, "pwd"))
-		return (1);
-	if (!ft_strcmp(str, "export"))
-		return (1);
-	if (!ft_strcmp(str, "unset"))
-		return (1);
-	if (!ft_strcmp(str, "env"))
-		return (1);
-	if (!ft_strcmp(str, "exit"))
-		return (1);
-	return (0);
-}
 
 void	child_init(t_data data)
 {
@@ -94,21 +75,12 @@ char	**find_path(t_data data)
 	return (paths);
 }
 
-char	*find_cmdpath(char **paths, char *cmd)
+static char	*join_the_path(char **paths, char *cmd)
 {
-	int			i;
-	char		*path;
-	struct stat	st;
+	int		i;
+	char	*path;
 
 	i = 0;
-	if ((cmd[0] == '/' || ft_strncmp(cmd, "./", 2) == 0) && access(cmd,
-			X_OK) == 0)
-	{
-		if (stat(cmd, &st) == 0 && S_ISREG(st.st_mode))
-			return (cmd);
-		path = ft_strdup(cmd);
-		return (path);
-	}
 	if (!paths)
 		return (NULL);
 	while (paths[i++])
@@ -121,4 +93,22 @@ char	*find_cmdpath(char **paths, char *cmd)
 		free(path);
 	}
 	return (NULL);
+}
+
+char	*find_cmdpath(char **paths, char *cmd)
+{
+	char		*path;
+	struct stat	st;
+
+	if ((cmd[0] == '/' || ft_strncmp(cmd, "./", 2) == 0))
+	{
+		if (stat(cmd, &st) == 0 && S_ISREG(st.st_mode) && !access(cmd, X_OK))
+		{
+			path = ft_strdup(cmd);
+			return (path);
+		}
+		return (NULL);
+	}
+	path = join_the_path(paths, cmd);
+	return (path);
 }
