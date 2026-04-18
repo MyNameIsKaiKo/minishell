@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:50:45 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 22:50:39 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 02:58:25 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint,
 		left = getleft(lexhead, checkpoint->index);
 	else
 		left = NULL;
-	node_add(&node, make_tree(&left, head), LEFT);
+	if (node->type != SUBPROCESS_AST)
+		node_add(&node, make_tree(&left, head), LEFT);
 	node_add(&node, make_tree(&right, head), RIGHT);
 	if (node->type == PIPE_AST || node->type == OPERATOR_AST)
 	{

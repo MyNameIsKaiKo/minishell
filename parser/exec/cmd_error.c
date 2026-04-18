@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 12:26:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 23:20:40 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/17 02:04:45 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,14 @@ int	cmd_error(char *cmd, t_ast **tree, t_env **env)
 	free(error_msg);
 	free_all_in_child(tree, env);
 	exit(0);
+}
+
+int	exit_on_point(t_ast **tree, t_env **env, t_data data)
+{
+	if (data.filesfd.fdin > 2)
+		close(data.filesfd.fdin);
+	if (data.filesfd.fdout > 2)
+		close(data.filesfd.fdout);
+	free_all_in_child(tree, env);
+	exit(2);
 }

@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 11:27:59 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/16 23:38:25 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/18 13:21:52 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <unistd.h>
 
 extern volatile sig_atomic_t	g_sigint;

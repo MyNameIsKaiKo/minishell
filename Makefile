@@ -32,6 +32,7 @@ SRCS 		=	maintest.c \
 				ast_exec_cmd.c \
 				ast_exec_cmd_utils.c \
 				ast_exec_builtin.c \
+				ast_exec_builtin_tools.c \
 				ast_exec_pipe.c \
 				ast_exec_heredoc.c \
 				ast_exec_redir.c \
@@ -39,6 +40,7 @@ SRCS 		=	maintest.c \
 				ast_utils.c \
 				free_tools.c \
 				cmd_error.c \
+				cmd_error_scd.c \
 				nodenew.c \
 				node_add.c \
 				node_free.c \
