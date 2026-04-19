@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:55 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/12 15:26:13 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:16:19 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 /*Execute "cd" built-in: change current working directory*/
 int		cd(char **args, t_env *env_var);
 int		path_error(char *path, char *oldpath);
-void	set_dash_pwd(t_env *pwd,
+int		set_dash_pwd(t_env *pwd,
 			t_env *old_pwd, t_env *env_var);
-void	set_dash_oldpwd(t_env *old_pwd, t_env *env_var);
+int		set_dash_oldpwd(t_env *old_pwd, t_env *env_var);
 void	change_pwd(t_env *old_pwd, char *newpwd, char *oldpwd);
 
 /*Execute "pwd" built-in: write the path of the current working

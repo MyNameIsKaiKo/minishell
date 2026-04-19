@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/12 18:47:37 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/19 14:32:05 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,20 @@ static int	cd_home(t_env *env_var)
 	t_env	*home;
 
 	home = env_var;
-	while (home && ft_strncmp("HOME", home->name, 4))
+	while (home && ft_strcmp("HOME", home->name))
 		home = home->next;
 	if (!home || !home->value)
 	{
-		ft_putendl_fd("minishell: cd: HOME not set", 2);
+		ft_putendl_fd("T&J Shell: cd: HOME not set", 2);
 		return (1);
 	}
 	if (!home->value[0])
 		return (0);
 	else
 	{
+		if (chdir(home->value) < 0)
+			return (path_error(home->value, NULL));
 		change_pwd(env_var, ft_strdup(home->value), getcwd(NULL, 0));
-		chdir(home->value);
 	}
 	return (0);
 }
@@ -38,28 +39,28 @@ static int	cd_dash(t_env *env_var, char *oldpath)
 {
 	t_env	*pwd;
 	t_env	*old_pwd;
+	int		status;
 
 	pwd = env_var;
 	old_pwd = env_var;
 	free(oldpath);
+	status = 0;
 	while (pwd && ft_strcmp("PWD", pwd->name))
 		pwd = pwd->next;
 	while (old_pwd && ft_strcmp("OLDPWD", old_pwd->name))
 		old_pwd = old_pwd->next;
 	if (!old_pwd || !old_pwd->value)
 	{
-		ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+		ft_putendl_fd("T&J Shell: cd: OLDPWD not set", 2);
 		return (1);
 	}
+	if (pwd)
+		status = set_dash_pwd(pwd, old_pwd, env_var);
 	else
-	{
-		if (pwd)
-			set_dash_pwd(pwd, old_pwd, env_var);
-		else
-			set_dash_oldpwd(old_pwd, env_var);
-	}
-	printf("%s\n", env_var->s_pwd);
-	return (0);
+		status = set_dash_oldpwd(old_pwd, env_var);
+	if (status == 0)
+		printf("%s\n", env_var->pwd_s);
+	return (status);
 }
 
 static bool	check_cd_args(char **args)
@@ -81,14 +82,14 @@ int	cd(char **args, t_env *env_var)
 
 	exit_status = 0;
 	if (!check_cd_args(args))
-		ft_putendl_fd("minishell: cd: too many arguments", 2);
+		ft_putendl_fd("T&J Shell: cd: too many arguments", 2);
 	else
 	{
 		if (!args[0])
 			exit_status = cd_home(env_var);
 		else
 		{
-			oldpath = ft_strdup(env_var->s_pwd);
+			oldpath = ft_strdup(env_var->pwd_s);
 			if (!ft_strncmp(args[0], "-", 2))
 				exit_status = cd_dash(env_var, oldpath);
 			else if (chdir(args[0]) < 0)
@@ -98,6 +99,6 @@ int	cd(char **args, t_env *env_var)
 		}
 	}
 	free(*env_var->prompt);
-	*env_var->prompt = build_prompt(env_var->s_pwd);
+	*env_var->prompt = build_prompt(env_var->pwd_s);
 	return (exit_status);
 }

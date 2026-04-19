@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 11:27:53 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/12 19:09:32 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/19 13:38:41 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 # include "../include/libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct s_env
 {
 	char			*name;
 	char			*value;
-	char			*s_pwd;
+	char			*pwd_s;
 	char			*exec;
 	int				exit_status;
 	int				is_valid_exit;
@@ -33,6 +34,7 @@ typedef struct s_env
 void				add_env(t_env *env_var, char *name, char *value);
 t_env				*init_env(char **envp, char *executable);
 t_env				*first_env(char *name, char *value, char *executable);
+void				shell_lvl(t_env *env_var);
 void				free_env(t_env *env_var);
 char				**reverse_env(t_env **env);
 #endif

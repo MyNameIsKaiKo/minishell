@@ -16,6 +16,7 @@ SRCS 		=	maintest.c \
 				echo.c \
 				cd.c \
 				cd_utils.c \
+				cd_dash.c \
 				export.c \
 				print_export.c \
 				export_utils.c \
@@ -65,7 +66,8 @@ SRCS 		=	maintest.c \
 				expander.c \
 				expand_utils.c \
 				apply_expend.c \
-				expand_copy.c
+				expand_copy.c \
+				shell_lvl.c
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

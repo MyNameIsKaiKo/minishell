@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 11:54:48 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/11 15:07:34 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/18 15:04:11 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 the env built-in don't need any argument*/
 static void	print_env_error(char *arg)
 {
-	ft_putstr_fd("minishell: env: \'", 2);
+	ft_putstr_fd("T&J Shell: env: \'", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd("\': No such file or directory\n", 2);
 }

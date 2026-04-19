@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:39:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/16 23:01:47 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/19 11:07:44 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static void	change_value(t_env *env_var, char *name, char *value)
 {
 	while (env_var && ft_strcmp(name, env_var->name))
 		env_var = env_var->next;
-	free(env_var->value);
 	free(name);
+	if (!value)
+		return ;
+	free(env_var->value);
 	env_var->value = value;
 }
 
@@ -38,7 +40,7 @@ static void	add_value(t_env *env_var, char *name, char *value)
 	env_var->value = ft_strjoin(env_var->value, value);
 	if (!env_var->value)
 	{
-		ft_putstr_fd("minishell: export: allocation error\n", 2);
+		ft_putstr_fd("T&J Shell: export: allocation error\n", 2);
 		env_var->value = value;
 	}
 	else
