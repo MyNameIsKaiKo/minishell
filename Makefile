@@ -42,6 +42,7 @@ SRCS 		=	maintest.c \
 				cmd_error.c \
 				cmd_error_scd.c \
 				nodenew.c \
+				nodenew_handle_cmd.c \
 				node_add.c \
 				node_free.c \
 				nodenew_data.c \

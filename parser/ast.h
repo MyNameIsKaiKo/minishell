@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 17:56:37 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/19 21:13:33 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_ast
 	struct s_ast		*left;
 	struct s_ast		*right;
 	struct s_ast		*head;
+	int					*quote_states;
 	int					old_lexindex;
 }						t_ast;
 
@@ -75,6 +76,7 @@ int						handle_cmd_merge(t_lexer **lexhead, t_lexer *checkpoint,
 							t_ast **node);
 void					handle_node_data(t_ast **new_node, t_lexer *checkpoint,
 							t_ast **head);
+int						handle_cmds_nodenew(t_lexer *checkpoint, t_ast *node);
 
 //	--- ast exec Function ---
 int						exec_tree(t_ast *tree, t_data data);
@@ -106,4 +108,7 @@ void					directory_error(char **paths, char *cmd, t_ast **tree,
 
 //	--- exec_error_message ---
 int						pipe_error(t_data data);
+
+// --- tools ---
+char					**ft_arr_join(char **arr1, char **arr2);
 #endif

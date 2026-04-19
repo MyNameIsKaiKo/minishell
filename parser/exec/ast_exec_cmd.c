@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/17 19:51:10 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/19 19:37:15 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,28 @@ static int	handle_empty_cmd(t_ast *tree, t_data data)
 	return (1);
 }
 
+static int	exec_non_builtin(t_ast *tree, t_data data)
+{
+	int		status;
+	pid_t	cmd;
+
+	cmd = fork();
+	if (cmd == 0)
+		exec_child(tree, data);
+	if (data.filesfd.fdin > 2)
+		close(data.filesfd.fdin);
+	if (data.filesfd.fdout > 2)
+		close(data.filesfd.fdout);
+	waitpid(cmd, &status, 0);
+	if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		status = 128 + WTERMSIG(status);
+	return (status);
+}
+
 int	exec_cmd(t_ast *tree, t_data data)
 {
-	pid_t	cmd;
 	int		status;
 
 	status = 0;
@@ -66,20 +85,7 @@ int	exec_cmd(t_ast *tree, t_data data)
 	if (is_builtin(tree->args[0]))
 		status = exec_builtin(tree, data);
 	else
-	{
-		cmd = fork();
-		if (cmd == 0)
-			exec_child(tree, data);
-		if (data.filesfd.fdin > 2)
-			close(data.filesfd.fdin);
-		if (data.filesfd.fdout > 2)
-			close(data.filesfd.fdout);
-		waitpid(cmd, &status, 0);
-		if (WIFEXITED(status))
-			status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			status = 128 + WTERMSIG(status);
-	}
+		status = exec_non_builtin(tree, data);
 	(*data.env)->exit_status = status;
 	return (status);
 }

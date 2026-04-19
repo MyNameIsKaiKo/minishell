@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 12:53:25 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/03 16:26:36 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/19 20:25:15 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	ast_free(t_ast **ast)
 	tmp = *ast;
 	ast_free(&tmp->right);
 	ast_free(&tmp->left);
+	if (tmp->quote_states)
+		free(tmp->quote_states);
 	if (tmp->args)
 	{
 		i = 0;

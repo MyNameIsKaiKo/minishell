@@ -6,10 +6,9 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:55 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 18:25:18 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/19 19:24:31 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../header.h"
 
@@ -35,7 +34,7 @@ static void	skip_dquote(char *result, int *i, int *j)
 	(*j)++;
 }
 
-static char	*supp_quote(char *result)
+char	*supp_quote(char *result)
 {
 	int	i;
 	int	j;
