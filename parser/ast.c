@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:50:45 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 18:16:57 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/19 18:44:58 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint,
 		return (NULL);
 	}
 	if (node->type != SUBPROCESS_AST)
-		node_add(&node, right, LEFT);
-	node_add(&node, left, RIGHT);
+		node_add(&node, left, LEFT);
+	node_add(&node, right, RIGHT);
 	if (node->type == PIPE_AST || node->type == OPERATOR_AST)
 	{
 		if (!node->left || !node->right)
