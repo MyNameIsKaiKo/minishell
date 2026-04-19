@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maintest.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/17 00:14:34 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/19 14:46:48 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	env_var = init_env(envp, av[0]);
-	prompt = build_prompt(env_var->s_pwd);
+	prompt = build_prompt(env_var->pwd_s);
 	env_var->prompt = &prompt;
 	if (!env_var || !(*env_var->prompt))
 	{

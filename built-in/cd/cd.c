@@ -6,11 +6,17 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/19 14:32:05 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:32:50 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../built_in.h"
+
+static int	cd_too_many_args(void)
+{
+	ft_putendl_fd("T&J Shell: cd: too many arguments", 2);
+	return (1);
+}
 
 static int	cd_home(t_env *env_var)
 {
@@ -82,7 +88,7 @@ int	cd(char **args, t_env *env_var)
 
 	exit_status = 0;
 	if (!check_cd_args(args))
-		ft_putendl_fd("T&J Shell: cd: too many arguments", 2);
+		return(cd_too_many_args());
 	else
 	{
 		if (!args[0])

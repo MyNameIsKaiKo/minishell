@@ -6,3 +6,5 @@ compile_commands.json
 main.c
 .gitignore
 readline.supp
+minishell_tester-master
+tester

@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/12 15:50:24 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/19 15:26:49 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
-	env_var = init_env(envp);
-	env_var->exec = ft_strdup(argv[0]);
-	prompt = build_prompt(env_var->s_pwd);
+	env_var = init_env(envp, argv[0]);
+	prompt = build_prompt(env_var->pwd_s);
 	// printf("Noeud 1 :\n");
 	// printf("Env name :%s\n", env_var->name);
 	// printf("Env value :%s\n", env_var->value);
-	// printf("Env pwd :%s\n", env_var->s_pwd);
+	// printf("Env pwd :%s\n", env_var->pwd_s);
 	// printf("Env previous :%p\n", env_var->prev);
 	// printf("Env next :%p\n", env_var->next);
 	// printf("-------------------------------\n");
@@ -54,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	// 	printf("Noeud 2 :\n");
 	// 	printf("Env name :%s\n", env_var->next->name);
 	// 	printf("Env value :%s\n", env_var->next->value);
-	// 	printf("Env pwd :%s\n", env_var->next->s_pwd);
+	// 	printf("Env pwd :%s\n", env_var->next->pwd_s);
 	// 	printf("Env previous :%p\n", env_var->next->prev);
 	// 	printf("Env next :%p\n", env_var->next->next);
 	// 	printf("-------------------------------\n");
@@ -124,7 +123,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			free(prompt);
 			env_var->exit_status = cd(&tmp2[1], env_var);
-			prompt = build_prompt(env_var->s_pwd);
+			prompt = build_prompt(env_var->pwd_s);
 		}
 		else if (!ft_strcmp("pwd", tmp2[0]))
 			env_var->exit_status = pwd(NULL, env_var);
@@ -151,7 +150,7 @@ int	main(int argc, char **argv, char **envp)
 		// 	printf("Noeud %d :\n", i + 1);
 		// 	printf("Env name :%s\n", printer->next->name);
 		// 	printf("Env value :%s\n", printer->next->value);
-		// 	printf("Env pwd :%s\n", printer->next->s_pwd);
+		// 	printf("Env pwd :%s\n", printer->next->pwd_s);
 		// 	printf("Env previous :%p\n", printer->next->prev);
 		// 	printf("Env next :%p\n", printer->next->next);
 		// 	printf("-------------------------------\n");

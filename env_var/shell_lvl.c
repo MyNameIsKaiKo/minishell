@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 11:17:03 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/19 14:33:20 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/19 17:29:44 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	shell_lvl(t_env *env_var)
 			newlvl = get_newlvl(env_var->value);
 			free(env_var->value);
 			env_var->value = ft_itoa(newlvl);
+			break ;
 		}
 		env_var = env_var->next;
 	}
