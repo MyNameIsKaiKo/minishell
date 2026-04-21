@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 02:17:06 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 20:30:02 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 20:06:22 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	exec_heredoc(char *delimiter)
 
 	if (pipe(pipefd) == -1)
 		return (-1);
+	delimiter = supp_quote(delimiter);
 	saved_stdin = dup(STDIN_FILENO);
 	g_sigint = 0;
 	while (1)
