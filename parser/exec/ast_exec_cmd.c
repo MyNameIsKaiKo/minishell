@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 20:28:54 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/21 21:17:30 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	exec_non_builtin(t_ast *tree, t_data data)
 
 int	exec_cmd(t_ast *tree, t_data data)
 {
-	int		status;
+	int	status;
 
 	status = 0;
 	status = handle_empty_cmd(tree, data);
