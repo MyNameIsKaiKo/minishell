@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/15 18:22:43 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/21 18:15:18 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ char	*search_and_expand(char *result, int *i, t_env *env)
 	int	end;
 
 	end = *i + 1;
-	while (result[end] && ((ft_isalnum(result[end])
-			|| result[end] == '_') || result[end] == '?'))
+	while (result[end] && ((ft_isalnum(result[end]) || result[end] == '_')
+			|| result[end] == '?'))
 		end++;
 	if (end != *i + 1)
 	{

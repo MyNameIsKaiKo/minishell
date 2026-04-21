@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 21:12:30 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 21:42:07 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 18:08:45 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ char	**ft_arr_join(char **arr1, char **arr2)
 	int		j;
 	char	**result;
 
-	i = 0;
-	j = 0;
+	i = -1;
+	j = -1;
 	if (!arr2)
 		return (NULL);
 	if (!arr1)
@@ -59,10 +59,10 @@ char	**ft_arr_join(char **arr1, char **arr2)
 	result = malloc(sizeof(char *) * (arr_len(arr1) + arr_len(arr2) + 1));
 	if (!result)
 		return (NULL);
-	while (arr1[i++])
-		result[i - 1] = arr1[i - 1];
-	while (arr2[j++])
-		result[i + j - 1] = arr2[j - 1];
+	while (arr1[++i])
+		result[i] = arr1[i];
+	while (arr2[++j])
+		result[i + j] = arr2[j];
 	result[i + j] = NULL;
 	free(arr1);
 	free(arr2);

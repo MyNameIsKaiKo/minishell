@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 21:13:33 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 17:59:37 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_ast
 	struct s_ast		*head;
 	int					*quote_states;
 	int					old_lexindex;
-	int	heredoc_fd;
+	int					heredoc_fd;
 }						t_ast;
 
 //	--- ast Function ---
@@ -110,6 +110,13 @@ void					directory_error(char **paths, char *cmd, t_ast **tree,
 //	--- exec_error_message ---
 int						pipe_error(t_data data);
 
+//	--- wildcards and expand ---
+int						is_wildcard(char *str, int state);
+void					make_wildcard(t_ast **tree, char ***to_wild, int *i);
+void					apply_exandwil(t_ast **tree, t_data data);
+
 // --- tools ---
 char					**ft_arr_join(char **arr1, char **arr2);
+int						arr_len(char **array);
+
 #endif
