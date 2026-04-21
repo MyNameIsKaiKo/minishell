@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:50:45 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 18:44:58 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 21:10:33 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static t_ast	*create_left(t_lexer **lexhead, t_lexer *checkpoint,
 	if (!left_node && left != NULL)
 	{
 		ast_free(curr);
+		*curr = NULL;
 		return (NULL);
 	}
 	return (left_node);
@@ -45,6 +46,7 @@ static t_ast	*create_right(t_lexer **lexhead, t_ast **head, t_ast **curr)
 	if (!right_node && right != NULL)
 	{
 		ast_free(curr);
+		*curr = NULL;
 		return (NULL);
 	}
 	return (right_node);
@@ -61,10 +63,10 @@ static t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint,
 	if (!node)
 		return (NULL);
 	right = create_right(lexhead, head, &node);
-	if (!right && getright(*lexhead, node->old_lexindex) != NULL)
+	if (!node)
 		return (NULL);
 	left = create_left(lexhead, checkpoint, head, &node);
-	if (!left && checkpoint->index > 1)
+	if (!node)
 	{
 		ast_free(&right);
 		return (NULL);
@@ -75,7 +77,10 @@ static t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint,
 	if (node->type == PIPE_AST || node->type == OPERATOR_AST)
 	{
 		if (!node->left || !node->right)
+		{
+			ast_free(&node);
 			return (NULL);
+		}
 	}
 	return (node);
 }
