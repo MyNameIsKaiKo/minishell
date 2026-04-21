@@ -12,7 +12,7 @@
 
 #include "ast.h"
 
-int	exec_heredoc(char *delimiter, t_data *data)
+int	exec_heredoc(char *delimiter)
 {
 	int		pipefd[2];
 	char	*str;
@@ -45,6 +45,5 @@ int	exec_heredoc(char *delimiter, t_data *data)
 	dup2(saved_stdin, STDIN_FILENO);
 	close(saved_stdin);
 	close(pipefd[1]);
-	data->filesfd.fdin = pipefd[0];
 	return (pipefd[0]);
 }

@@ -58,6 +58,7 @@ typedef struct s_ast
 	struct s_ast		*head;
 	int					*quote_states;
 	int					old_lexindex;
+	int	heredoc_fd;
 }						t_ast;
 
 //	--- ast Function ---
@@ -83,9 +84,9 @@ int						exec_tree(t_ast *tree, t_data data);
 int						exec_pipe(t_ast *tree, t_data data);
 int						exec_cmd(t_ast *tree, t_data data);
 int						exec_builtin(t_ast *tree, t_data data);
-int						exec_heredoc(char *delimiter, t_data *data);
+int						exec_heredoc(char *delimiter);
 int						exec_redir(t_ast *tree, t_data data);
-
+int						do_all_heredocs(t_ast *tree);
 //	--- ast exec cmd utils Function ---
 int						is_builtin(char *str);
 void					child_init(t_data data);

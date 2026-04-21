@@ -52,6 +52,7 @@ t_ast	*nodenew(t_lexer *checkpoint, t_ast **head)
 	new_node->left = NULL;
 	new_node->right = NULL;
 	new_node->quote_states = NULL;
+	new_node->heredoc_fd = -1;
 	new_node->old_lexindex = -1;
 	get_ast_type(checkpoint, &new_node);
 	handle_node_data(&new_node, checkpoint, head);

@@ -53,7 +53,10 @@ void	main_loop(char **prompt, t_env **env_var)
 		}
 		lexer_abs_free(&lex);
 		signal(SIGINT, handler_exec);
-		exec_tree(ast, data);
+		if (do_all_heredocs(ast) == -1)
+			((*data.env)->exit_status = 130);
+		else
+			exec_tree(ast, data);
 		signal(SIGINT, handler);
 		ast_free(&ast);
 		if ((*env_var)->is_valid_exit)

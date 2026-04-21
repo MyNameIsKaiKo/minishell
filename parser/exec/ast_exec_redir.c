@@ -36,11 +36,10 @@ int	exec_redir(t_ast *tree, t_data data)
 	status = 0;
 	if (!ft_strcmp(tree->args[0], "<<"))
 	{
-		signal(SIGINT, handler_heredoc);
-		signal(SIGQUIT, SIG_IGN);
-		fd = exec_heredoc(tree->args[1], &data);
-		signal(SIGINT, handler);
-		signal(SIGQUIT, SIG_IGN);
+		if (data.filesfd.fdin > 2)
+			close(data.filesfd.fdin);
+		fd = tree->heredoc_fd;
+		data.filesfd.fdin = fd;
 	}
 	if (!ft_strcmp(tree->args[0], "<"))
 	{

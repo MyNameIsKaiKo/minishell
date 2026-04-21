@@ -12,6 +12,32 @@
 
 #include "ast.h"
 
+static void	set_quotes_states(t_ast **tree, int old_i, int add, int total)
+{
+	int	*new_quotes;
+	int	j;
+	int	k;
+
+	new_quotes = malloc(sizeof(int) * total);
+	if(!new_quotes)
+		return ;
+	j = 0;
+	k = 0;
+	while(j < total)
+	{
+		if (j >= old_i && j < old_i + add)
+			new_quotes[j] = 0;
+		else
+		{
+			new_quotes[j] = (*tree)->quote_states[k];
+			k++;
+		}
+		j++;
+	}
+	free((*tree)->quote_states);
+	(*tree)->quote_states = new_quotes;
+}
+
 static int	is_wildcard(char *str, int state)
 {
 	int	i;
@@ -70,59 +96,86 @@ static char	**get_right_wild(int count, char **old_args)
 	return (output);
 }
 
+static void	make_wildcard(t_ast **tree, char ***to_wild, int *i)
+{
+	char	**wilds;
+	char	**left;
+	int	wild_count;
+
+	left = NULL;
+	wilds = wildcards((*to_wild)[*i]);
+	wild_count = arr_len(wilds);
+	if (*i > 0)
+		left = get_left_wild(*i, *to_wild);
+	left = ft_arr_join(left, wilds);
+	wilds = ft_arr_join(left, get_right_wild(*i, *to_wild));
+	set_quotes_states(tree, *i, wild_count, arr_len(wilds));
+	free(*to_wild);
+	*to_wild = wilds;
+	*i += wild_count - 1;
+}
+
 static void	apply_wildcard_totree(t_ast **tree)
 {
 	char	**to_wild;
-	char	**wildcards_sa;
-	char	**left;
-	char	**right;
 	int		i;
 
 	to_wild = (*tree)->args;
 	i = 0;
-	left = NULL;
 	while (to_wild[i])
 	{
 		if (is_wildcard(to_wild[i], (*tree)->quote_states[i]))
-		{
-			wildcards_sa = wildcards(to_wild[i]);
-			if (i > 0)
-				left = get_left_wild(i, to_wild);
-			right = get_right_wild(i, to_wild);
-			left = ft_arr_join(left, wildcards_sa);
-			wildcards_sa = ft_arr_join(left, right);
-			free(to_wild);
-			to_wild = wildcards_sa;
-		}
+			make_wildcard(tree, &to_wild, &i);
 		i++;
 	}
 	(*tree)->args = to_wild;
 }
 
+static	void shift_sarr(t_ast **tree, char **sarr, int i)
+{
+	int	j;
+
+	j = i;
+	while(sarr[j])
+	{
+		sarr[j] = sarr[j + 1];
+		(*tree)->quote_states[j] = (*tree)->quote_states[j + 1];
+		j++;
+	}
+}
+
+static void replace_to_expand(t_ast **tree, char **to_expand, int i, char *tmp)
+{
+	size_t len;
+	char *supped_quotes;
+
+	len = ft_strlen(tmp);
+	supped_quotes = supp_quote(tmp);
+	if (len > ft_strlen(supped_quotes))
+		(*tree)->quote_states[i] = 1;
+	free(to_expand[i]);
+	to_expand[i] = supped_quotes;
+}
+
 static void	apply_expand_totree(t_ast **tree, t_data data)
 {
 	char	**to_expand;
-	char	*tmp;
-	size_t	len;
-	int		i;
+	char *tmp;
+	int	i;
 
 	i = 0;
 	to_expand = (*tree)->args;
-	while (to_expand[i])
+	while(to_expand[i])
 	{
-		tmp = to_expand[i];
-		tmp = expander(tmp, (*data.env));
-		if (!tmp[0])
-			free(tmp);
-		else
+		tmp = expander(to_expand[i], *(data.env));
+		if (!tmp || !tmp[0])
 		{
-			len = ft_strlen(tmp);
-			tmp = supp_quote(tmp);
-			if (len > ft_strlen(tmp))
-				(*tree)->quote_states[i] = 1;
-			free(to_expand[i]);
-			to_expand[i] = tmp;
+			if (tmp)
+				free(tmp);
+			shift_sarr(tree, to_expand, i);
+			continue ;
 		}
+		replace_to_expand(tree, to_expand, i, tmp);
 		i++;
 	}
 }

@@ -29,9 +29,15 @@ char	**ft_arr_dup(char **ar)
 
 	i = 0;
 	output = malloc(sizeof(char *) * (arr_len(ar) + 1));
-	while (ar[i++])
-		output[i - 1] = ar[i - 1];
-	return (ar);
+	if (!output)
+		return (NULL);
+	while (ar[i])
+	{
+		output[i] = ar[i];
+		i++;
+	}
+	output[i] = NULL;
+	return (output);
 }
 
 char	**ft_arr_join(char **arr1, char **arr2)
@@ -51,6 +57,8 @@ char	**ft_arr_join(char **arr1, char **arr2)
 		return (result);
 	}
 	result = malloc(sizeof(char *) * (arr_len(arr1) + arr_len(arr2) + 1));
+	if (!result)
+		return (NULL);
 	while (arr1[i++])
 		result[i - 1] = arr1[i - 1];
 	while (arr2[j++])
