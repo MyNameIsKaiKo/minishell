@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_exec_heredoc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 02:17:06 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 20:30:02 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 20:07:56 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	exec_heredoc(char *delimiter)
 
 	if (pipe(pipefd) == -1)
 		return (-1);
+	delimiter = supp_quote(delimiter);
 	saved_stdin = dup(STDIN_FILENO);
 	g_sigint = 0;
 	while (1)

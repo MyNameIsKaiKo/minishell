@@ -6,11 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 11:27:59 by nredouan          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2026/04/18 13:21:52 by nredouan         ###   ########.fr       */
-=======
-/*   Updated: 2026/04/19 19:24:41 by jleray           ###   ########.fr       */
->>>>>>> Jerry
+/*   Updated: 2026/04/21 20:02:17 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +49,5 @@ void							handler_heredoc(int signal);
 void							handler(int signal);
 void							handler_exec(int signal);
 char							*supp_quote(char *result);
+bool							check_unclose(char *arg, char quote, int i);
 #endif

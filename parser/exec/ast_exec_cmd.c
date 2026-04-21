@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_exec_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 19:28:34 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 20:28:54 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	exec_child(t_ast *tree, t_data data)
 	free(path);
 	free_sarr(paths);
 	free_sarr(env);
-	exit(126);
+	exit(127);
 }
 
 static int	handle_empty_cmd(t_ast *tree, t_data data)

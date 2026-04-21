@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_exec_cmd_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 17:18:33 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 20:28:19 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,10 @@ char	*find_cmdpath(char **paths, t_ast **tree, t_env **env)
 			path = ft_strdup(cmd);
 			return (path);
 		}
-		directory_error(paths, cmd, tree, env);
+		if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode) && !access(cmd, X_OK))
+			directory_error(paths, cmd, tree, env);
 	}
-	else if (ft_strncmp(cmd, "./", 2) == 0)
+	else if (!ft_strncmp(cmd, "./", 2))
 	{
 		if (!access(cmd, X_OK))
 		{
