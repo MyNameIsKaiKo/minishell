@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 18:39:15 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/21 19:59:49 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	main_loop(char **prompt, t_env **env_var)
 		data.env = env_var;
 		lex = lexer(tmp);
 		free(tmp);
-		apply_expend(&lex, data);
-		apply_wildcard(&lex);
 		head = NULL;
 		ast = make_tree(&lex, &head);
 		if (lex && !ast)
@@ -53,7 +51,10 @@ void	main_loop(char **prompt, t_env **env_var)
 		}
 		lexer_abs_free(&lex);
 		signal(SIGINT, handler_exec);
-		exec_tree(ast, data);
+		if (do_all_heredocs(ast) == -1)
+			((*data.env)->exit_status = 130);
+		else
+			exec_tree(ast, data);
 		signal(SIGINT, handler);
 		ast_free(&ast);
 		if ((*env_var)->is_valid_exit)

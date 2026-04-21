@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 17:56:37 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 17:59:37 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ typedef struct s_ast
 	struct s_ast		*left;
 	struct s_ast		*right;
 	struct s_ast		*head;
+	int					*quote_states;
 	int					old_lexindex;
+	int					heredoc_fd;
 }						t_ast;
 
 //	--- ast Function ---
@@ -75,15 +77,16 @@ int						handle_cmd_merge(t_lexer **lexhead, t_lexer *checkpoint,
 							t_ast **node);
 void					handle_node_data(t_ast **new_node, t_lexer *checkpoint,
 							t_ast **head);
+int						handle_cmds_nodenew(t_lexer *checkpoint, t_ast *node);
 
 //	--- ast exec Function ---
 int						exec_tree(t_ast *tree, t_data data);
 int						exec_pipe(t_ast *tree, t_data data);
 int						exec_cmd(t_ast *tree, t_data data);
 int						exec_builtin(t_ast *tree, t_data data);
-int						exec_heredoc(char *delimiter, t_data *data);
+int						exec_heredoc(char *delimiter);
 int						exec_redir(t_ast *tree, t_data data);
-
+int						do_all_heredocs(t_ast *tree);
 //	--- ast exec cmd utils Function ---
 int						is_builtin(char *str);
 void					child_init(t_data data);
@@ -106,4 +109,14 @@ void					directory_error(char **paths, char *cmd, t_ast **tree,
 
 //	--- exec_error_message ---
 int						pipe_error(t_data data);
+
+//	--- wildcards and expand ---
+int						is_wildcard(char *str, int state);
+void					make_wildcard(t_ast **tree, char ***to_wild, int *i);
+void					apply_exandwil(t_ast **tree, t_data data);
+
+// --- tools ---
+char					**ft_arr_join(char **arr1, char **arr2);
+int						arr_len(char **array);
+
 #endif

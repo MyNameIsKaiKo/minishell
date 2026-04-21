@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 15:57:13 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 23:56:21 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 19:54:33 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ void	handle_first(t_ast *tree, t_data data, int pipefd[2])
 		close(data.filesfd.fdout);
 	data.filesfd.fdout = pipefd[1];
 	status = exec_tree(tree->left, data);
+	if (data.filesfd.fdout > 2)
+		close(data.filesfd.fdout);
+	if (data.filesfd.fdin > 2)
+		close(data.filesfd.fdout);
 	ast_free(&tree->head);
 	free_env(*(data.env));
 	rl_clear_history();
@@ -48,6 +52,10 @@ void	handle_scd(t_ast *tree, t_data data, int pipefd[2])
 		close(data.filesfd.fdin);
 	data.filesfd.fdin = pipefd[0];
 	status = exec_tree(tree->right, data);
+	if (data.filesfd.fdout > 2)
+		close(data.filesfd.fdout);
+	if (data.filesfd.fdin > 2)
+		close(data.filesfd.fdout);
 	ast_free(&tree->head);
 	free_env(*(data.env));
 	rl_clear_history();

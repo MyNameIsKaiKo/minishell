@@ -6,7 +6,11 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 11:27:59 by nredouan          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/04/18 13:21:52 by nredouan         ###   ########.fr       */
+=======
+/*   Updated: 2026/04/19 19:24:41 by jleray           ###   ########.fr       */
+>>>>>>> Jerry
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +26,31 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <sys/wait.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
 extern volatile sig_atomic_t	g_sigint;
 
 /*Build the prompt according to the working directory*/
-char					*build_prompt(char *pwd);
+char							*build_prompt(char *pwd);
 
-void					free_str(char **str);
+void							free_str(char **str);
 
-char					**wildcards(char *pattern);
+char							**wildcards(char *pattern);
 
-char					*expander(char *args, t_env *env);
-char					*expand_var(char *arg, int start, int *end, t_env *env);
-void					expand_copy(char *result, int *i, t_env *env,
-							char *var);
-char					*search_and_expand(char *result, int *i, t_env *env);
-char					*expand_dquotes(char *result, int *i, t_env *env);
-void					not_expand(char *result, int *i);
-bool					check_unclose(char *arg, char quote, int i);
-void					handler_heredoc(int signal);
-void					handler(int signal);
-void					handler_exec(int signal);
+char							*expander(char *args, t_env *env);
+char							*expand_var(char *arg, int start, int *end,
+									t_env *env);
+void							expand_copy(char *result, int *i, t_env *env,
+									char *var);
+char							*search_and_expand(char *result, int *i,
+									t_env *env);
+char							*expand_dquotes(char *result, int *i,
+									t_env *env);
+void							not_expand(char *result, int *i);
+void							handler_heredoc(int signal);
+void							handler(int signal);
+void							handler_exec(int signal);
+char							*supp_quote(char *result);
 #endif
