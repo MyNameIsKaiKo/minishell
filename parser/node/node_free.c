@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 12:53:25 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 20:25:15 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 18:55:42 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,15 @@ void	ast_free(t_ast **ast)
 		free(tmp->quote_states);
 	if (tmp->args)
 	{
-		i = 0;
-		while (tmp->args[i])
-		{
+		i = -1;
+		while (tmp->args[++i])
 			free(tmp->args[i]);
-			i++;
-		}
 		free(tmp->args);
 	}
 	if (tmp->data)
 		free(tmp->data);
+	if (tmp->heredoc_fd > 2)
+		close(tmp->heredoc_fd);
 	free(tmp);
 	tmp = NULL;
 	return ;

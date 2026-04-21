@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 17:57:09 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 17:59:12 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 18:42:55 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	make_wildcard(t_ast **tree, char ***to_wild, int *i)
 	left = ft_arr_join(left, wilds);
 	wilds = ft_arr_join(left, get_right_wild(*i, *to_wild));
 	set_quotes_states(tree, *i, wild_count, arr_len(wilds));
+	free((*to_wild)[*i]);
 	free(*to_wild);
 	*to_wild = wilds;
 	*i += wild_count - 1;
