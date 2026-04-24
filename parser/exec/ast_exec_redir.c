@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 12:53:59 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 11:37:49 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 13:41:58 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,18 @@ int	exec_redir(t_ast *tree, t_data data)
 	status = 0;
 	while (node && node->type >= HEREDOC_AST && node->type <= REDIR_OUT_AST)
 		node = node->left;
+	if (!node)
+		node = tree;
 	status = do_all_redirs(tree, &data);
 	if (status != 0)
 	{
 		(*data.env)->exit_status = 1;
 		return (status);
 	}
-	if (node)
+	if (node && node->type == CMD_AST)
 		status = exec_tree(node, data);
+	else if (node && node->type == HEREDOC_AST)
+		status = exec_tree(node->right, data);
 	if (data.filesfd.fdin > 2)
 		close(data.filesfd.fdin);
 	if (data.filesfd.fdout > 2)
