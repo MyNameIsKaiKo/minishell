@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 12:53:59 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 13:41:58 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 13:42:50 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	exec_redir(t_ast *tree, t_data data)
 	}
 	if (node && node->type == CMD_AST)
 		status = exec_tree(node, data);
-	else if (node && node->type == HEREDOC_AST)
+	else if (node && node->type == HEREDOC_AST && node->right->type == CMD_AST)
 		status = exec_tree(node->right, data);
 	if (data.filesfd.fdin > 2)
 		close(data.filesfd.fdin);
