@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 21:58:10 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 11:27:22 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void					lexer_set_next(t_lexer **lex, t_lexer *next);
 
 // -- lexer --
 t_lexer					*lexer(char *str);
-int						syntax_edge_case(t_lexer **lex);
 
 // -- handle_ponct Function --
 void					handle_ponct(t_lexer **lex);

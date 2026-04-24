@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 21:58:19 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 11:27:05 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ t_lexer	*lexer(char *str)
 		remove_remaining_type(&lex, PONCT);
 		lexerlst_trim(&lex);
 		replace_arg(&lex);
-		syntax_edge_case(&lex);
 	}
 	else
 		return (NULL);
