@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 11:59:36 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 14:13:54 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_ast
 	struct s_ast		*right;
 	struct s_ast		*head;
 	int					*quote_states;
+	int					do_expand;
 	int					old_lexindex;
 	int					heredoc_fd;
 }						t_ast;
@@ -84,9 +85,10 @@ int						exec_tree(t_ast *tree, t_data data);
 int						exec_pipe(t_ast *tree, t_data data);
 int						exec_cmd(t_ast *tree, t_data data);
 int						exec_builtin(t_ast *tree, t_data data);
-int						exec_heredoc(char *delimiter);
+int						exec_heredoc(char *delimiter, t_data data,
+							int do_expand);
 int						exec_redir(t_ast *tree, t_data data);
-int						do_all_heredocs(t_ast *tree);
+int						do_all_heredocs(t_ast *tree, t_data data);
 //	--- ast exec cmd utils Function ---
 int						is_builtin(char *str);
 void					child_init(t_data data);

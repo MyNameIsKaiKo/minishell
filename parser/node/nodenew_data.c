@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 21:13:24 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 19:31:41 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 14:20:32 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	handle_redir(t_lexer *checkpoint, t_ast *node)
 	if (!checkpoint->next || checkpoint->next->type != WORD)
 		return (-1);
 	node->args = malloc(sizeof(char *) * 3);
+	if (checkpoint->next->is_squoted || checkpoint->next->is_dquoted)
+		node->do_expand = 0;
 	if (!node->args)
 		return (0);
 	node->args[0] = ft_strdup(checkpoint->data);

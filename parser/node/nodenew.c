@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:19:58 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/19 20:26:27 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 14:15:55 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_ast	*nodenew(t_lexer *checkpoint, t_ast **head)
 	new_node->quote_states = NULL;
 	new_node->heredoc_fd = -1;
 	new_node->old_lexindex = -1;
+	new_node->do_expand = 1;
 	get_ast_type(checkpoint, &new_node);
 	handle_node_data(&new_node, checkpoint, head);
 	if (new_node->old_lexindex == -1)
