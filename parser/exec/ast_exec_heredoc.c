@@ -6,13 +6,13 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 02:17:06 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 20:06:22 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 14:21:45 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-int	exec_heredoc(char *delimiter)
+int	exec_heredoc(char *delimiter, t_data data, int do_expand)
 {
 	int		pipefd[2];
 	char	*str;
@@ -39,6 +39,8 @@ int	exec_heredoc(char *delimiter)
 			free(str);
 			break ;
 		}
+		if (do_expand)
+			str = expander(str, (*data.env));
 		write(pipefd[1], str, ft_strlen(str));
 		write(pipefd[1], "\n", 1);
 		free(str);
