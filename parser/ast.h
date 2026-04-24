@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 17:59:37 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 11:59:36 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void					cmd_env_error(char **paths, char *path, t_ast **tree,
 void					free_all_in_child(t_ast **tree, t_env **env);
 int						exit_on_point(t_ast **tree, t_env **env, t_data data);
 void					directory_error(char **paths, char *cmd, t_ast **tree,
+							t_env **env);
+void					cmd_permision_denied(char **paths, t_ast **tree,
 							t_env **env);
 
 //	--- exec_error_message ---

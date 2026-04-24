@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 19:59:49 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 13:27:42 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,19 @@ void	main_loop(char **prompt, t_env **env_var)
 		data.env = env_var;
 		lex = lexer(tmp);
 		free(tmp);
+		if (!lex)
+		{
+			(*env_var)->exit_status = 2;
+			ft_putstr_fd("Syntax Error : By lexer in main\n", 2);
+			continue ;
+		}
 		head = NULL;
 		ast = make_tree(&lex, &head);
 		if (lex && !ast)
 		{
 			lexer_abs_free(&lex);
 			(*env_var)->exit_status = 2;
-			ft_putstr_fd("Syntax Error\n", 2);
+			ft_putstr_fd("Syntax Error : By ast in main\n", 2);
 			continue ;
 		}
 		lexer_abs_free(&lex);

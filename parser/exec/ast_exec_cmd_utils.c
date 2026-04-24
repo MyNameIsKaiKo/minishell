@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 21:17:25 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 13:28:08 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ char	*find_cmdpath(char **paths, t_ast **tree, t_env **env)
 			path = ft_strdup(cmd);
 			return (path);
 		}
+		else
+			cmd_permision_denied(paths, tree, env);
 	}
 	path = join_the_path(paths, cmd);
 	return (path);

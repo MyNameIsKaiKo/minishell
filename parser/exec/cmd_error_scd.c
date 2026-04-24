@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 19:47:34 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/17 20:02:13 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 11:57:57 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,12 @@ void	directory_error(char **paths, char *cmd, t_ast **tree, t_env **env)
 	free_sarr(paths);
 	free_all_in_child(tree, env);
 	exit(126);
+}
+
+void	cmd_permision_denied(char **paths, t_ast **tree, t_env **env)
+{
+	perror("T&J Shell ");
+	free_sarr(paths);
+	free_all_in_child(tree, env);
+	exit (126);
 }

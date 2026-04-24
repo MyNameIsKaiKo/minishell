@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 22:49:49 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 11:27:05 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static int	is_type(char *s, char *og)
 		if (status)
 			return (status);
 	}
+	if (is_complete_w(s, og) == -1)
+		return (-1);
 	if (is_complete_w(s, og))
 		return (WORD);
 	return (0);
@@ -93,7 +95,6 @@ void	lexing(t_lexer **lex, char *str)
 		}
 	}
 	free(tmp);
-	return ;
 }
 
 t_lexer	*lexer(char *str)
