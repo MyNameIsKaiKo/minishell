@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/24 13:41:56 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 17:46:12 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	cd_home(t_env *env_var)
 	t_env	*home;
 
 	home = env_var;
-	while (home && ft_strcmp("HOME", home->name))
+	while (home && home->name && ft_strcmp("HOME", home->name))
 		home = home->next;
 	if (!home || !home->value)
 	{
@@ -51,9 +51,9 @@ static int	cd_dash(t_env *env_var, char *oldpath)
 	old_pwd = env_var;
 	free(oldpath);
 	status = 0;
-	while (pwd && ft_strcmp("PWD", pwd->name))
+	while (pwd && pwd->name && ft_strcmp("PWD", pwd->name))
 		pwd = pwd->next;
-	while (old_pwd && ft_strcmp("OLDPWD", old_pwd->name))
+	while (old_pwd && old_pwd->name && ft_strcmp("OLDPWD", old_pwd->name))
 		old_pwd = old_pwd->next;
 	if (!old_pwd || !old_pwd->value)
 	{

@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 13:28:08 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 17:50:31 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	**find_directpath(t_env *env)
 	char	**output;
 	char	*path;
 
-	if (ft_strncmp(env->name, "PATH", 4))
+	if (ft_strcmp(env->name, "PATH") || !env->value)
 		return (NULL);
 	output = ft_split(env->value, ':');
 	if (!output)
@@ -59,13 +59,13 @@ char	**find_path(t_data data)
 	char	**paths;
 	t_env	*tmp;
 
-	if (!data.env)
-		return (NULL);
 	env = data.env;
+	if (!(*env) || !(*env)->name)
+		return (NULL);
 	tmp = *env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->name, "PATH", 4))
+		if (!ft_strcmp(tmp->name, "PATH"))
 			break ;
 		tmp = tmp->next;
 	}

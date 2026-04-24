@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 11:17:03 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/19 17:29:44 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 17:32:14 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	shell_lvl(t_env *env_var)
 
 	while (env_var)
 	{
-		if (!ft_strcmp(env_var->name, "SHLVL"))
+		if (env_var->name && !ft_strcmp(env_var->name, "SHLVL"))
 		{
 			newlvl = get_newlvl(env_var->value);
 			free(env_var->value);

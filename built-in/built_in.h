@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:55 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/19 13:16:19 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 17:27:35 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ directory in the standard output*/
 int		pwd(char **args, t_env *env_var);
 
 /*Execute "unset" built-in: unset one or multiple env vars*/
-int		unset(char **args, t_env *env_var);
+int		unset(char **args, t_env **env_var);
 
 /*Execute "env" built-in: print the list of env vars,
 except those that have not been assigned a value*/
@@ -40,7 +40,7 @@ int		env(char **args, t_env *env_var);
 
 /*Execute "export" built-in: create new env vars,
 change value of an env var or print the list of env vars*/
-int		export(char **args, t_env *env_var);
+int		export(char **args, t_env **env_var);
 
 /*Print the list of all variables set in env_var in alphabetical order.*/
 void	print_export(t_env *env_var);

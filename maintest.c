@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 13:27:42 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 18:06:54 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	main_loop(char **prompt, t_env **env_var)
 
 	while (1)
 	{
+		g_sigint = 0;
 		tmp = readline(*prompt);
 		if (!tmp)
 		{
@@ -34,6 +35,8 @@ void	main_loop(char **prompt, t_env **env_var)
 			free(tmp);
 			continue ;
 		}
+		if (g_sigint == 130)
+			(*env_var)->exit_status = 130;
 		add_history(tmp);
 		data.filesfd.fdin = STDIN_FILENO;
 		data.filesfd.fdout = STDOUT_FILENO;
@@ -57,7 +60,7 @@ void	main_loop(char **prompt, t_env **env_var)
 		}
 		lexer_abs_free(&lex);
 		signal(SIGINT, handler_exec);
-		if (do_all_heredocs(ast) == -1)
+		if (do_all_heredocs(ast, data) == -1)
 			((*data.env)->exit_status = 130);
 		else
 			exec_tree(ast, data);

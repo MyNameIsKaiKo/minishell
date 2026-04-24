@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 17:16:31 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/19 14:32:31 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 17:43:52 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,20 @@ void	change_pwd(t_env *env_var, char *newpwd, char *oldpwd)
 
 	pwd = env_var;
 	old_pwd = env_var;
-	while (pwd && ft_strcmp("PWD", pwd->name))
+	while (pwd && pwd->name && ft_strcmp("PWD", pwd->name))
 		pwd = pwd->next;
-	while (old_pwd && ft_strcmp("OLDPWD", old_pwd->name))
+	while (old_pwd && old_pwd->name && ft_strcmp("OLDPWD", old_pwd->name))
 		old_pwd = old_pwd->next;
 	if (!newpwd || !oldpwd)
 	{
 		cd_error(newpwd, oldpwd);
 		return ;
 	}
-	if (!pwd)
+	if (!pwd || !pwd->name)
 		free(set_pwd_value(NULL, newpwd, env_var));
 	else
 		pwd->value = set_pwd_value(pwd->value, newpwd, env_var);
-	if (!old_pwd)
+	if (!old_pwd || !old_pwd->name)
 		free(oldpwd);
 	else
 		old_pwd->value = set_pwd_value(old_pwd->value, oldpwd, NULL);

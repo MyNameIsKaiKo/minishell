@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_exec_builtin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 11:43:54 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/16 23:59:47 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 17:27:49 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ static int	find_builtin(t_ast *tree, t_data data)
 	if (!ft_strcmp(tree->args[0], "echo"))
 		(*env_v)->exit_status = echo(tree->args + 1, *env_v);
 	if (!ft_strcmp(tree->args[0], "unset"))
-		(*env_v)->exit_status = unset(tree->args + 1, *env_v);
+		(*env_v)->exit_status = unset(tree->args + 1, env_v);
 	if (!ft_strcmp(tree->args[0], "export"))
-		(*env_v)->exit_status = export(tree->args + 1, *env_v);
+		(*env_v)->exit_status = export(tree->args + 1, env_v);
 	if (!ft_strcmp(tree->args[0], "env"))
 		(*env_v)->exit_status = env(tree->args + 1, *env_v);
 	if (!ft_strcmp(tree->args[0], "pwd"))

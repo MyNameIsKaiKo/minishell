@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 12:22:02 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/19 13:38:41 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 17:29:25 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ t_env	*init_env(char **envp, char *executable)
 	i = 0;
 	j = 0;
 	env_var = NULL;
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		while (envp[i][j] && envp[i][j] != '=')
 			j++;
