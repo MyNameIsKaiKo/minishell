@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 11:22:53 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 13:57:07 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	main_loop(char **prompt, t_env **env_var)
 		}
 		lexer_abs_free(&lex);
 		signal(SIGINT, handler_exec);
-		if (do_all_heredocs(ast) == -1)
+		if (do_all_heredocs(ast, data) < 0)
 			((*data.env)->exit_status = 130);
 		else
 			exec_tree(ast, data);
