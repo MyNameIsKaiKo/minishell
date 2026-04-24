@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_exec_cmd_exandwil.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/19 19:38:01 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 18:28:31 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 14:35:55 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,18 @@ static void	apply_wildcard_totree(t_ast **tree)
 
 static void	shift_sarr(t_ast **tree, char **sarr, int i)
 {
+	int	len;
 	int	j;
 
 	j = i;
-	while (sarr[j])
+	len = 0;
+	while (sarr[len])
+		len++;
+	while (j < len)
 	{
 		sarr[j] = sarr[j + 1];
+		if (!sarr[j])
+			break ;
 		(*tree)->quote_states[j] = (*tree)->quote_states[j + 1];
 		j++;
 	}

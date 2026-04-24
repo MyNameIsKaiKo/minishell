@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/19 15:32:50 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 13:41:56 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	cd_home(t_env *env_var)
 	{
 		if (chdir(home->value) < 0)
 			return (path_error(home->value, NULL));
-		change_pwd(env_var, ft_strdup(home->value), getcwd(NULL, 0));
+		change_pwd(env_var, ft_strdup(home->value), ft_strdup(env_var->pwd_s));
 	}
 	return (0);
 }
