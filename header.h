@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 11:27:59 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/24 16:35:16 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:23:58 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void							handler(int signal);
 void							handler_exec(int signal);
 char							*supp_quote(char *result);
 bool							check_unclose(char *arg, char quote, int i);
+
 #endif

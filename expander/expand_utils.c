@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:17:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/21 19:59:09 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:14:54 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_env	*get_exp(char *arg, char *var, t_env *env_var, int *size)
 		*size = ft_strlen(arg) - *size + ft_intlen(env_var->exit_status) + 1;
 		return (env_var);
 	}
-	while (env_var && ft_strcmp(var, env_var->name))
+	while (env_var && env_var->name && ft_strcmp(var, env_var->name))
 		env_var = env_var->next;
 	if (!env_var || !env_var->value)
 		*size = ft_strlen(arg) - *size + 1;

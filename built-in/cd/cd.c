@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 15:54:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/24 17:46:12 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:21:26 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	cd(char **args, t_env *env_var)
 
 	exit_status = 0;
 	if (!check_cd_args(args))
-		return(cd_too_many_args());
+		return (cd_too_many_args());
 	else
 	{
 		if (!args[0])

@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 14:56:50 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/29 14:59:20 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:22:45 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_lexer	*lex_init(char *tmp, t_data *data, t_env **env_var)
 {
 	t_lexer	*lex;
-	
+
 	add_history(tmp);
 	(*data).filesfd.fdin = STDIN_FILENO;
 	(*data).filesfd.fdout = STDOUT_FILENO;
