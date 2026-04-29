@@ -50,5 +50,6 @@ void							handler(int signal);
 void							handler_exec(int signal);
 char							*supp_quote(char *result);
 bool							check_unclose(char *arg, char quote, int i);
+int								check_whitespace(char *str);
 
 #endif

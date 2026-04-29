@@ -33,6 +33,8 @@ int	loop_init(char *tmp, int type)
 		printf("exit\n");
 		return (0);
 	}
+	if (check_whitespace(tmp) == 1 && type == 1)
+		return (1);
 	if (tmp[0] == '\0' && type == 1)
 	{
 		free(tmp);
