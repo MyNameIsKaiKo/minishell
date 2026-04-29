@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 13:27:56 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/29 17:04:09 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	handle_empty_cmd(t_ast *tree, t_data data)
 	{
 		if (tree->args[0] && tree->args[0][0] == '\0')
 		{
-			write(2, "T&J Shell : command not founct\n", 31);
+			write(2, "T&J Shell : command not found\n", 31);
 			(*data.env)->exit_status = 127;
 			return (127);
 		}

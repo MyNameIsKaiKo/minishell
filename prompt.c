@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:18:50 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/24 18:10:40 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/29 17:05:15 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*build_prompt(char *pwd)
 {
 	char	*prompt;
 
-	prompt = ft_strjoinjoin("\001\033[35m\002<T&J minishell>", pwd,
+	prompt = ft_strjoinjoin("\001\033[35m\002<T&J Shell>", pwd,
 			"$ \001\033[0m\002");
 	if (!prompt)
 		return (NULL);

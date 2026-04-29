@@ -144,12 +144,12 @@ $(OBJ_DIR)/%.o: %.c
 clean: 
 	@$(RM) -r $(OBJ_DIR)
 	@make --no-print-directory -C $(LIBFT_DIR) clean
-	@echo "Objects removed\n"
+	@echo "Objects removed"
 
 fclean: clean
 	@$(RM) -r $(NAME)
 	@make --no-print-directory -C $(LIBFT_DIR) fclean
-	@echo "Minishell removed\n"
+	@echo "Minishell removed"
 
 re: fclean all
 

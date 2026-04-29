@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maintest.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/29 15:05:35 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/29 17:05:35 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	main(int ac, char **av, char **envp)
 	env_var->prompt = &prompt;
 	if (!env_var || !(*env_var->prompt))
 	{
-		ft_putendl_fd("minishell: internal fatal error", 2);
+		ft_putendl_fd("T&J Shell: internal fatal error", 2);
 		free_env(env_var);
 		return (1);
 	}
