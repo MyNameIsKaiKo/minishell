@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 11:27:05 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/29 16:48:03 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include <stdio.h>
-
-// Aim -> create t_lexer with everything with a token
-// token list :
-// - word -> file and cmd ?
-// - operator -> logic or pipe
-// - direction
 
 static int	handle_singletype(char *s, char *og)
 {

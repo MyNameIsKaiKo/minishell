@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 14:16:21 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/29 16:48:11 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 # define LEXER_H
 
 # include "../../include/libft/libft.h"
-
-// typedef enum e_token_type
-// {
-// WORD = 1,
-// PIPE = 2,
-// REDIR_IN = 3,
-// REDIR_OUT = 4,
-// PONCT = 5,
-// HEREDOC = 6,
-// APPEND = 7,
-// OPERATOR = 8,
-// SUBPROCESS = 9,
-// }						t_token_type;
 
 typedef enum e_token_type
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_parr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 19:45:23 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/06 19:34:08 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/29 16:47:02 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int	find_parrc(t_lexer **lex, int parro)
 	}
 	return (0);
 }
-
-// don't know what to set or the single ( need to test with the real shell;
 
 void	combined_parr(t_lexer **lex)
 {
