@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 23:49:11 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 11:55:56 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/29 16:48:11 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 # define LEXER_H
 
 # include "../../include/libft/libft.h"
-
-// typedef enum e_token_type
-// {
-// WORD = 1,
-// PIPE = 2,
-// REDIR_IN = 3,
-// REDIR_OUT = 4,
-// PONCT = 5,
-// HEREDOC = 6,
-// APPEND = 7,
-// OPERATOR = 8,
-// SUBPROCESS = 9,
-// }						t_token_type;
 
 typedef enum e_token_type
 {
@@ -62,6 +49,7 @@ typedef struct s_lexer
 	struct s_lexer		*to_freen;
 	int					index;
 	int					is_squoted;
+	int					is_dquoted;
 }						t_lexer;
 
 // -- struct Function --
@@ -70,7 +58,7 @@ t_lexer					*lexernew(char *data, int type);
 void					lexer_add(t_lexer **head, t_lexer *to_add);
 void					lexer_free(t_lexer **lex);
 void					indexing_lex(t_lexer **lex);
-void					lexer_delone(t_lexer *to_del, t_lexer **head);
+void					lexer_delone(t_lexer **to_del, t_lexer **head);
 void					lexerlst_trim(t_lexer **lex);
 void					lexer_abs_free(t_lexer **lex);
 void					lexer_set_next(t_lexer **lex, t_lexer *next);
@@ -90,6 +78,7 @@ void					combined_quotes(t_lexer **lex);
 void					merge_words(t_lexer **lex);
 void					merge_word_ponct(t_lexer **lex);
 void					remove_remaining_type(t_lexer **lex, t_token_type type);
+void					replace_arg(t_lexer **lex);
 
 // -- lexer_merge function --
 t_lexer					*lexer_merge(t_lexer **lex, int start, int stop,

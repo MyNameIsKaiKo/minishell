@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/11 16:50:26 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 14:13:54 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,14 @@ typedef struct s_ast
 	struct s_ast		*left;
 	struct s_ast		*right;
 	struct s_ast		*head;
+	int					*quote_states;
+	int					do_expand;
 	int					old_lexindex;
+	int					heredoc_fd;
 }						t_ast;
 
 //	--- ast Function ---
-t_ast					*make_tree(t_lexer **lex);
+t_ast					*make_tree(t_lexer **lex, t_ast **head);
 
 //	--- ast_utils Function ---
 t_lexer					*get_last_cpoint(t_lexer *lex);
@@ -68,35 +71,59 @@ t_lexer					*getright(t_lexer *lex, int index);
 t_lexer					*getleft(t_lexer **lex, int index);
 
 //	--- ast node Fucntion ---
-t_ast					*nodenew(t_lexer *checkpoint);
+t_ast					*nodenew(t_lexer *checkpoint, t_ast **head);
 void					node_add(t_ast **ast, t_ast *new_node, t_side side);
 void					ast_free(t_ast **ast);
 int						handle_cmd_merge(t_lexer **lexhead, t_lexer *checkpoint,
 							t_ast **node);
-void					handle_node_data(t_ast **new_node, t_lexer *checkpoint);
+void					handle_node_data(t_ast **new_node, t_lexer *checkpoint,
+							t_ast **head);
+int						handle_cmds_nodenew(t_lexer *checkpoint, t_ast *node);
 
 //	--- ast exec Function ---
 int						exec_tree(t_ast *tree, t_data data);
 int						exec_pipe(t_ast *tree, t_data data);
 int						exec_cmd(t_ast *tree, t_data data);
 int						exec_builtin(t_ast *tree, t_data data);
-int						exec_heredoc(char *delimiter, t_data *data);
+int						exec_heredoc(char *delimiter, t_data data,
+							int do_expand);
 int						exec_redir(t_ast *tree, t_data data);
-
+int						do_all_heredocs(t_ast *tree, t_data data);
+int						do_all_redirs(t_ast *tree, t_data *data);
 //	--- ast exec cmd utils Function ---
 int						is_builtin(char *str);
 void					child_init(t_data data);
-char					*find_cmdpath(char **paths, char *cmd);
+char					*find_cmdpath(char **paths, t_ast **tree, t_env **env);
+char					*find_cmdpath_utils(t_ast **tree, t_env **env,
+							char **paths);
 char					**find_path(t_data data);
 
 //	--- free Function ---
 void					free_sarr(char **arr);
 
 //	--- cmd error Function ---
-int						cmd_path_error(char **paths, char *cmd);
-int						cmd_error(char *cmd);
-void					cmd_env_error(char **paths, char *path, char *cmd);
+int						cmd_path_error(char **paths, char *cmd, t_ast **head,
+							t_env **env);
+int						cmd_error(char *cmd, t_ast **tree, t_env **env);
+void					cmd_env_error(char **paths, char *path, t_ast **tree,
+							t_env **env);
+void					free_all_in_child(t_ast **tree, t_env **env);
+int						exit_on_point(t_ast **tree, t_env **env, t_data data);
+void					directory_error(char **paths, char *cmd, t_ast **tree,
+							t_env **env);
+void					cmd_permision_denied(char **paths, t_ast **tree,
+							t_env **env);
 
 //	--- exec_error_message ---
 int						pipe_error(t_data data);
+
+//	--- wildcards and expand ---
+int						is_wildcard(char *str, int state);
+void					make_wildcard(t_ast **tree, char ***to_wild, int *i);
+void					apply_exandwil(t_ast **tree, t_data data);
+
+// --- tools ---
+char					**ft_arr_join(char **arr1, char **arr2);
+int						arr_len(char **array);
+
 #endif

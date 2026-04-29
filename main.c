@@ -1,219 +1,97 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   maintest.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/17 12:48:12 by nredouan          #+#    #+#             */
-/*   Updated: 2026/03/27 16:37:41 by nredouan         ###   ########.fr       */
+/*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
+/*   Updated: 2026/04/29 15:05:35 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "minishell.h"
 
-static char    **find_directpath(char *env)
+static void	exec_loop(t_data data, t_ast *ast)
 {
-    char    **paths;
-    char    *path;
-    int        i;
-
-    if (!ft_strncmp(env, "PATH=", 5))
-    {
-        paths = ft_split(env + 5, ':');
-        if (!paths)
-            return (NULL);
-        i = 0;
-        while (paths[i++])
-        {
-            path = paths[i - 1];
-            paths[i - 1] = ft_strjoin(path, "/");
-            if (!paths[i - 1])
-            {
-                write (1, "ERROR\n", 6);
-                return (NULL);
-            }
-            free(path);
-        }
-    }
-    else
-        return (NULL);
-    return (paths);
+	signal(SIGINT, handler_exec);
+	if (do_all_heredocs(ast, data) == -1)
+		((*data.env)->exit_status = 130);
+	else
+		exec_tree(ast, data);
+	signal(SIGINT, handler);
+	ast_free(&ast);
 }
 
-static char    **find_path(char **env)
+static bool	loop_exit(t_env **env_var)
 {
-    int        i;
-    char    **paths;
-
-    i = 0;
-    while (env[i] && ft_strncmp(env[i], "PATH=", 5))
-        i++;
-    if (!env[i])
-        return (NULL);
-    paths = find_directpath(env[i]);
-    if (!paths)
-        return (NULL);
-    return (paths);
+	if ((*env_var)->is_valid_exit)
+	{
+		rl_clear_history();
+		return (true);
+	}
+	return (false);
 }
 
-static char    *find_cmdpath(char **paths, char *cmd)
+static t_ast	*make_make_tree(t_lexer *lex)
 {
-    int        i;
-    char    *path;
+	t_ast	*head;
+	t_ast	*ast;
 
-    i = 0;
-    if ((cmd[0] == '/' || ft_strncmp(cmd, "./", 2) == 0) && access(cmd,
-            X_OK) == 0)
-    {
-        path = ft_strdup(cmd);
-        if (!path)
-            return (NULL);
-        return (path);
-    }
-    while (paths[i])
-    {
-        path = ft_strjoin(paths[i], cmd);
-        if (!path)
-            return (NULL);
-        if (access(path, X_OK) == 0)
-            return (path);
-        free(path);
-        i++;
-    }
-    return (NULL);
+	head = NULL;
+	ast = make_tree(&lex, &head);
+	return (ast);
 }
 
-int    exec(char *cmd, char **env)
+static void	main_loop(char **prompt, t_env **env_var)
 {
-    char    **paths;
-    char    **args;
-    char    *path;
+	char	*tmp;
+	t_lexer	*lex;
+	t_ast	*ast;
+	t_data	data;
 
-    paths = find_path(env);
-    if (!paths)
-        write (1, "ERROR\n", 6);
-    args = ft_split(cmd, ' ');
-    if (!args)
-    {
-        write(2, "Command not found\n", 18);
-        write (1, "ERROR\n", 6);
-        exit(1);//TODO changer exit pour fonction d'exit
-    }
-    path = find_cmdpath(paths, args[0]);
-    if (!path)
-        write (1, "ERROR\n", 6);
-    if (execve(path, args, env) == -1)
-        write (1, "ERROR\n", 6);
-    return (0);
+	while (1)
+	{
+		g_sigint = 0;
+		tmp = readline(*prompt);
+		if (loop_init(tmp, 0) == 0)
+			break ;
+		else if (loop_init(tmp, 1) == 1)
+			continue ;
+		if (g_sigint == 130)
+			(*env_var)->exit_status = 130;
+		lex = lex_init(tmp, &data, env_var);
+		if (!lex_init_error(lex, env_var))
+			continue ;
+		ast = make_make_tree(lex);
+		if (!ast_error_init(lex, ast, env_var))
+			continue ;
+		exec_loop(data, ast);
+		if (loop_exit(env_var))
+			break ;
+	}
 }
 
-static void	handler(int signal)
+int	main(int ac, char **av, char **envp)
 {
-	(void)signal;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
+	t_env	*env_var;
+	int		output;
+	char	*prompt;
 
-void	clear(char **envp)
-{
-	char *arg[] =  {"clear", (char *)0};
-	execve("/usr/bin/clear", arg, envp);//TODO protect
-	//TODO contruire le path pour clear (et toutes les commandes concernées)
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	char			*prompt;
-	char			*tmp;
-	char			**tmp2;
-	t_env			*env_var;
-	t_silent_env	senv;
-	pid_t			child;
-
-	(void)argc;
-	(void)argv;
+	(void)ac;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
-	env_var = init_env(envp);
-	senv.pwd = getcwd(NULL, 0);
-	prompt = build_prompt(&senv);
-	if (!prompt || !env_var)
+	env_var = init_env(envp, av[0]);
+	prompt = build_prompt(env_var->pwd_s);
+	env_var->prompt = &prompt;
+	if (!env_var || !(*env_var->prompt))
 	{
 		ft_putendl_fd("minishell: internal fatal error", 2);
 		free_env(env_var);
-		free(senv.pwd);
-		free(prompt);
-		return (1);	
+		return (1);
 	}
-	// int fd = open("Tom_and_jerry.txt", O_RDONLY);
-	// char *gnl = get_next_line(fd);
-	// int t = 0;
-	// while (gnl)
-	// {
-	// 	printf("%s", gnl);
-	// 	if (t < 7)
-	// 		usleep(15000);
-	// 	else if (t < 15)
-	// 	{
-	// 		usleep(100000);
-	// 		t = 0;
-	// 	}
-	// 	free(gnl);
-	// 	gnl = get_next_line(fd);
-	// 	t++;
-	// }
-	// close(fd);
-	while (1)
-	{
-		tmp = readline(prompt);
-		if (tmp && tmp[0])
-			add_history(tmp);
-		tmp2 = ft_split(tmp, ' ');
-		free(tmp);
-		if (!tmp2)
-		{
-			ft_putendl_fd("minishell: internal fatal error", 2);
-			continue ;
-		}
-		if (tmp2[0] && !ft_strcmp("exit", tmp2[0]))
-		{
-			free_str(tmp2);
-			break ;
-		}
-		if (!tmp2[0])
-		{
-			free_str(tmp2);
-			continue ;
-		}
-		if (!ft_strcmp("cd", tmp2[0]))
-		{
-			free(prompt);
-			prompt = cd(&tmp2[1], env_var, &senv);
-		}
-		else if (!ft_strcmp("pwd", tmp2[0]))
-			pwd(&senv);
-		else if (!ft_strcmp("clear", tmp2[0]))
-		{
-			child = fork();//TODO protect
-			if (child == 0)
-				clear(envp);
-			waitpid(child, NULL, 0);//TODO protect
-		}
-		else if (!ft_strcmp("unset", tmp2[0]))
-			env_var = unset(&tmp2[1], env_var);
-		else if (!ft_strcmp("export", tmp2[0]))
-			env_var = export(&tmp2[1], env_var);
-		else if (!ft_strcmp("env", tmp2[0]))
-			env(&tmp2[1], env_var);
-		else if (!ft_strcmp("echo", tmp2[0]))
-			echo(&tmp2[1], env_var);
-		free_str(tmp2);
-	}
-	rl_clear_history();
+	main_loop(env_var->prompt, &env_var);
+	output = env_var->exit_status;
 	free_env(env_var);
-	free(senv.pwd);
-	free(prompt);
+	return (output);
 }

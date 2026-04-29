@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:14:27 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/08 16:40:46 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/12 18:18:44 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static bool	wild_check(char *pattern, char *str, int index_p, int index_s)
 		return (wild_check(pattern, str, index_p + 1, index_s + 1));
 	if (pattern[index_p] == '*')
 	{
+		while (pattern[index_p + 1] && pattern[index_p + 1] == '*')
+			index_p++;
 		if (wild_check(pattern, str, index_p + 1, index_s))
 			return (true);
 		if (str[index_s])
@@ -84,9 +86,7 @@ char	**wildcards(char *pattern)
 {
 	char			**result;
 	int				i;
-	int				j;
 
-	j = 0;
 	i = count_obj();
 	if (i == 0)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 12:53:59 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/11 17:20:26 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 13:42:50 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,100 @@ static int	exec_redirout_append(t_ast **tree, t_data *data)
 	else
 		fd = open((*tree)->args[1], O_CREAT | O_APPEND | O_WRONLY, 0644);
 	data->filesfd.fdout = fd;
+	if (fd < 0)
+	{
+		perror("T&J Shell ");
+		return (-1);
+	}
 	return (fd);
+}
+
+static int	exec_redirin(t_ast **tree, t_data *data)
+{
+	int	fd;
+
+	fd = 0;
+	if (data->filesfd.fdin > 2)
+		close(data->filesfd.fdin);
+	fd = open((*tree)->args[1], O_RDONLY);
+	if (fd < 0)
+	{
+		perror("T&J Shell :");
+		return (-1);
+	}
+	data->filesfd.fdin = fd;
+	return (fd);
+}
+
+static int	go_left_redirs(t_ast **trees, t_data *data, int *status)
+{
+	t_ast	*tree;
+
+	tree = *trees;
+	if (tree->left)
+	{
+		if (tree->left->type >= HEREDOC_AST
+			&& tree->left->type <= REDIR_OUT_AST)
+		{
+			*status = do_all_redirs(tree->left, data);
+			if (*status != 0)
+				return (*status);
+		}
+	}
+	return (1025);
+}
+
+int	do_all_redirs(t_ast *tree, t_data *data)
+{
+	int	status;
+
+	status = 0;
+	if (go_left_redirs(&tree, data, &status) != 1025)
+		return (status);
+	if (!ft_strcmp(tree->args[0], "<<"))
+	{
+		if (data->filesfd.fdin)
+			close(data->filesfd.fdin);
+		data->filesfd.fdin = tree->heredoc_fd;
+	}
+	else if (!ft_strcmp(tree->args[0], "<"))
+	{
+		if (exec_redirin(&tree, data) == -1)
+			return (1);
+	}
+	else if (!ft_strcmp(tree->args[0], ">") || !ft_strcmp(tree->args[0], ">>"))
+	{
+		if (exec_redirout_append(&tree, data) == -1)
+			return (1);
+	}
+	return (0);
 }
 
 int	exec_redir(t_ast *tree, t_data data)
 {
-	int	fd;
-	int	status;
+	t_ast	*node;
+	int		status;
 
-	fd = 0;
-	if (!ft_strcmp(tree->args[0], "<<"))
-		fd = exec_heredoc(tree->args[1], &data);
-	if (!ft_strcmp(tree->args[0], "<"))
+	node = tree;
+	status = 0;
+	while (node && node->type >= HEREDOC_AST && node->type <= REDIR_OUT_AST)
+		node = node->left;
+	if (!node)
+		node = tree;
+	status = do_all_redirs(tree, &data);
+	if (status != 0)
 	{
-		if (data.filesfd.fdin > 2)
-			close(data.filesfd.fdin);
-		fd = open(tree->args[1], O_RDONLY);
-		data.filesfd.fdin = fd;
+		(*data.env)->exit_status = 1;
+		return (status);
 	}
-	else if (!ft_strcmp(tree->args[0], ">") || !ft_strcmp(tree->args[0], ">>"))
-		fd = exec_redirout_append(&tree, &data);
-	if (fd <= -1)
-	{
-		perror("T&J Shell :");
-		return (127);
-	}
-	if (tree->left)
-		status = exec_tree(tree->left, data);
-	if (tree->right)
-		status = exec_tree(tree->right, data);
+	if (node && node->type == CMD_AST)
+		status = exec_tree(node, data);
+	else if (node && node->type == HEREDOC_AST && node->right
+		&& node->right->type == CMD_AST)
+		status = exec_tree(node->right, data);
+	if (data.filesfd.fdin > 2)
+		close(data.filesfd.fdin);
+	if (data.filesfd.fdout > 2)
+		close(data.filesfd.fdout);
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 01:25:09 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 18:37:04 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/21 21:50:30 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ int	is_complete_w(char *str, char *og)
 	if (*str && (*og == ' ' || *og == '\t' || *og == '\n'))
 		return (1);
 	if (*og == '(' || *og == ')' || *og == '\'' || *og == '\"' || *og == '\0')
+		return (1);
+	if (*str == '|' && *og == '|')
+		return (0);
+	if (*str == '&' && *og == '&')
+		return (0);
+	if (*og == '&')
+		return (1);
+	if (og[0] == '|')
 		return (1);
 	return (0);
 }

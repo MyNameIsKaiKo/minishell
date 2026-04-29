@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 15:39:18 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/04 17:07:09 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/24 17:27:24 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static void	change_value(t_env *env_var, char *name, char *value)
 {
 	while (env_var && ft_strcmp(name, env_var->name))
 		env_var = env_var->next;
-	free(env_var->value);
 	free(name);
+	if (!value)
+		return ;
+	free(env_var->value);
 	env_var->value = value;
 }
 
@@ -38,7 +40,7 @@ static void	add_value(t_env *env_var, char *name, char *value)
 	env_var->value = ft_strjoin(env_var->value, value);
 	if (!env_var->value)
 	{
-		ft_putstr_fd("export: allocation error\n", 2);
+		ft_putstr_fd("T&J Shell: export: allocation error\n", 2);
 		env_var->value = value;
 	}
 	else
@@ -70,7 +72,7 @@ static t_env	*exec_export(char *arg, t_env *env_var, int separator)
 	if (!env_var->name && !env_var->value)
 	{
 		env_var->name = name;
-		env_var->value = value;		
+		env_var->value = value;
 	}
 	else if (!env_search(name, env_var))
 		add_env(env_var, name, value);
@@ -79,30 +81,30 @@ static t_env	*exec_export(char *arg, t_env *env_var, int separator)
 	return (env_var);
 }
 
-t_env	*export(char **args, t_env *env_var)
+int	export(char **args, t_env **env_var)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
-	j = 0;
+	(*env_var)->exit_status = 0;
 	if (!check_export_args(args))
-		print_export(env_var);
+		print_export(*env_var);
 	else
 	{
 		while (args[i])
 		{
+			j = 0;
 			if (!parser_export(args[i]))
-				print_export_error(args[i], 0);
+				(*env_var)->exit_status |= print_export_error(args[i], 0);
 			else
 			{
 				while (args[i][j] && args[i][j] != '=')
 					j++;
-				env_var = exec_export(args[i], env_var, j);
+				(*env_var) = exec_export(args[i], *env_var, j);
 			}
-			j = 0;
 			i++;
 		}
 	}
-	return (env_var);
+	return ((*env_var)->exit_status);
 }

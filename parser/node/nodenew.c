@@ -6,7 +6,7 @@
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 20:19:58 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/28 13:02:43 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 14:15:55 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,39 @@ static void	get_ast_type(t_lexer *checkpoint, t_ast **ast)
 		(*ast)->type = SUBPROCESS_AST;
 }
 
-t_ast	*nodenew(t_lexer *checkpoint)
+static void	init_nodenew(t_ast **new_node)
+{
+	t_ast	*node;
+
+	node = *new_node;
+	node->args = NULL;
+	node->data = NULL;
+	node->left = NULL;
+	node->right = NULL;
+	node->quote_states = NULL;
+	node->heredoc_fd = -1;
+	node->old_lexindex = -1;
+	node->do_expand = 1;
+}
+
+t_ast	*nodenew(t_lexer *checkpoint, t_ast **head)
 {
 	t_ast	*new_node;
 
 	new_node = malloc(sizeof(t_ast));
 	if (!new_node)
 		return (NULL);
-	new_node->args = NULL;
-	new_node->data = NULL;
-	new_node->left = NULL;
-	new_node->right = NULL;
+	if (head && !(*head))
+		*head = new_node;
+	if (!head)
+		new_node->head = new_node;
+	else
+		new_node->head = *head;
+	init_nodenew(&new_node);
 	get_ast_type(checkpoint, &new_node);
-	handle_node_data(&new_node, checkpoint);
-	if (new_node->old_lexindex == 0)
+	handle_node_data(&new_node, checkpoint, head);
+	if (new_node->old_lexindex == -1)
 	{
-		ft_putstr_fd("Syntax Error", 2);
 		ast_free(&new_node);
 		return (NULL);
 	}

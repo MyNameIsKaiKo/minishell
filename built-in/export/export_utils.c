@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:18:29 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/07 12:31:17 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/19 17:33:07 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_strings(char *name, char *value)
 {
 	free(name);
 	free(value);
-	ft_putstr_fd("export: allocation error\n", 2);
+	ft_putstr_fd("T&J Shell: export: allocation error\n", 2);
 }
 
 bool	parser_export(char *arg)
@@ -45,7 +45,7 @@ bool	parser_export(char *arg)
 	int	i;
 
 	i = 0;
-	if (ft_isdigit(arg[i]))
+	if (!arg[0] || ft_isdigit(arg[i]))
 		return (false);
 	while (arg[i])
 	{

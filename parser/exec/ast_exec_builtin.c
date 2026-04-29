@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ast_exec_builtin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 11:43:54 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/09 12:36:25 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/24 17:27:49 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
+#include <unistd.h>
 
 static void	builtin_init(t_data *data)
 {
@@ -32,32 +33,44 @@ static void	buildin_closefd(t_data *data)
 {
 	if (data->filesfd.fdin > 2)
 	{
-		dup2(data->filesfd.fdintmp, data->filesfd.fdin);
+		dup2(data->filesfd.fdintmp, STDIN_FILENO);
 		close(data->filesfd.fdintmp);
 	}
 	if (data->filesfd.fdout > 2)
 	{
-		dup2(data->filesfd.fdouttmp, data->filesfd.fdout);
+		dup2(data->filesfd.fdouttmp, STDOUT_FILENO);
 		close(data->filesfd.fdouttmp);
 	}
 }
 
 static int	find_builtin(t_ast *tree, t_data data)
 {
-	t_env	**env;
-	int		status;
+	t_env	**env_v;
 
-	env = data.env;
-	status = 0;
+	env_v = data.env;
 	if (!ft_strcmp(tree->args[0], "echo"))
-		echo(tree->args + 1, *env);
-	return (status);
+		(*env_v)->exit_status = echo(tree->args + 1, *env_v);
+	if (!ft_strcmp(tree->args[0], "unset"))
+		(*env_v)->exit_status = unset(tree->args + 1, env_v);
+	if (!ft_strcmp(tree->args[0], "export"))
+		(*env_v)->exit_status = export(tree->args + 1, env_v);
+	if (!ft_strcmp(tree->args[0], "env"))
+		(*env_v)->exit_status = env(tree->args + 1, *env_v);
+	if (!ft_strcmp(tree->args[0], "pwd"))
+		(*env_v)->exit_status = pwd(tree->args + 1, *env_v);
+	if (!ft_strcmp(tree->args[0], "cd"))
+		(*env_v)->exit_status = cd(tree->args + 1, *env_v);
+	if (!ft_strcmp(tree->args[0], "exit"))
+		(*env_v)->exit_status = minish_exit(tree->args + 1, *env_v);
+	return ((*env_v)->exit_status);
 }
 
 int	exec_builtin(t_ast *tree, t_data data)
 {
+	int	status;
+
 	builtin_init(&data);
-	find_builtin(tree, data);
+	status = find_builtin(tree, data);
 	buildin_closefd(&data);
-	return (0);
+	return (status);
 }

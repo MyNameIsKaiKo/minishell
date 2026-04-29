@@ -1,7 +1,15 @@
 minishell
 *.o
-*.json
 obj
 readline.supp
-
 compile_commands.json
+main.c
+.gitignore
+readline.supp
+minishell_tester-master
+tester
+.cache/clangd/index/apply_wildcards.c.10EE8552ACE64CB1.idx
+.cache/clangd/index/apply_expend.c.66D3A1110425B5D8.idx
+/.cache/clangd/index
+/.cache/clangd
+*.idx

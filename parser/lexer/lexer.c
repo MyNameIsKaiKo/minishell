@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/08 16:25:00 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/29 16:48:03 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include <stdio.h>
-
-// Aim -> create t_lexer with everything with a token
-// token list :
-// - word -> file and cmd ?
-// - operator -> logic or pipe
-// - direction
 
 static int	handle_singletype(char *s, char *og)
 {
@@ -64,6 +58,8 @@ static int	is_type(char *s, char *og)
 		if (status)
 			return (status);
 	}
+	if (is_complete_w(s, og) == -1)
+		return (-1);
 	if (is_complete_w(s, og))
 		return (WORD);
 	return (0);
@@ -93,7 +89,6 @@ void	lexing(t_lexer **lex, char *str)
 		}
 	}
 	free(tmp);
-	return ;
 }
 
 t_lexer	*lexer(char *str)
@@ -109,6 +104,7 @@ t_lexer	*lexer(char *str)
 		remove_remaining_type(&lex, WSPACE);
 		remove_remaining_type(&lex, PONCT);
 		lexerlst_trim(&lex);
+		replace_arg(&lex);
 	}
 	else
 		return (NULL);

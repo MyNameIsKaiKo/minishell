@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:09:06 by nredouan          #+#    #+#             */
-/*   Updated: 2026/04/02 18:10:18 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/12 15:03:09 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int				ft_isascii(int c);
 int				ft_isprint(int c);
 int				ft_isspace(int c);
 size_t			ft_strlen(const char *str);
+size_t			ft_intlen(int n);
 int				ft_tab_size(char **tab);
 char			**tab_char_cpy(char **args);
 void			*ft_memset(void *s, int c, size_t n);
