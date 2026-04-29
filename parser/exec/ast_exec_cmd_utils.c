@@ -100,19 +100,14 @@ static char	*join_the_path(char **paths, char *cmd)
 char	*find_cmdpath(char **paths, t_ast **tree, t_env **env)
 {
 	char		*path;
-	struct stat	st;
 	char		*cmd;
 
 	cmd = (*tree)->args[0];
 	if (cmd[0] == '/')
 	{
-		if (stat(cmd, &st) == 0 && S_ISREG(st.st_mode) && !access(cmd, X_OK))
-		{
-			path = ft_strdup(cmd);
+		path = find_cmdpath_utils(tree, env, paths);
+		if (path)
 			return (path);
-		}
-		if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode) && !access(cmd, X_OK))
-			directory_error(paths, cmd, tree, env);
 	}
 	else if (ft_strncmp(cmd, "./", 2) == 0)
 	{

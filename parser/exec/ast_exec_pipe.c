@@ -62,6 +62,16 @@ void	handle_scd(t_ast *tree, t_data data, int pipefd[2])
 	exit(status);
 }
 
+static	void	close_for_execpipe(int pipefd[2], t_data data)
+{
+	close(pipefd[0]);
+	close(pipefd[1]);
+	if (data.filesfd.fdin > 2)
+		close(data.filesfd.fdin);
+	if (data.filesfd.fdout > 2)
+		close(data.filesfd.fdout);
+}
+
 int	exec_pipe(t_ast *tree, t_data data)
 {
 	int		pipefd[2];
@@ -77,12 +87,7 @@ int	exec_pipe(t_ast *tree, t_data data)
 	scd_child = fork();
 	if (scd_child == 0)
 		handle_scd(tree, data, pipefd);
-	close(pipefd[0]);
-	close(pipefd[1]);
-	if (data.filesfd.fdin > 2)
-		close(data.filesfd.fdin);
-	if (data.filesfd.fdout > 2)
-		close(data.filesfd.fdout);
+	close_for_execpipe(pipefd, data);
 	waitpid(first_child, NULL, 0);
 	waitpid(scd_child, &status, 0);
 	if (WIFEXITED(status))
