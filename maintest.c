@@ -6,71 +6,69 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:32:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 18:06:54 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:01:22 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	main_loop(char **prompt, t_env **env_var)
+static void	exec_loop(t_data data, t_ast *ast)
+{
+	signal(SIGINT, handler_exec);
+	if (do_all_heredocs(ast, data) == -1)
+		((*data.env)->exit_status = 130);
+	else
+		exec_tree(ast, data);
+	signal(SIGINT, handler);
+	ast_free(&ast);
+}
+
+static bool	loop_exit(t_env **env_var)
+{
+	if ((*env_var)->is_valid_exit)
+	{
+		rl_clear_history();
+		return (true);
+	}
+	return (false);
+}
+
+static t_ast	*make_make_tree(t_lexer *lex)
+{
+	t_ast	*head;
+	t_ast	*ast;
+
+	head = NULL;
+	ast = make_tree(&lex, &head);
+	return (ast);
+}
+
+static void	main_loop(char **prompt, t_env **env_var)
 {
 	char	*tmp;
 	t_lexer	*lex;
 	t_ast	*ast;
 	t_data	data;
-	t_ast	*head;
 
 	while (1)
 	{
 		g_sigint = 0;
 		tmp = readline(*prompt);
-		if (!tmp)
-		{
-			rl_clear_history();
-			printf("exit\n");
+		if (loop_init(tmp, 0) == 0)
 			break ;
-		}
-		if (tmp[0] == '\0')
-		{
-			free(tmp);
+		else if (loop_init(tmp, 1) == 1)
 			continue ;
-		}
 		if (g_sigint == 130)
 			(*env_var)->exit_status = 130;
-		add_history(tmp);
-		data.filesfd.fdin = STDIN_FILENO;
-		data.filesfd.fdout = STDOUT_FILENO;
-		data.env = env_var;
-		lex = lexer(tmp);
-		free(tmp);
-		if (!lex)
-		{
-			(*env_var)->exit_status = 2;
-			ft_putstr_fd("Syntax Error : By lexer in main\n", 2);
+		lex = lex_init(tmp, &data, env_var);
+		if (!lex_init_error(lex, env_var))
 			continue ;
-		}
-		head = NULL;
-		ast = make_tree(&lex, &head);
-		if (lex && !ast)
-		{
-			lexer_abs_free(&lex);
-			(*env_var)->exit_status = 2;
-			ft_putstr_fd("Syntax Error : By ast in main\n", 2);
+		ast = make_make_tree(lex);
+		if (!ast_error_init(lex, ast, env_var))
 			continue ;
-		}
-		lexer_abs_free(&lex);
-		signal(SIGINT, handler_exec);
-		if (do_all_heredocs(ast, data) == -1)
-			((*data.env)->exit_status = 130);
-		else
-			exec_tree(ast, data);
-		signal(SIGINT, handler);
-		ast_free(&ast);
-		if ((*env_var)->is_valid_exit)
-		{
-			rl_clear_history();
+		exec_loop(data, ast);
+		if (loop_exit(env_var))
 			break ;
-		}
 	}
 }
 

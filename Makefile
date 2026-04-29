@@ -27,7 +27,6 @@ SRCS 		=	maintest.c \
 				reverse_env.c \
 				general_utils.c \
 				wildcards.c \
-				apply_wildcards.c \
 				ast.c \
 				ast_exec.c \
 				ast_exec_cmd.c \
@@ -70,9 +69,9 @@ SRCS 		=	maintest.c \
 				remove_rponct.c \
 				expander.c \
 				expand_utils.c \
-				apply_expend.c \
 				expand_copy.c \
-				shell_lvl.c
+				shell_lvl.c \
+				loop_utils.c
 
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
