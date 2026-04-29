@@ -66,7 +66,6 @@ SRCS 		=	main.c \
 				handle_quote.c \
 				lexer_utils.c \
 				word_merger.c \
-				word_and_ponct_merger.c \
 				remove_rponct.c \
 				expander.c \
 				expand_utils.c \
