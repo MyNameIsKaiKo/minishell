@@ -52,6 +52,13 @@ static t_ast	*create_right(t_lexer **lexhead, t_ast **head, t_ast **curr)
 	return (right_node);
 }
 
+static void	add_the_nodes(t_ast **node, t_ast *left, t_ast *right)
+{
+	if ((*node)->type != SUBPROCESS_AST)
+		node_add(node, left, LEFT);
+	node_add(node, right, RIGHT);
+}
+
 static t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint,
 		t_ast **head)
 {
@@ -71,16 +78,12 @@ static t_ast	*create_treenode(t_lexer **lexhead, t_lexer *checkpoint,
 		ast_free(&right);
 		return (NULL);
 	}
-	if (node->type != SUBPROCESS_AST)
-		node_add(&node, left, LEFT);
-	node_add(&node, right, RIGHT);
-	if (node->type == PIPE_AST || node->type == OPERATOR_AST)
+	add_the_nodes(&node, left, right);
+	if ((node->type == PIPE_AST || node->type == OPERATOR_AST) && (!node->left
+			|| !node->right))
 	{
-		if (!node->left || !node->right)
-		{
-			ast_free(&node);
-			return (NULL);
-		}
+		ast_free(&node);
+		return (NULL);
 	}
 	return (node);
 }

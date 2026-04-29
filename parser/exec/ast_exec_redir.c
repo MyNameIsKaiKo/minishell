@@ -32,24 +32,48 @@ static int	exec_redirout_append(t_ast **tree, t_data *data)
 	return (fd);
 }
 
-// the first if check recursivly into ny tree in order to check for another trick.
-// then execute normaly the redir and return the correct error with perror (still need to test the permission one)
-static int	do_all_redirs(t_ast *tree, t_data *data)
+static int	exec_redirin(t_ast **tree, t_data *data)
 {
-	int	status;
 	int	fd;
 
-	status = 0;
+	fd = 0;
+	if (data->filesfd.fdin > 2)
+		close(data->filesfd.fdin);
+	fd = open((*tree)->args[1], O_RDONLY);
+	if (fd < 0)
+	{
+		perror("T&J Shell :");
+		return (-1);
+	}
+	data->filesfd.fdin = fd;
+	return (fd);
+}
+
+static int	go_left_redirs(t_ast **trees, t_data *data, int *status)
+{
+	t_ast	*tree;
+
+	tree = *trees;
 	if (tree->left)
 	{
 		if (tree->left->type >= HEREDOC_AST
 			&& tree->left->type <= REDIR_OUT_AST)
 		{
-			status = do_all_redirs(tree->left, data);
-			if (status != 0)
-				return (status);
+			*status = do_all_redirs(tree->left, data);
+			if (*status != 0)
+				return (*status);
 		}
 	}
+	return (1025);
+}
+
+int	do_all_redirs(t_ast *tree, t_data *data)
+{
+	int	status;
+
+	status = 0;
+	if (go_left_redirs(&tree, data, &status) != 1025)
+		return (status);
 	if (!ft_strcmp(tree->args[0], "<<"))
 	{
 		if (data->filesfd.fdin)
@@ -58,15 +82,8 @@ static int	do_all_redirs(t_ast *tree, t_data *data)
 	}
 	else if (!ft_strcmp(tree->args[0], "<"))
 	{
-		if (data->filesfd.fdin > 2)
-			close(data->filesfd.fdin);
-		fd = open(tree->args[1], O_RDONLY);
-		if (fd < 0)
-		{
-			perror("T&J Shell :");
+		if (exec_redirin(&tree, data) == -1)
 			return (1);
-		}
-		data->filesfd.fdin = fd;
 	}
 	else if (!ft_strcmp(tree->args[0], ">") || !ft_strcmp(tree->args[0], ">>"))
 	{
@@ -76,10 +93,6 @@ static int	do_all_redirs(t_ast *tree, t_data *data)
 	return (0);
 }
 
-// New exec redir now go on the cmd before every redir ( in case they trick us into many redir )
-// then exec do_all_redirs -> the name speak for itself
-// if one of the redir return (an error ( 1 ) it will stop everything !);
-// if everything is alr it will continue on exec_tree to exec the cmd node !
 int	exec_redir(t_ast *tree, t_data data)
 {
 	t_ast	*node;
@@ -99,7 +112,8 @@ int	exec_redir(t_ast *tree, t_data data)
 	}
 	if (node && node->type == CMD_AST)
 		status = exec_tree(node, data);
-	else if (node && node->type == HEREDOC_AST && node->right->type == CMD_AST)
+	else if (node && node->type == HEREDOC_AST && node->right
+		&& node->right->type == CMD_AST)
 		status = exec_tree(node->right, data);
 	if (data.filesfd.fdin > 2)
 		close(data.filesfd.fdin);
@@ -107,46 +121,3 @@ int	exec_redir(t_ast *tree, t_data data)
 		close(data.filesfd.fdout);
 	return (status);
 }
-
-// int	exec_redir(t_ast *tree, t_data data)
-// {
-// int	fd;
-// int	status;
-//
-// fd = 0;
-// status = 0;
-// if (!ft_strcmp(tree->args[0], "<<"))
-// {
-// if (data.filesfd.fdin > 2)
-// close(data.filesfd.fdin);
-// fd = tree->heredoc_fd;
-// data.filesfd.fdin = fd;
-// }
-// if (!ft_strcmp(tree->args[0], "<"))
-// {
-// if (data.filesfd.fdin > 2)
-// close(data.filesfd.fdin);
-// fd = open(tree->args[1], O_RDONLY);
-// data.filesfd.fdin = fd;
-// }
-// else if (!ft_strcmp(tree->args[0], ">") || !ft_strcmp(tree->args[0], ">>"))
-// fd = exec_redirout_append(&tree, &data);
-// if (fd == -2)
-// {
-// (*data.env)->exit_status = 130;
-// return (130);
-// }
-// if (fd <= -1)
-// {
-// perror("T&J Shell ");
-// (*data.env)->exit_status = 1;
-// return (1);
-// }
-// if (tree->left)
-// status = exec_tree(tree->left, data);
-// if (tree->right)
-// status = exec_tree(tree->right, data);
-// if (fd > 2)
-// close (fd);
-// return (status);
-// }

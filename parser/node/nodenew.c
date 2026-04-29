@@ -34,6 +34,21 @@ static void	get_ast_type(t_lexer *checkpoint, t_ast **ast)
 		(*ast)->type = SUBPROCESS_AST;
 }
 
+static void	init_nodenew(t_ast **new_node)
+{
+	t_ast	*node;
+
+	node = *new_node;
+	node->args = NULL;
+	node->data = NULL;
+	node->left = NULL;
+	node->right = NULL;
+	node->quote_states = NULL;
+	node->heredoc_fd = -1;
+	node->old_lexindex = -1;
+	node->do_expand = 1;
+}
+
 t_ast	*nodenew(t_lexer *checkpoint, t_ast **head)
 {
 	t_ast	*new_node;
@@ -47,14 +62,7 @@ t_ast	*nodenew(t_lexer *checkpoint, t_ast **head)
 		new_node->head = new_node;
 	else
 		new_node->head = *head;
-	new_node->args = NULL;
-	new_node->data = NULL;
-	new_node->left = NULL;
-	new_node->right = NULL;
-	new_node->quote_states = NULL;
-	new_node->heredoc_fd = -1;
-	new_node->old_lexindex = -1;
-	new_node->do_expand = 1;
+	init_nodenew(&new_node);
 	get_ast_type(checkpoint, &new_node);
 	handle_node_data(&new_node, checkpoint, head);
 	if (new_node->old_lexindex == -1)

@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node_add.c                                         :+:      :+:    :+:   */
+/*   find_cmdpath_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/13 16:05:32 by jleray            #+#    #+#             */
-/*   Updated: 2026/03/12 14:48:03 by jleray           ###   ########.fr       */
+/*   Created: 2026/04/29 12:39:54 by jleray            #+#    #+#             */
+/*   Updated: 2026/04/29 12:39:54 by jleray           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ast.h"
+#include "ast.h"
 
-void	node_add(t_ast **node, t_ast *new_node, t_side side)
+char	*find_cmdpath_utils(t_ast **tree, t_env **env, char **paths)
 {
-	if (!node || !new_node)
-		return ;
-	if (side == LEFT)
-		(*node)->left = new_node;
-	if (side == RIGHT)
-		(*node)->right = new_node;
-	return ;
+	char		*cmd;
+	char		*path;
+	struct stat	st;
+
+	cmd = (*tree)->args[0];
+	if (stat(cmd, &st) == 0 && S_ISREG(st.st_mode) && !access(cmd, X_OK))
+	{
+		path = ft_strdup(cmd);
+		return (path);
+	}
+	if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode) && !access(cmd, X_OK))
+		directory_error(paths, cmd, tree, env);
+	return (NULL);
 }

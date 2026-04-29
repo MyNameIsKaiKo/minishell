@@ -31,6 +31,7 @@ SRCS 		=	maintest.c \
 				ast_exec.c \
 				ast_exec_cmd.c \
 				ast_exec_cmd_utils.c \
+				find_cmdpath_utils.c \
 				ast_exec_builtin.c \
 				ast_exec_builtin_tools.c \
 				ast_exec_pipe.c \
