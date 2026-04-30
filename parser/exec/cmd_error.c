@@ -29,7 +29,6 @@ int	cmd_path_error(char **paths, char *cmd, t_ast **tree, t_env **env)
 	char	*tmp;
 	int		size;
 
-
 	tmp = ft_strdup("Command not found : ");
 	error_msg = ft_strjoin(tmp, cmd);
 	free(tmp);

@@ -38,6 +38,8 @@ static int	handle_subprocess(t_lexer *checkpoint, t_ast *node, t_ast **head)
 	content = ft_strtrim(checkpoint->data, "()");
 	sub_lex = lexer(content);
 	free(content);
+	if (!sub_lex)
+		return (-1);
 	node->left = make_tree(&sub_lex, head);
 	lexer_abs_free(&sub_lex);
 	return (checkpoint->index);

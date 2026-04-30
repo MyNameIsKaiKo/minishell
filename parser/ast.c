@@ -56,6 +56,8 @@ static void	add_the_nodes(t_ast **node, t_ast *left, t_ast *right)
 {
 	if ((*node)->type != SUBPROCESS_AST)
 		node_add(node, left, LEFT);
+	else if (left != NULL)
+		ast_free(&left);
 	node_add(node, right, RIGHT);
 }
 
