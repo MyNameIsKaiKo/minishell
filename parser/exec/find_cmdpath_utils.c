@@ -24,7 +24,7 @@ char	*find_cmdpath_utils(t_ast **tree, t_env **env, char **paths)
 		path = ft_strdup(cmd);
 		return (path);
 	}
-	if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode) && !access(cmd, X_OK))
+	if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode))
 		directory_error(paths, cmd, tree, env);
 	return (NULL);
 }

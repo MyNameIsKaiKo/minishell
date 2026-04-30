@@ -77,10 +77,11 @@ char	**find_path(t_data data)
 	return (paths);
 }
 
-static char	*join_the_path(char **paths, char *cmd)
+static char	*join_the_path(char **paths, char *cmd, t_ast **tree, t_env **env)
 {
-	int		i;
-	char	*path;
+	int			i;
+	char		*path;
+	struct stat	st;
 
 	i = 0;
 	if (!paths)
@@ -90,8 +91,13 @@ static char	*join_the_path(char **paths, char *cmd)
 		path = ft_strjoin(paths[i - 1], cmd);
 		if (!path)
 			return (NULL);
-		if (access(path, X_OK) == 0)
+		if (!access(path, X_OK) && stat(cmd, &st) == 0 && S_ISREG(st.st_mode))
 			return (path);
+		else if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode))
+		{
+			free(path);
+			directory_error(paths, cmd, tree, env);
+		}
 		free(path);
 	}
 	return (NULL);
@@ -101,6 +107,7 @@ char	*find_cmdpath(char **paths, t_ast **tree, t_env **env)
 {
 	char		*path;
 	char		*cmd;
+	struct stat	st;
 
 	cmd = (*tree)->args[0];
 	if (cmd[0] == '/')
@@ -111,7 +118,7 @@ char	*find_cmdpath(char **paths, t_ast **tree, t_env **env)
 	}
 	else if (!ft_strncmp(cmd, "./", 2))
 	{
-		if (!access(cmd, X_OK))
+		if (!access(cmd, X_OK) && stat(cmd, &st) == 0 && S_ISREG(st.st_mode))
 		{
 			path = ft_strdup(cmd);
 			return (path);
@@ -119,6 +126,6 @@ char	*find_cmdpath(char **paths, t_ast **tree, t_env **env)
 		else
 			cmd_permision_denied(paths, tree, env);
 	}
-	path = join_the_path(paths, cmd);
+	path = join_the_path(paths, cmd, tree, env);
 	return (path);
 }
