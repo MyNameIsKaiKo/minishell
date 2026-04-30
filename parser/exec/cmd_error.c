@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jleray <marvin@d42.fr>                     +#+  +:+       +#+        */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 12:26:04 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/17 02:04:45 by jleray           ###   ########.fr       */
+/*   Updated: 2026/04/30 16:41:04 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	cmd_path_error(char **paths, char *cmd, t_ast **tree, t_env **env)
 	char	*error_msg;
 	char	*tmp;
 	int		size;
-
 
 	tmp = ft_strdup("Command not found : ");
 	error_msg = ft_strjoin(tmp, cmd);

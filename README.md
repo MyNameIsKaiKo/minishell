@@ -1,4 +1,3 @@
-
 > This project has been created as part of the 42 curriculum by jleray and nredouan.
 
 # 🐚 Minishell by T&J
@@ -110,4 +109,3 @@ make re     # Recompile everything from scratch
 
 ### Note about AI
 AI like Claude or Gemini were used only to learn how to use certain functions and fix issues when we were at an impasse.
-
