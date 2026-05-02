@@ -98,7 +98,7 @@ char					*find_cmdpath(char **paths, t_ast **tree, t_env **env);
 char					*find_cmdpath_utils(t_ast **tree, t_env **env,
 							char **paths);
 char					**find_path(t_data data);
-
+void					close_all_heredocs(t_ast *tree);
 //	--- free Function ---
 void					free_sarr(char **arr);
 

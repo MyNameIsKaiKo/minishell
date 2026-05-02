@@ -12,6 +12,16 @@
 
 #include "ast.h"
 
+void	close_all_heredocs(t_ast *tree)
+{
+	if (!tree)
+		return ;
+	if (tree->heredoc_fd > 2)
+		close(tree->heredoc_fd);
+	close_all_heredoc(tree->left);
+	close_all_heredoc(tree->right);
+}
+
 int	exec_child(t_ast *tree, t_data data)
 {
 	char	**paths;
@@ -21,6 +31,7 @@ int	exec_child(t_ast *tree, t_data data)
 	if (ft_strcmp(tree->args[0], ".") == 0)
 		exit_on_point(&tree, data.env, data);
 	child_init(data);
+	close_all_heredocs(tree->head);
 	paths = find_path(data);
 	path = find_cmdpath(paths, &tree, data.env);
 	if (!path || !ft_strcmp(tree->args[0], ".."))
