@@ -23,7 +23,7 @@ int	exec_child(t_ast *tree, t_data data)
 	child_init(data);
 	paths = find_path(data);
 	path = find_cmdpath(paths, &tree, data.env);
-	if (!path)
+	if (!path || !ft_strcmp(tree->args[0], ".."))
 		cmd_path_error(paths, tree->args[0], &tree, data.env);
 	env = reverse_env(data.env);
 	if (!env)
