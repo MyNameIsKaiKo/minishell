@@ -1,0 +1,131 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_exec_cmd_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/29 11:40:36 by jleray            #+#    #+#             */
+/*   Updated: 2026/04/24 17:50:31 by nredouan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ast.h"
+
+void	child_init(t_data data)
+{
+	if (data.filesfd.fdin > 2)
+	{
+		dup2(data.filesfd.fdin, STDIN_FILENO);
+		close(data.filesfd.fdin);
+	}
+	if (data.filesfd.fdout > 2)
+	{
+		dup2(data.filesfd.fdout, STDOUT_FILENO);
+		close(data.filesfd.fdout);
+	}
+	return ;
+}
+
+static char	**find_directpath(t_env *env)
+{
+	int		i;
+	char	**output;
+	char	*path;
+
+	if (ft_strcmp(env->name, "PATH") || !env->value)
+		return (NULL);
+	output = ft_split(env->value, ':');
+	if (!output)
+		return (NULL);
+	i = 0;
+	while (output[i++])
+	{
+		path = output[i - 1];
+		output[i - 1] = ft_strjoin(path, "/");
+		if (!output[i - 1])
+		{
+			free_sarr(output);
+			return (NULL);
+		}
+		free(path);
+	}
+	return (output);
+}
+
+char	**find_path(t_data data)
+{
+	t_env	**env;
+	char	**paths;
+	t_env	*tmp;
+
+	env = data.env;
+	if (!(*env) || !(*env)->name)
+		return (NULL);
+	tmp = *env;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->name, "PATH"))
+			break ;
+		tmp = tmp->next;
+	}
+	if (!tmp)
+		return (NULL);
+	paths = find_directpath(tmp);
+	if (!paths)
+		return (NULL);
+	return (paths);
+}
+
+static char	*join_the_path(char **paths, char *cmd, t_ast **tree, t_env **env)
+{
+	int			i;
+	char		*path;
+	struct stat	st;
+
+	i = 0;
+	if (!paths)
+		return (NULL);
+	while (paths[i++])
+	{
+		path = ft_strjoin(paths[i - 1], cmd);
+		if (!path)
+			return (NULL);
+		if (!access(path, X_OK) && ft_strcmp(cmd, "../"))
+			return (path);
+		else if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode))
+		{
+			free(path);
+			directory_error(paths, cmd, tree, env);
+		}
+		free(path);
+	}
+	return (NULL);
+}
+
+char	*find_cmdpath(char **paths, t_ast **tree, t_env **env)
+{
+	char		*path;
+	char		*cmd;
+	struct stat	st;
+
+	cmd = (*tree)->args[0];
+	if (cmd[0] == '/')
+	{
+		path = find_cmdpath_utils(tree, env, paths);
+		if (path)
+			return (path);
+	}
+	else if (!ft_strncmp(cmd, "./", 2))
+	{
+		if (!access(cmd, X_OK) && stat(cmd, &st) == 0 && S_ISREG(st.st_mode))
+		{
+			path = ft_strdup(cmd);
+			return (path);
+		}
+		else
+			cmd_permision_denied(paths, tree, env);
+	}
+	path = join_the_path(paths, cmd, tree, env);
+	return (path);
+}
