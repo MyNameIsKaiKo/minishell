@@ -13,3 +13,5 @@ tester
 /.cache/clangd/index
 /.cache/clangd
 *.idx
+.cache
+./*/.cache

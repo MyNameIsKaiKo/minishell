@@ -15,7 +15,7 @@
 static void	exec_loop(t_data data, t_ast *ast)
 {
 	signal(SIGINT, handler_exec);
-	if (do_all_heredocs(ast, data) == -1)
+	if (do_all_heredocs(ast, data) == -2)
 		((*data.env)->exit_status = 130);
 	else
 		exec_tree(ast, data);
