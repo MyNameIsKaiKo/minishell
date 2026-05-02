@@ -90,6 +90,9 @@ int	do_all_redirs(t_ast *tree, t_data *data)
 		if (exec_redirout_append(&tree, data) == -1)
 			return (1);
 	}
+	status = fix_heredoc_command_after(&tree, data);
+	if (status != 0)
+		return (status);
 	return (0);
 }
 

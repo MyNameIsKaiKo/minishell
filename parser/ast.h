@@ -90,6 +90,7 @@ int						exec_heredoc(char *delimiter, t_data data,
 int						exec_redir(t_ast *tree, t_data data);
 int						do_all_heredocs(t_ast *tree, t_data data);
 int						do_all_redirs(t_ast *tree, t_data *data);
+int						fix_heredoc_command_after(t_ast **tree, t_data data);
 //	--- ast exec cmd utils Function ---
 int						is_builtin(char *str);
 void					child_init(t_data data);

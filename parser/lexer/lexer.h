@@ -79,6 +79,7 @@ void					merge_words(t_lexer **lex);
 void					merge_word_ponct(t_lexer **lex);
 void					remove_remaining_type(t_lexer **lex, t_token_type type);
 void					replace_arg(t_lexer **lex);
+void    				replace_to_norm(t_lexer **lex);
 
 // -- lexer_merge function --
 t_lexer					*lexer_merge(t_lexer **lex, int start, int stop,

@@ -104,7 +104,8 @@ t_lexer	*lexer(char *str)
 		remove_remaining_type(&lex, WSPACE);
 		remove_remaining_type(&lex, PONCT);
 		lexerlst_trim(&lex);
-		replace_arg(&lex);
+		replace_to_norm(&lex);
+		//replace_arg(&lex);
 	}
 	else
 		return (NULL);

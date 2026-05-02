@@ -37,6 +37,7 @@ SRCS 		=	main.c \
 				ast_exec_pipe.c \
 				ast_exec_heredoc.c \
 				ast_exec_redir.c \
+				ast_exec_redir_utils.c \
 				ast_exec_error_message.c \
 				ast_do_all_heredoc.c \
 				ast_exec_cmd_exandwil.c \
@@ -65,6 +66,7 @@ SRCS 		=	main.c \
 				handle_parr.c \
 				handle_quote.c \
 				lexer_utils.c \
+				replace_to_norm.c \
 				word_merger.c \
 				remove_rponct.c \
 				expander.c \
