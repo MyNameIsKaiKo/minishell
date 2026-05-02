@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 19:02:17 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/29 17:04:09 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/05/04 14:29:22 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	close_all_heredocs(t_ast *tree)
 		return ;
 	if (tree->heredoc_fd > 2)
 		close(tree->heredoc_fd);
-	close_all_heredoc(tree->left);
-	close_all_heredoc(tree->right);
+	close_all_heredocs(tree->left);
+	close_all_heredocs(tree->right);
 }
 
 int	exec_child(t_ast *tree, t_data data)
