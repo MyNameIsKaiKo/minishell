@@ -78,8 +78,8 @@ int	exec_cmd(t_ast *tree, t_data data)
 	int	status;
 
 	status = 0;
-	status = handle_empty_cmd(tree, data);
 	apply_exandwil(&tree, data);
+	status = handle_empty_cmd(tree, data);
 	if (status != 1)
 		return (status);
 	if (!tree || !tree->args || !tree->args[0])
