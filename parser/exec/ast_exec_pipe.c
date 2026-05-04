@@ -12,14 +12,26 @@
 
 #include "ast.h"
 
+static void	close_for_execpipe(int pipefd[2], t_data data)
+{
+	close(pipefd[0]);
+	close(pipefd[1]);
+	if (data.filesfd.fdin > 2)
+		close(data.filesfd.fdin);
+	if (data.filesfd.fdout > 2)
+		close(data.filesfd.fdout);
+}
+
 void	handle_first(t_ast *tree, t_data data, int pipefd[2])
 {
 	int	status;
 
 	if (data.filesfd.fdin < 0)
 	{
-		close(pipefd[0]);
-		close(pipefd[1]);
+		close_for_execpipe(pipefd, data);
+		ast_free(&tree->head);
+		free_env(*(data.env));
+		rl_clear_history();
 		exit(127);
 	}
 	close(pipefd[0]);
@@ -27,10 +39,7 @@ void	handle_first(t_ast *tree, t_data data, int pipefd[2])
 		close(data.filesfd.fdout);
 	data.filesfd.fdout = pipefd[1];
 	status = exec_tree(tree->left, data);
-	if (data.filesfd.fdout > 2)
-		close(data.filesfd.fdout);
-	if (data.filesfd.fdin > 2)
-		close(data.filesfd.fdout);
+	close_for_execpipe(pipefd, data);
 	ast_free(&tree->head);
 	free_env(*(data.env));
 	rl_clear_history();
@@ -43,8 +52,10 @@ void	handle_scd(t_ast *tree, t_data data, int pipefd[2])
 
 	if (data.filesfd.fdout < 0)
 	{
-		close(pipefd[0]);
-		close(pipefd[1]);
+		close_for_execpipe(pipefd, data);
+		ast_free(&tree->head);
+		free_env(*(data.env));
+		rl_clear_history();
 		exit(127);
 	}
 	close(pipefd[1]);
@@ -52,24 +63,11 @@ void	handle_scd(t_ast *tree, t_data data, int pipefd[2])
 		close(data.filesfd.fdin);
 	data.filesfd.fdin = pipefd[0];
 	status = exec_tree(tree->right, data);
-	if (data.filesfd.fdout > 2)
-		close(data.filesfd.fdout);
-	if (data.filesfd.fdin > 2)
-		close(data.filesfd.fdout);
+	close_for_execpipe(pipefd, data);
 	ast_free(&tree->head);
 	free_env(*(data.env));
 	rl_clear_history();
 	exit(status);
-}
-
-static	void	close_for_execpipe(int pipefd[2], t_data data)
-{
-	close(pipefd[0]);
-	close(pipefd[1]);
-	if (data.filesfd.fdin > 2)
-		close(data.filesfd.fdin);
-	if (data.filesfd.fdout > 2)
-		close(data.filesfd.fdout);
 }
 
 int	exec_pipe(t_ast *tree, t_data data)
