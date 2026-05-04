@@ -18,6 +18,8 @@ void	directory_error(char **paths, char *cmd, t_ast **tree, t_env **env)
 	char	*tmp;
 	int		size;
 
+	if (!ft_strcmp(cmd, ".."))
+		cmd_path_error(paths, cmd, tree, env);
 	tmp = ft_strdup("T&J Shell : ");
 	error_msg = ft_strjoin(tmp, cmd);
 	free(tmp);
