@@ -72,6 +72,7 @@ SRCS 		=	main.c \
 				expander.c \
 				expand_utils.c \
 				expand_copy.c \
+				expander_heredoc.c \
 				shell_lvl.c \
 				loop_utils.c
 
