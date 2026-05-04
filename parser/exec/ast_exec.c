@@ -46,6 +46,9 @@ int	exec_subprocess(t_ast *tree, t_data data)
 		return (1);
 	if (subprocess == 0)
 	{
+		child_init(data);
+		data.filesfd.fdin = -1;
+		data.filesfd.fdout = -1;
 		output = exec_tree(tree->left, data);
 		free_env(*(data.env));
 		ast_free(&tree->head);

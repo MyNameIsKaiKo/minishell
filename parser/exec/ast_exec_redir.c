@@ -113,7 +113,7 @@ int	exec_redir(t_ast *tree, t_data data)
 		(*data.env)->exit_status = 1;
 		return (status);
 	}
-	if (node && node->type == CMD_AST)
+	if (node && (node->type == CMD_AST || node->type == SUBPROCESS_AST))
 		status = exec_tree(node, data);
 	else if (node && node->type == HEREDOC_AST && node->right
 		&& node->right->type == CMD_AST)
