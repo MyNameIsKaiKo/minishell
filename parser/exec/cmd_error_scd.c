@@ -43,10 +43,15 @@ void	cmd_permision_denied(char **paths, t_ast **tree, t_env **env)
 	cmd = (*tree)->args[0];
 	if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode))
 		directory_error(paths, cmd, tree, env);
+	if (access(cmd, X_OK) && S_ISREG(st.st_mode))
+	{
+		perror("T&J Shell ");
+		free_sarr(paths);
+		free_all_in_child(tree, env);
+		exit(126);
+	}
 	perror("T&J Shell ");
 	free_sarr(paths);
 	free_all_in_child(tree, env);
-	if (access(cmd, X_OK) && S_ISREG(st.st_mode))
-		exit(126);
 	exit(127);
 }
