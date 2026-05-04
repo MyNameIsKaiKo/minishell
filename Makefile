@@ -5,7 +5,7 @@ RM			= rm -f
 
 OBJ_DIR		= obj
 
-VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env:built-in/exit:expander:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node:parser/exec:parser/*
+VPATH		= env_var:built-in/cd:built-in/unset:built-in/pwd:built-in/export:built-in/echo:built-in/env:built-in/exit:expander:parser:parser/lexer:parser/lexer/lexerlst:parser/lexer/utils:parser/node:parser/exec
 
 SRCS 		=	main.c \
 				signals.c \
@@ -128,13 +128,13 @@ endef
 export ASCII_ART
 
 all: $(NAME)
+
+$(NAME): $(LIBFT) $(OBJS)
+	@$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 	@echo "$$ASCII_ART" | while IFS= read -r line; do \
 		echo "$$line"; \
 		sleep 0.1; \
 	done
-
-$(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
 	@make --no-print-directory -C $(LIBFT_DIR) all
