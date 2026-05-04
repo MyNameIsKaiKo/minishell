@@ -91,14 +91,15 @@ static char	*join_the_path(char **paths, char *cmd, t_ast **tree, t_env **env)
 		path = ft_strjoin(paths[i - 1], cmd);
 		if (!path)
 			return (NULL);
-		if (!access(path, X_OK) && ft_strcmp(cmd, "../"))
-			return (path);
-		else if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode))
+		if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode))
 		{
 			free(path);
 			directory_error(paths, cmd, tree, env);
 		}
-		free(path);
+		else if (!access(path, X_OK) && ft_strcmp(cmd, "../"))
+			return (path);
+		else
+			free(path);
 	}
 	return (NULL);
 }
