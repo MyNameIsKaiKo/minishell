@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 02:17:06 by jleray            #+#    #+#             */
-/*   Updated: 2026/04/24 14:42:08 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/05/04 15:31:08 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	end_heredoc_loop(char *str, int pipefd[2], int do_expand,
 		t_data data)
 {
 	if (do_expand)
-		str = expander(str, (*data.env));
+		str = expand_heredoc(str, (*data.env));
 	write(pipefd[1], str, ft_strlen(str));
 	write(pipefd[1], "\n", 1);
 	free(str);

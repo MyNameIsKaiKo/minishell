@@ -53,7 +53,6 @@ SRCS 		=	main.c \
 				node_free.c \
 				nodenew_data.c \
 				lexer.c \
-				replace_arg.c \
 				handle_ponct.c \
 				lexerlst_add.c \
 				lexerlst_new.c \

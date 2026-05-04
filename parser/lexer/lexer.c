@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 20:16:19 by jleray            #+#    #+#             */
-/*   Updated: 2026/05/04 14:30:15 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/05/04 15:43:36 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ t_lexer	*lexer(char *str)
 		remove_remaining_type(&lex, PONCT);
 		lexerlst_trim(&lex);
 		replace_to_norm(&lex);
-		//replace_arg(&lex);
 	}
 	else
 		return (NULL);

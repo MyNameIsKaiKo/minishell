@@ -6,7 +6,7 @@
 /*   By: nredouan <nredouan@student.42angouleme.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 14:51:35 by jleray            #+#    #+#             */
-/*   Updated: 2026/05/04 14:30:33 by nredouan         ###   ########.fr       */
+/*   Updated: 2026/05/04 15:22:32 by nredouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int						exec_heredoc(char *delimiter, t_data data,
 int						exec_redir(t_ast *tree, t_data data);
 int						do_all_heredocs(t_ast *tree, t_data data);
 int						do_all_redirs(t_ast *tree, t_data *data);
-int						fix_heredoc_command_after(t_ast **tree, t_data data);
+int						fix_heredoc_command_after(t_ast **tree, t_data *data);
 //	--- ast exec cmd utils Function ---
 int						is_builtin(char *str);
 void					child_init(t_data data);
