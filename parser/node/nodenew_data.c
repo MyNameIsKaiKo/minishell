@@ -35,7 +35,11 @@ static int	handle_subprocess(t_lexer *checkpoint, t_ast *node, t_ast **head)
 	char	*content;
 	t_lexer	*sub_lex;
 
-	content = ft_strtrim(checkpoint->data, "()");
+	if (!checkpoint)
+		return (-1);
+	content = ft_substr(checkpoint->data, 1, ft_strlen(checkpoint->data) - 1);
+	if (!content)
+		return (-1);
 	sub_lex = lexer(content);
 	free(content);
 	if (!sub_lex)
